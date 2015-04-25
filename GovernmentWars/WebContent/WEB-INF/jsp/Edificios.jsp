@@ -8,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<p>Hola que ase</p>
 	//for each edificios mostrar su nombre nivel y lo que cuesta construir el siguiente nivel
 </body>
 </html>
