@@ -10,6 +10,7 @@
 <body>
 
 	<p>Listado de edificios</p>
+	<p>Hola que ase</p>
 	//for each edificios mostrar su nombre nivel y lo que cuesta construir el siguiente nivel
 </body>
 </html>
