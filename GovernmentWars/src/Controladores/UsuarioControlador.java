@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.context.ApplicationContext;
@@ -78,7 +79,7 @@ public class UsuarioControlador {
 	}
 	
 	@RequestMapping("/Index")
-	public String Bienvenido(Model modelo, HttpSession session) {
+	public String Bienvenido(Model modelo, HttpSession session, HttpServletRequest request) {
 		
 		if(session.getAttribute("usuarioSession") == null){
 			return "index";

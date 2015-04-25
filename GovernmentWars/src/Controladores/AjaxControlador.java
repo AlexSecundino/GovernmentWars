@@ -1,9 +1,11 @@
 package Controladores;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,8 +24,13 @@ public class AjaxControlador {
 	@RequestMapping(value="/Login", method=RequestMethod.GET)
 	public @ResponseBody String processAJAXRequest(
 				@RequestParam("usuario") String name,
-				@RequestParam("password") String password, HttpSession session) {
+				@RequestParam("password") String password, HttpSession sessionAnterior, HttpServletRequest request) {
+		
 
+		/*Deletea la session anterior y crea una nueva*/
+		sessionAnterior.invalidate();
+		HttpSession session = request.getSession(true);
+		
 		String response = "false";
 		
 		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
@@ -31,8 +38,6 @@ public class AjaxControlador {
 		UsuarioDAO usuarioDAO = (UsuarioDAO) context.getBean("UsuarioDAO");
 			
 		Usuario usuario = new Usuario(name, password);
-		
-		session.setAttribute("usuarioSession", null);
 		
 		if(usuarioDAO.isRegistrado(usuario)){
 			response = "true";
