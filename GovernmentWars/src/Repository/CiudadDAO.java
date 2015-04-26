@@ -11,7 +11,7 @@ public interface CiudadDAO {
 
 	public Ciudad getCiudad(Usuario usuario);
 	
-	public boolean cambiarNombre(String antiguoNombre, String nombre);
+	public boolean cambiarNombre(String antiguoNombre, String nombre, Usuario usuario);
 	
 	public List<Recursos> cargarRecursos();
 	

@@ -75,11 +75,11 @@ public class JDBCCiudadDAO implements CiudadDAO{
 	}
 	
 	@Override
-	public boolean cambiarNombre(String antiguoNombre, String nombre) {
+	public boolean cambiarNombre(String antiguoNombre, String nombre, Usuario usuario) {
 
 		boolean correcto = false;
 
-		String sql = "update ciudad set nombreCiudad = ? where nombreCiudad = ? AND usuario ='alex'";
+		String sql = "update ciudad set nombreCiudad = ? where nombreCiudad = ? AND usuario = ?";
 		Connection conn = null;
 		
 		try {
@@ -88,6 +88,7 @@ public class JDBCCiudadDAO implements CiudadDAO{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, nombre);
 			ps.setString(2, antiguoNombre);
+			ps.setString(3, usuario.getUsuario());
 			
 			if(ps.executeUpdate() == 1){
 				correcto = true;

@@ -53,7 +53,8 @@ public class AjaxControlador {
 	@RequestMapping(value="/CambiarNombreCiudad", method=RequestMethod.GET)
 	public @ResponseBody String cambiarNombreCiudad(
 				@RequestParam("antiguoNombre") String antiguoNombre,
-				@RequestParam("nombre") String nombre) {
+				@RequestParam("nombre") String nombre,
+				HttpSession session) {
 		
 		String response = "false";
 		
@@ -61,9 +62,7 @@ public class AjaxControlador {
 		
 		CiudadDAO ciudadDAO = (CiudadDAO) context.getBean("CiudadDAO");
 		
-		
-		System.out.println(antiguoNombre + nombre);
-		if(ciudadDAO.cambiarNombre(antiguoNombre, nombre)){
+		if(ciudadDAO.cambiarNombre(antiguoNombre, nombre, new Usuario(session.getAttribute("usuarioSession").toString()))){
 			response = "true";
 		}
 		
