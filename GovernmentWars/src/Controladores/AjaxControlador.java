@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import Classes.Ciudad;
 import Classes.Usuario;
+import Repository.CiudadDAO;
 import Repository.UsuarioDAO;
 
 @Controller
@@ -46,5 +48,25 @@ public class AjaxControlador {
 		
 		return response;
 		
+	}
+	
+	@RequestMapping(value="/CambiarNombreCiudad", method=RequestMethod.GET)
+	public @ResponseBody String cambiarNombreCiudad(
+				@RequestParam("antiguoNombre") String antiguoNombre,
+				@RequestParam("nombre") String nombre) {
+		
+		String response = "false";
+		
+		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
+		
+		CiudadDAO ciudadDAO = (CiudadDAO) context.getBean("CiudadDAO");
+		
+		
+		System.out.println(antiguoNombre + nombre);
+		if(ciudadDAO.cambiarNombre(antiguoNombre, nombre)){
+			response = "true";
+		}
+		
+		return response;
 	}
 }

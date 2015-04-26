@@ -17,11 +17,13 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
 import Classes.Bonus;
+import Classes.Ciudad;
 import Classes.Edificio;
 import Classes.Mensaje;
 import Classes.Raza;
 import Classes.Recursos;
 import Classes.Usuario;
+import Repository.CiudadDAO;
 import Repository.MensajeDAO;
 import Repository.UsuarioDAO;
 
@@ -79,23 +81,23 @@ public class UsuarioControlador {
 	}
 	
 	@RequestMapping("/Index")
-	public String Bienvenido(Model modelo, HttpSession session, HttpServletRequest request) {
+	public String Bienvenido(Model modelo, HttpSession session) {
 		
 		if(session.getAttribute("usuarioSession") == null){
 			return "index";
 		}
 		
-		List<Recursos> recursos = new ArrayList();
-		recursos.add(Recursos.Antena);
-		recursos.add(Recursos.Jueces);
-		recursos.add(Recursos.Militantes);
-		recursos.add(Recursos.Militantes);
+		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 		
-		Edificio edifico = new Edificio("edificio1", 1, recursos, new Bonus(1), new Date());
+		CiudadDAO ciudadDAO = (CiudadDAO) context.getBean("CiudadDAO");
 		
-		session.setAttribute("edificio", edifico);
+		Ciudad ciudad = ciudadDAO.getCiudad(new Usuario(session.getAttribute("usuarioSession").toString()));
 		
-		return "VistaResumen";
+		session.setAttribute("ciudad", ciudad);
+		
+		modelo.addAttribute("ciudad", ciudad);
+		
+		return "ResumenCiudad";
 	}
 	
 	@RequestMapping("/Perfil")
