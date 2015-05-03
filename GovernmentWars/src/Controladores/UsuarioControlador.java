@@ -1,10 +1,7 @@
 package Controladores;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.context.ApplicationContext;
@@ -14,21 +11,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.servlet.ModelAndView;
 
-import Classes.Bonus;
 import Classes.Ciudad;
-import Classes.Edificio;
 import Classes.Mensaje;
 import Classes.Raza;
-import Classes.Recursos;
 import Classes.Usuario;
 import Repository.CiudadDAO;
 import Repository.MensajeDAO;
 import Repository.UsuarioDAO;
 
 @Controller
-@SessionAttributes("usuarioSession")
+@SessionAttributes({"usuario", "ciudad", "edificios"})
 @RequestMapping("/Usuario")
 public class UsuarioControlador {
 	
@@ -83,7 +76,7 @@ public class UsuarioControlador {
 	@RequestMapping("/Index")
 	public String Bienvenido(Model modelo, HttpSession session) {
 		
-		if(session.getAttribute("usuarioSession") == null){
+		if(session.getAttribute("usuario") == null){
 			return "index";
 		}
 		
@@ -91,7 +84,7 @@ public class UsuarioControlador {
 		
 		CiudadDAO ciudadDAO = (CiudadDAO) context.getBean("CiudadDAO");
 		
-		Ciudad ciudad = ciudadDAO.getCiudad(new Usuario(session.getAttribute("usuarioSession").toString()));
+		Ciudad ciudad = ciudadDAO.getCiudad(new Usuario(session.getAttribute("usuario").toString()));
 		
 		session.setAttribute("ciudad", ciudad);
 		
@@ -103,11 +96,15 @@ public class UsuarioControlador {
 	@RequestMapping("/Perfil")
 	public String Perfil(Model modelo, HttpSession session) {
 		
+		if(session.getAttribute("usuario") == null){
+			return "index";
+		}
+		
 		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 		
 		UsuarioDAO usuarioDAO = (UsuarioDAO) context.getBean("UsuarioDAO");
 			
-		Usuario usuario = new Usuario(session.getAttribute("usuarioSession").toString());
+		Usuario usuario = new Usuario(session.getAttribute("usuario").toString());
 
 		Usuario datosUsuario = usuarioDAO.getUsuario(usuario);
 		
@@ -119,11 +116,15 @@ public class UsuarioControlador {
 	@RequestMapping("/Mensajes")
 	public String Mensajes(Model modelo, HttpSession session) {
 		
+		if(session.getAttribute("usuario") == null){
+			return "index";
+		}
+		
 		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 		
 		MensajeDAO mensajeDAO = (MensajeDAO) context.getBean("MensajeDAO");
 			
-		Usuario usuario = new Usuario(session.getAttribute("usuarioSession").toString());
+		Usuario usuario = new Usuario(session.getAttribute("usuario").toString());
 		
 		List<Mensaje> listaMensajes = mensajeDAO.cargarMensajes(usuario);
 		

@@ -5,7 +5,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,7 +42,7 @@ public class AjaxControlador {
 		
 		if(usuarioDAO.isRegistrado(usuario)){
 			response = "true";
-			session.setAttribute("usuarioSession", usuario.getUsuario());
+			session.setAttribute("usuario", usuario.getUsuario());
 		}
 		
 		return response;
@@ -62,8 +61,16 @@ public class AjaxControlador {
 		
 		CiudadDAO ciudadDAO = (CiudadDAO) context.getBean("CiudadDAO");
 		
-		if(ciudadDAO.cambiarNombre(antiguoNombre, nombre, new Usuario(session.getAttribute("usuarioSession").toString()))){
+		if(ciudadDAO.cambiarNombre(antiguoNombre, nombre, new Usuario(session.getAttribute("usuario").toString()))){
 			response = "true";
+			
+			//actualizar la ciudad en la sesion
+			Ciudad ciudad = (Ciudad) session.getAttribute("ciudad");
+			ciudad.setNombre(nombre);
+			session.setAttribute("ciudad", ciudad);
+			
+			System.out.println(session.getAttribute("usuario"));
+			System.out.println(session.getAttribute("ciudad"));
 		}
 		
 		return response;

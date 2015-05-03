@@ -2,7 +2,6 @@ package Classes;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
 public class Ciudad {
 
@@ -17,6 +16,10 @@ public class Ciudad {
 	private Date ultimaFechaActualizacion;
 
 	public Ciudad(){}
+	
+	public Ciudad(String ciudad) {
+		this.nombre = ciudad;
+	}
 	
 	public Ciudad(String nombre, String coordenadas, HashMap<Recursos,Integer> recursos, int nivelCorrupcion, Date ultimaFechaActualizacion) {
 		this.nombre = nombre;

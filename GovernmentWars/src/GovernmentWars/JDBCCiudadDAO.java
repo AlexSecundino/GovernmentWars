@@ -6,15 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 
 import javax.sql.DataSource;
 
 import Classes.Bonus;
 import Classes.Ciudad;
-import Classes.Gender;
 import Classes.Recursos;
 import Classes.Usuario;
 import Repository.CiudadDAO;
