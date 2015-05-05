@@ -1,1 +1,10 @@
+<<<<<<< HEAD
 /.DS_Store
+=======
+/.DS_Store
+/Beans.xml
+/Repository/
+/Controladores/
+/Classes
+/GovernmentWars
+>>>>>>> b485979bde2cf72769ed88a2d97f6c211e9abcac
