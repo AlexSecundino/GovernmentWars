@@ -23,6 +23,9 @@ import Repository.UsuarioDAO;
 @Controller
 @SessionAttributes({"usuario", "ciudad", "edificios"})
 @RequestMapping("/Usuario")
+
+
+
 public class UsuarioControlador {
 	
 	@RequestMapping("/Registro")

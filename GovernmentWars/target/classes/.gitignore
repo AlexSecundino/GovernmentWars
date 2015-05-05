@@ -1,7 +1,11 @@
 /.DS_Store
 /Beans.xml
+/Repository/
+/Controladores/
 /Classes
-/Controladores
 /GovernmentWars
+<<<<<<< HEAD
 /Repository
 /Utilidades
+=======
+>>>>>>> refs/heads/RaulNieves
