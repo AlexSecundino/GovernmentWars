@@ -27,6 +27,9 @@ import Repository.UsuarioDAO;
 @Controller
 @SessionAttributes("usuarioSession")
 @RequestMapping("/Usuario")
+
+
+
 public class UsuarioControlador {
 	
 	@RequestMapping("/Registro")
@@ -95,6 +98,7 @@ public class UsuarioControlador {
 		session.setAttribute("edificio", edifico);
 		
 		return "VistaResumen";
+		//a
 	}
 	
 	@RequestMapping("/Perfil")
