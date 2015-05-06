@@ -1,7 +1,5 @@
 package Controladores;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -13,19 +11,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.servlet.ModelAndView;
 
-import Classes.Bonus;
-import Classes.Edificio;
+import Classes.Ciudad;
 import Classes.Mensaje;
 import Classes.Raza;
-import Classes.Recursos;
 import Classes.Usuario;
+import Repository.CiudadDAO;
 import Repository.MensajeDAO;
 import Repository.UsuarioDAO;
 
 @Controller
-@SessionAttributes("usuarioSession")
+@SessionAttributes({"usuario", "ciudad", "edificios"})
 @RequestMapping("/Usuario")
 
 
@@ -83,32 +79,35 @@ public class UsuarioControlador {
 	@RequestMapping("/Index")
 	public String Bienvenido(Model modelo, HttpSession session) {
 		
-		if(session.getAttribute("usuarioSession") == null){
+		if(session.getAttribute("usuario") == null){
 			return "index";
 		}
 		
-		List<Recursos> recursos = new ArrayList();
-		recursos.add(Recursos.Antena);
-		recursos.add(Recursos.Jueces);
-		recursos.add(Recursos.Militantes);
-		recursos.add(Recursos.Militantes);
+		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 		
-		Edificio edifico = new Edificio("edificio1", 1, recursos, new Bonus(1), new Date());
+		CiudadDAO ciudadDAO = (CiudadDAO) context.getBean("CiudadDAO");
 		
-		session.setAttribute("edificio", edifico);
+		Ciudad ciudad = ciudadDAO.getCiudad(new Usuario(session.getAttribute("usuario").toString()));
 		
-		return "VistaResumen";
-		//a
+		session.setAttribute("ciudad", ciudad);
+		
+		modelo.addAttribute("ciudad", ciudad);
+		
+		return "ResumenCiudad";
 	}
 	
 	@RequestMapping("/Perfil")
 	public String Perfil(Model modelo, HttpSession session) {
 		
+		if(session.getAttribute("usuario") == null){
+			return "index";
+		}
+		
 		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 		
 		UsuarioDAO usuarioDAO = (UsuarioDAO) context.getBean("UsuarioDAO");
 			
-		Usuario usuario = new Usuario(session.getAttribute("usuarioSession").toString());
+		Usuario usuario = new Usuario(session.getAttribute("usuario").toString());
 
 		Usuario datosUsuario = usuarioDAO.getUsuario(usuario);
 		
@@ -120,11 +119,15 @@ public class UsuarioControlador {
 	@RequestMapping("/Mensajes")
 	public String Mensajes(Model modelo, HttpSession session) {
 		
+		if(session.getAttribute("usuario") == null){
+			return "index";
+		}
+		
 		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 		
 		MensajeDAO mensajeDAO = (MensajeDAO) context.getBean("MensajeDAO");
 			
-		Usuario usuario = new Usuario(session.getAttribute("usuarioSession").toString());
+		Usuario usuario = new Usuario(session.getAttribute("usuario").toString());
 		
 		List<Mensaje> listaMensajes = mensajeDAO.cargarMensajes(usuario);
 		

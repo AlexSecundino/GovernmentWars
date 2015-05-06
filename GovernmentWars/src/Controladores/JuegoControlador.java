@@ -1,22 +1,23 @@
 package Controladores;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import Classes.Bonus;
+import Classes.Ciudad;
 import Classes.Edificio;
-import Classes.Recursos;
+import Classes.Usuario;
+import Repository.EdificioDAO;
 
 @Controller
-@SessionAttributes("usuarioSession")
+@SessionAttributes({"usuario", "ciudad", "edificios"})
 @RequestMapping("/Juego")
 public class JuegoControlador {
 	
@@ -24,10 +25,20 @@ public class JuegoControlador {
 	@RequestMapping("/Edificios")
 	public String Edificios(Model modelo, HttpSession session) {
 		
-		Edificio edificio = (Edificio) session.getAttribute("edificio");
+		if(session.getAttribute("usuario") == null){
+			return "index";
+		}
 		
+		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 		
-		System.out.println(edificio);
+		EdificioDAO edificioDAO = (EdificioDAO) context.getBean("EdificioDAO");
+		
+		List<Edificio> listaEdificios = edificioDAO.getEdificios(new Usuario(session.getAttribute("usuario").toString()), (Ciudad)session.getAttribute("ciudad"));
+		
+		session.setAttribute("edificios", listaEdificios);
+
+		modelo.addAttribute("edificios", listaEdificios);
+		
 		return "Edificios";
 	}
 }

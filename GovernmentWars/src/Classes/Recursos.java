@@ -2,5 +2,5 @@ package Classes;
 
 public enum Recursos {
 
-	Antena, Sobres, Militantes, Jueces
+	Antena, Sobres, Militantes, Jueces;
 }

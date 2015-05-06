@@ -17,4 +17,11 @@
   	<servlet-name>springmvc</servlet-name>
   	<url-pattern>/</url-pattern>
   </servlet-mapping>
+  
+  
+  <!-- La session se borra tras un minuto -->
+  <session-config>
+  	<session-timeout>1</session-timeout>
+  </session-config>
+  
 </web-app>

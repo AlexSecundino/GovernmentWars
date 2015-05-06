@@ -5,10 +5,13 @@ import java.util.List;
 import Classes.Bonus;
 import Classes.Ciudad;
 import Classes.Recursos;
+import Classes.Usuario;
 
 public interface CiudadDAO {
 
-	public boolean cambiarNombre();
+	public Ciudad getCiudad(Usuario usuario);
+	
+	public boolean cambiarNombre(String antiguoNombre, String nombre, Usuario usuario);
 	
 	public List<Recursos> cargarRecursos();
 	
