@@ -55,6 +55,14 @@
 	
 	<p>Bienvenido</p>
 	
+	<c:if test="${nuevoMensaje == true}">
+		tienes un nuevo mensaje!!!
+	</c:if>
+	
+	<c:if test="${nuevoMensaje == false}">
+		no hay nada en el buzon
+	</c:if>
+	
 	<p>Nombre ciudad: <span id="nombre">${ciudad.getNombre()}</span></p><input type="text" id="nuevoNombre"/><input type="button" id="cambiarNombre" value="Cambiar Nombre"/>
 	
 	<p>Antena: ${ciudad.getRecurso("Antena")}</p>

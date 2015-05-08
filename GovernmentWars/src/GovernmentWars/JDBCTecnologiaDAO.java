@@ -57,22 +57,12 @@ public class JDBCTecnologiaDAO implements TecnologiaDAO{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, ciudad.getNombre());
 			ps.setString(2, usuario.getUsuario());
-			
-			switch(raza){
-				case 1:
-					ps.setString(3, Raza.Anarquista.toString());
-					break;
-				case 2:
-					ps.setString(3, Raza.Socialdemocrata.toString());
-					break;
-				case 3:
-					ps.setString(3, Raza.Liberal.toString());
-					break;
-			}
+			ps.setInt(3, raza);
 			
 			rs = ps.executeQuery();
-			
+
 			while(rs.next()){
+				
 				HashMap<Recursos,Integer> listaRecursos = new HashMap<Recursos,Integer>();
 				listaRecursos.put(Recursos.Antena, rs.getInt("antena"));
 				listaRecursos.put(Recursos.Sobres, rs.getInt("sobres"));

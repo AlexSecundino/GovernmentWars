@@ -11,14 +11,6 @@
 <body>
 	<p>Mazo mensajes loco!!</p>
 	
-	<c:if test="${nuevoMensaje == true}">
-		tienes un nuevo mensaje!!!
-	</c:if>
-	
-	<c:if test="${nuevoMensaje == false}">
-		no hay nada en el buzon
-	</c:if>
-	
 	<table>
 	<thead>
 		<th>Remitente</th>

@@ -54,22 +54,6 @@ public class UsuarioControlador {
 		usuario.setPass(password);
 		usuario.setRaza(raza);
 		
-		/*switch(raza){
-			
-			case 1:
-				usuario.setRaza(Raza.Anarquista);
-				break;
-			case 2:
-				usuario.setRaza(Raza.Socialdemocrata);
-				break;
-			case 3:
-				usuario.setRaza(Raza.Liberal);
-				break;
-			default:
-				usuario.setRaza(Raza.Socialdemocrata);
-				break;
-		}*/
-		
 		if(usuarioDAO.registrarUsuario(usuario)){
 			modelo.addAttribute("registroCorrecto", true);
 		}
@@ -90,11 +74,17 @@ public class UsuarioControlador {
 		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 		
 		CiudadDAO ciudadDAO = (CiudadDAO) context.getBean("CiudadDAO");
+		MensajeDAO mensajeDAO = (MensajeDAO) context.getBean("MensajeDAO");
 		
-		Ciudad ciudad = ciudadDAO.getCiudad(new Usuario(session.getAttribute("usuario").toString()));
-		Produccion produccion = ciudadDAO.getProduccion(new Usuario(session.getAttribute("usuario").toString()), ciudad);
+		Usuario usuario = new Usuario(session.getAttribute("usuario").toString());
+		Ciudad ciudad = ciudadDAO.getCiudad(usuario);
+		Produccion produccion = ciudadDAO.getProduccion(usuario, ciudad);
+		
 		session.setAttribute("ciudad", ciudad);
 		
+		boolean nuevoMensaje = mensajeDAO.comprobarNuevoMensaje(usuario);
+
+		modelo.addAttribute("nuevoMensaje", nuevoMensaje);
 		modelo.addAttribute("ciudad", ciudad);
 		modelo.addAttribute("produccion", produccion);
 		
@@ -135,11 +125,8 @@ public class UsuarioControlador {
 		Usuario usuario = new Usuario(session.getAttribute("usuario").toString());
 		
 		List<Mensaje> listaMensajes = mensajeDAO.cargarMensajes(usuario);
-		
-		boolean nuevoMensaje = mensajeDAO.comprobarNuevoMensaje(usuario);
-		
+
 		modelo.addAttribute("listaMensajes", listaMensajes);
-		modelo.addAttribute("nuevoMensaje", nuevoMensaje);
 		
 		return "Mensajes";
 	}
