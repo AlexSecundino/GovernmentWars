@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import Classes.Ciudad;
 import Classes.Edificio;
+import Classes.Tecnologia;
 import Classes.Usuario;
 import Repository.EdificioDAO;
+import Repository.TecnologiaDAO;
 
 @Controller
 @SessionAttributes({"usuario", "ciudad", "edificios"})
@@ -40,5 +42,25 @@ public class JuegoControlador {
 		modelo.addAttribute("edificios", listaEdificios);
 		
 		return "Edificios";
+	}
+	
+	@RequestMapping("/Tecnologias")
+	public String Tecnologias(Model modelo, HttpSession session) {
+		
+		if(session.getAttribute("usuario") == null){
+			return "index";
+		}
+		
+		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
+		
+		TecnologiaDAO tecnologiaDAO = (TecnologiaDAO) context.getBean("TecnologiaDAO");
+		
+		List<Tecnologia> listaTecnologias = tecnologiaDAO.getTecnologias(new Usuario(session.getAttribute("usuario").toString()), (Ciudad)session.getAttribute("ciudad"), (int)session.getAttribute("raza"));
+		
+		session.setAttribute("tecnologias", listaTecnologias);
+
+		modelo.addAttribute("tecnologias", listaTecnologias);
+		
+		return "Tecnologias";
 	}
 }

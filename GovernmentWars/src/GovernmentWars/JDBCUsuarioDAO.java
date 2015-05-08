@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 import Classes.Gender;
+import Classes.Raza;
 import Classes.Usuario;
 import Repository.UsuarioDAO;
 
@@ -55,6 +56,52 @@ public class JDBCUsuarioDAO implements UsuarioDAO{
 	}
 	
 	@Override
+	public int getRaza(Usuario usuario) {
+		
+		int raza = 0;
+		String sql = "Select raza from usuario where usuario = ?";
+		Connection conn = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, usuario.getUsuario());
+			rs = ps.executeQuery();
+			
+			if(rs.next()){
+				
+				switch (rs.getString("raza")){
+				
+					case "Anarquista":
+						raza = 1;
+						break;
+					case "Socialdemocrata":
+						raza = 2;
+						break;
+					case "Liberal":
+						raza = 3;
+						break;
+				}
+			}
+			
+			ps.close();
+ 
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+ 
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {}
+			}
+		}
+
+		return raza;
+	}
+	
+	@Override
 	public Usuario getUsuario(Usuario usuario) {
 		
 		Usuario datosUsuario = new Usuario();
@@ -71,9 +118,9 @@ public class JDBCUsuarioDAO implements UsuarioDAO{
 			
 			if(rs.next()){
 				datosUsuario.setUsuario(rs.getString("usuario"));
-				if(rs.getString("genero") == "H"){
+				if(rs.getString("genero").equals("H")){
 					datosUsuario.setGenero(Gender.Hombre);
-				}else if(rs.getString("genero") == "M"){
+				}else if(rs.getString("genero").equals("M")){
 					datosUsuario.setGenero(Gender.Mujer);
 				}
 				datosUsuario.setPais(rs.getString("pais"));
@@ -100,7 +147,8 @@ public class JDBCUsuarioDAO implements UsuarioDAO{
 	@Override
 	public boolean registrarUsuario(Usuario usuario) {
 		
-		String sql = "Insert into Usuario (usuario, pass, raza) values (?, ?, ?)";
+		/*Los usuarios que se registran nunca son administradores*/
+		String sql = "Insert into Usuario (usuario, pass, raza) values (?, ?, ?, ?)";
 		Connection conn = null;
 		boolean correcto = true;
 		
@@ -109,7 +157,21 @@ public class JDBCUsuarioDAO implements UsuarioDAO{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, usuario.getUsuario());
 			ps.setString(2, usuario.getPass());
-			ps.setString(3, usuario.getRaza().toString());
+			
+			switch(usuario.getRaza()){
+			
+				case 1:
+					ps.setString(3, Raza.Anarquista.toString());
+					break;
+				case 2:
+					ps.setString(3, Raza.Socialdemocrata.toString());
+					break;
+				case 3:
+					ps.setString(3, Raza.Liberal.toString());
+					break;
+			}
+			
+			ps.setBoolean(4, false);
 			ps.executeUpdate();
 			ps.close();
  

@@ -3,75 +3,67 @@ package Classes;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 
-public class Edificio {
+public class Tecnologia {
 
 	private String nombre;
-	private int nivel;
 	private HashMap<Recursos, Integer> recursos;
-	private Bonus bonus;
+	private int bonus;
 	private Date tiempoConstruccion;
+	private boolean isInvestigada;
 	
-	public Edificio(String nombre, int nivel, HashMap<Recursos, Integer> recursos, Date tiempoConstruccion) {
+	public Tecnologia(String nombre, HashMap<Recursos, Integer> recursos, int bonus, Date tiempoConstruccion, boolean isInvestigada) {
 		this.nombre = nombre;
-		this.nivel = nivel;
-		this.recursos = recursos;
-		this.tiempoConstruccion = tiempoConstruccion;
-	}
-	
-	public Edificio(String nombre, int nivel, HashMap<Recursos, Integer> recursos, Bonus bonus, Date tiempoConstruccion) {
-		this.nombre = nombre;
-		this.nivel = nivel;
 		this.recursos = recursos;
 		this.bonus = bonus;
 		this.tiempoConstruccion = tiempoConstruccion;
+		this.isInvestigada = isInvestigada;
 	}
 	
 	public String getNombre() {
 		return nombre;
 	}
-	
+
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	
-	public int getNivel() {
-		return nivel;
-	}
-	
-	public void setNivel(int nivel) {
-		this.nivel = nivel;
-	}
-	
+
 	public HashMap<Recursos, Integer> getRecursos() {
 		return recursos;
 	}
-	
+
 	public void setRecursos(HashMap<Recursos, Integer> recursos) {
 		this.recursos = recursos;
 	}
-	
-	public Bonus getBonus() {
+
+	public int getBonus() {
 		return bonus;
 	}
-	
-	public void setBonus(Bonus bonus) {
+
+	public void setBonus(int bonus) {
 		this.bonus = bonus;
 	}
-	
+
 	public Date getTiempoConstruccion() {
 		return tiempoConstruccion;
 	}
-	
+
 	public void setTiempoConstruccion(Date tiempoConstruccion) {
 		this.tiempoConstruccion = tiempoConstruccion;
 	}
-	
+
+	public boolean isInvestigada() {
+		return isInvestigada;
+	}
+
+	public void setInvestigada(boolean isInvestigada) {
+		this.isInvestigada = isInvestigada;
+	}
+
 	@Override
 	public String toString() {
-		return "Edificio [nombre=" + nombre + ", nivel=" + nivel
-				+ ", recursos=" + recursos + ", Bonus=" + bonus
+		return "Tecnologia [nombre=" + nombre + ", investigada="
+				+ isInvestigada + ", recursos=" + recursos + ", bonus=" + bonus
 				+ ", tiempoConstruccion=" + tiempoConstruccion + "]";
 	}
 	
@@ -103,5 +95,3 @@ public class Edificio {
 		return cadenaTiempo;
 	}
 }
-
-

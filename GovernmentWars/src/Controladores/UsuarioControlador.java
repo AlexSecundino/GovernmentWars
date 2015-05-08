@@ -1,5 +1,6 @@
 package Controladores;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import Classes.Ciudad;
 import Classes.Mensaje;
+import Classes.Produccion;
 import Classes.Raza;
+import Classes.Recursos;
 import Classes.Usuario;
 import Repository.CiudadDAO;
 import Repository.MensajeDAO;
@@ -49,8 +52,9 @@ public class UsuarioControlador {
 		Usuario usuario = new Usuario();
 		usuario.setUsuario(nombre);
 		usuario.setPass(password);
+		usuario.setRaza(raza);
 		
-		switch(raza){
+		/*switch(raza){
 			
 			case 1:
 				usuario.setRaza(Raza.Anarquista);
@@ -64,7 +68,7 @@ public class UsuarioControlador {
 			default:
 				usuario.setRaza(Raza.Socialdemocrata);
 				break;
-		}
+		}*/
 		
 		if(usuarioDAO.registrarUsuario(usuario)){
 			modelo.addAttribute("registroCorrecto", true);
@@ -88,10 +92,11 @@ public class UsuarioControlador {
 		CiudadDAO ciudadDAO = (CiudadDAO) context.getBean("CiudadDAO");
 		
 		Ciudad ciudad = ciudadDAO.getCiudad(new Usuario(session.getAttribute("usuario").toString()));
-		
+		Produccion produccion = ciudadDAO.getProduccion(new Usuario(session.getAttribute("usuario").toString()), ciudad);
 		session.setAttribute("ciudad", ciudad);
 		
 		modelo.addAttribute("ciudad", ciudad);
+		modelo.addAttribute("produccion", produccion);
 		
 		return "ResumenCiudad";
 	}

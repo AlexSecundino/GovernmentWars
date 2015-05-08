@@ -9,4 +9,6 @@ public interface UsuarioDAO {
 	    public Usuario getUsuario(Usuario usuario);
 
 	    public boolean registrarUsuario(Usuario usuario);
+
+		public int getRaza(Usuario usuario);
 }

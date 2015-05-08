@@ -8,7 +8,7 @@ public class Usuario {
 	//private String email;	
 	private String descripcion;
 	private String pais;
-	private Raza raza;
+	private int raza;
 	
 	public Usuario() {
 		super();
@@ -79,11 +79,11 @@ public class Usuario {
 		this.pais = pais;
 	}
 	
-	public Raza getRaza() {
+	public int getRaza() {
 		return raza;
 	}
 
-	public void setRaza(Raza raza) {
+	public void setRaza(int raza) {
 		this.raza = raza;
 	}
 

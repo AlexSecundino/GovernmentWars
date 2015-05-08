@@ -41,6 +41,10 @@ http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	
+	<bean id="TecnologiaDAO" class="GovernmentWars.JDBCTecnologiaDAO">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
 	<bean name="/" class ="Controladores.RootControlador"/>
 	<bean name="/Admin" class="Controladores.AdminControlador"/>
 	<bean name="/Usuario" class="Controladores.UsuarioControlador"/>

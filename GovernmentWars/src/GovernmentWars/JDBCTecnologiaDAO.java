@@ -13,12 +13,13 @@ import javax.sql.DataSource;
 
 import Classes.Ciudad;
 import Classes.Edificio;
-import Classes.Mensaje;
+import Classes.Raza;
 import Classes.Recursos;
+import Classes.Tecnologia;
 import Classes.Usuario;
-import Repository.EdificioDAO;
+import Repository.TecnologiaDAO;
 
-public class JDBCEdificioDAO implements EdificioDAO{
+public class JDBCTecnologiaDAO implements TecnologiaDAO{
 
 	private DataSource dataSource;
 	
@@ -28,39 +29,26 @@ public class JDBCEdificioDAO implements EdificioDAO{
 	
 	@Override
 	public boolean crearCola() {
-		boolean correcto = true;
-		
-		return correcto;
-	}
-
-	@Override
-	public boolean aumentarNivelEdificio() {
-		boolean correcto = true;
-		
-		return correcto;
+		return false;
 	}
 
 	@Override
 	public boolean eliminarCola() {
-		boolean correcto = true;
-		
-		return correcto;
+		return false;
 	}
 
 	@Override
 	public boolean comprobarRequisitos() {
-		boolean correcto = true;
-		
-		return correcto;
+		return false;
 	}
 
 	@Override
-	public List<Edificio> getEdificios(Usuario usuario, Ciudad ciudad) {
+	public List<Tecnologia> getTecnologias(Usuario usuario, Ciudad ciudad, int raza) {
 		
-		List<Edificio> listaEdificios = new ArrayList<Edificio>();
+		List<Tecnologia> listaTecnologias = new ArrayList<Tecnologia>();
 		
-		/*Saca los datos del edificio (nombr y nivel actual) y el tiempo y recursos que costaria aumentarlo al siguiente nivel*/
-		String sql = "Select ce.nombre, ce.nivel, bonus, tiempoConstruccion, antena, sobres, jueces from Ciudad_Edificios ce inner join Edificios e on ce.nombre = e.nombre and e.nivel = ce.nivel + 1 where nombreCiudad = ? AND usuario = ?";
+		/*Saca los datos de las tecnologias nombre, tiempo y recursos que costaria investigarlas y te indica las que tienes creadas*/
+		String sql = "Select ctec.nombre, ctec.nombreCiudad, tec.nombre as nombreTec, bonus, antena, sobres, jueces, tiempo from Ciudad_Tecnologias ctec right join Tecnologias tec on tec.nombre = ctec.nombre where (ctec.nombreCiudad = ? or ctec.nombreCiudad is null) AND (ctec.usuario = ? or ctec.usuario is null) and (raza = ? or raza is null)";
 		Connection conn = null;
 		ResultSet rs = null;
 		
@@ -69,6 +57,18 @@ public class JDBCEdificioDAO implements EdificioDAO{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, ciudad.getNombre());
 			ps.setString(2, usuario.getUsuario());
+			
+			switch(raza){
+				case 1:
+					ps.setString(3, Raza.Anarquista.toString());
+					break;
+				case 2:
+					ps.setString(3, Raza.Socialdemocrata.toString());
+					break;
+				case 3:
+					ps.setString(3, Raza.Liberal.toString());
+					break;
+			}
 			
 			rs = ps.executeQuery();
 			
@@ -79,13 +79,19 @@ public class JDBCEdificioDAO implements EdificioDAO{
 				listaRecursos.put(Recursos.Jueces, rs.getInt("jueces"));
 				
 				/*Las fechas necesitan milisegundos*/
-				int tiempo = rs.getInt("tiempoConstruccion") * 1000;
+				int tiempo = rs.getInt("tiempo") * 1000;
 				/*Empieza el 1 de Enero a la 1:00, se necesita disminuir ese tiempo*/
 				Date tiempoConstruccion = new Date(-3600 * 1000 + tiempo);
 				
-				Edificio edificio = new Edificio(rs.getString("nombre"), rs.getInt("nivel"), listaRecursos, tiempoConstruccion);
-				System.out.println(edificio);
-				listaEdificios.add(edificio);
+				boolean isInvestigada = false;
+				
+				if(rs.getString("nombre") != null && rs.getString("nombreCiudad") != null){
+					isInvestigada = true;
+				}
+				
+				Tecnologia tecnologia = new Tecnologia(rs.getString("nombreTec"), listaRecursos, rs.getInt("bonus"), tiempoConstruccion, isInvestigada);
+				System.out.println(tecnologia);
+				listaTecnologias.add(tecnologia);
 			}
 			
 			ps.close();
@@ -101,7 +107,7 @@ public class JDBCEdificioDAO implements EdificioDAO{
 			}
 		}
 		
-		return listaEdificios;
+		return listaTecnologias;
 	}
 
 }

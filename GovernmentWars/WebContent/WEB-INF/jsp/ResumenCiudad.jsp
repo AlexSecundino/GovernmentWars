@@ -64,11 +64,24 @@
 	
 	<p>Corrupcion: ${ciudad.getNivelCorrupcion()}</p>
 	
+	
+	<p>Produccion</p>
+	
+	<ul>
+		<li>antena: ${produccion.getRecurso("Antena")}</li>
+		<li>sobres: ${produccion.getRecurso("Sobres")}</li>
+		<li>jueces: ${produccion.getRecurso("Jueces")}</li>
+	</ul>
+	
 	<a href="Perfil">Ir a perfil</a>
 	
 	<a href="Mensajes">Ver mensajes</a>
 	
-	<a href="../Juego/Edificios">Ver edificios</a>
+	<a href="/GovernmentWars/Juego/Edificios">Ver edificios</a>
+	
+	<a href="/GovernmentWars/Juego/Tecnologias">Ver tecnologias</a>
+	
+	<a href="/GovernmentWars/Juego/Tropas">Ver unidades</a>
 	
 </body>
 </html>
