@@ -15,5 +15,5 @@ public interface TecnologiaDAO {
 	
 	public boolean comprobarRequisitos();
 	
-	public List<Tecnologia> getTecnologias(Usuario usuario, Ciudad ciudad, int raza);
+	public List<Tecnologia> getTecnologias(Usuario usuario, Ciudad ciudad, String raza);
 }

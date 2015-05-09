@@ -8,7 +8,7 @@ public class Usuario {
 	//private String email;	
 	private String descripcion;
 	private String pais;
-	private int raza;
+	private Raza faccion;
 	
 	public Usuario() {
 		super();
@@ -79,18 +79,30 @@ public class Usuario {
 		this.pais = pais;
 	}
 	
-	public int getRaza() {
-		return raza;
+	public String getFaccion() {
+		return faccion.toString();
 	}
 
-	public void setRaza(int raza) {
-		this.raza = raza;
+	public void setFaccion(String raza) {
+		
+		switch(raza){
+			
+			case "Anarquista":
+				this.faccion = Raza.Anarquista;
+				break;
+			case "Socialdemocrata":
+				this.faccion = Raza.Socialdemocrata;
+				break;
+			case "Liberal":
+				this.faccion = Raza.Liberal;
+				break;
+		}	
 	}
 
 	@Override
 	public String toString() {
 		return "Usuario [usuario=" + usuario + ", pass=" + pass + ", genero="
 				+ genero + ", descripcion=" + descripcion + ", pais=" + pais
-				+ ", raza=" + raza + "]";
+				+ "faccion = " + faccion + "]";
 	}
 }

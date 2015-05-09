@@ -19,7 +19,7 @@ import Repository.EdificioDAO;
 import Repository.TecnologiaDAO;
 
 @Controller
-@SessionAttributes({"usuario", "ciudad", "edificios"})
+@SessionAttributes({"usuario", "ciudad", "edificios", "tecnologias", "raza"})
 @RequestMapping("/Juego")
 public class JuegoControlador {
 	
@@ -55,7 +55,7 @@ public class JuegoControlador {
 		
 		TecnologiaDAO tecnologiaDAO = (TecnologiaDAO) context.getBean("TecnologiaDAO");
 		
-		List<Tecnologia> listaTecnologias = tecnologiaDAO.getTecnologias(new Usuario(session.getAttribute("usuario").toString()), (Ciudad)session.getAttribute("ciudad"), (int)session.getAttribute("raza"));
+		List<Tecnologia> listaTecnologias = tecnologiaDAO.getTecnologias(new Usuario(session.getAttribute("usuario").toString()), (Ciudad)session.getAttribute("ciudad"), session.getAttribute("raza").toString());
 		
 		session.setAttribute("tecnologias", listaTecnologias);
 

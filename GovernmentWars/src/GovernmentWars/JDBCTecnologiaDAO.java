@@ -43,7 +43,7 @@ public class JDBCTecnologiaDAO implements TecnologiaDAO{
 	}
 
 	@Override
-	public List<Tecnologia> getTecnologias(Usuario usuario, Ciudad ciudad, int raza) {
+	public List<Tecnologia> getTecnologias(Usuario usuario, Ciudad ciudad, String raza) {
 		
 		List<Tecnologia> listaTecnologias = new ArrayList<Tecnologia>();
 		
@@ -57,7 +57,7 @@ public class JDBCTecnologiaDAO implements TecnologiaDAO{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, ciudad.getNombre());
 			ps.setString(2, usuario.getUsuario());
-			ps.setInt(3, raza);
+			ps.setString(3, raza);
 			
 			rs = ps.executeQuery();
 

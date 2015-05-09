@@ -56,9 +56,9 @@ public class JDBCUsuarioDAO implements UsuarioDAO{
 	}
 	
 	@Override
-	public int getRaza(Usuario usuario) {
+	public String getRaza(Usuario usuario) {
 		
-		int raza = 0;
+		String raza = "";
 		String sql = "Select raza from usuario where usuario = ?";
 		Connection conn = null;
 		ResultSet rs = null;
@@ -70,19 +70,7 @@ public class JDBCUsuarioDAO implements UsuarioDAO{
 			rs = ps.executeQuery();
 			
 			if(rs.next()){
-				
-				switch (rs.getString("raza")){
-				
-					case "Anarquista":
-						raza = 1;
-						break;
-					case "Socialdemocrata":
-						raza = 2;
-						break;
-					case "Liberal":
-						raza = 3;
-						break;
-				}
+				raza = rs.getString("raza");
 			}
 			
 			ps.close();
@@ -106,7 +94,7 @@ public class JDBCUsuarioDAO implements UsuarioDAO{
 		
 		Usuario datosUsuario = new Usuario();
 		
-		String sql = "Select usuario, genero, pais, descripcion from perfil where usuario = ?";
+		String sql = "Select p.usuario, genero, pais, descripcion, raza from perfil p inner join usuario u on u.usuario = p.usuario where p.usuario = ?";
 		Connection conn = null;
 		ResultSet rs = null;
 		
@@ -125,6 +113,7 @@ public class JDBCUsuarioDAO implements UsuarioDAO{
 				}
 				datosUsuario.setPais(rs.getString("pais"));
 				datosUsuario.setDescripcion(rs.getString("descripcion"));
+				datosUsuario.setFaccion(rs.getString("raza"));
 			}
 			
 			ps.close();
@@ -157,21 +146,9 @@ public class JDBCUsuarioDAO implements UsuarioDAO{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, usuario.getUsuario());
 			ps.setString(2, usuario.getPass());
-			
-			switch(usuario.getRaza()){
-			
-				case 1:
-					ps.setString(3, Raza.Anarquista.toString());
-					break;
-				case 2:
-					ps.setString(3, Raza.Socialdemocrata.toString());
-					break;
-				case 3:
-					ps.setString(3, Raza.Liberal.toString());
-					break;
-			}
-			
+			ps.setString(3,usuario.getFaccion());			
 			ps.setBoolean(4, false);
+			
 			ps.executeUpdate();
 			ps.close();
  
