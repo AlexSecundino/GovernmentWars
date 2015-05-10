@@ -18,7 +18,7 @@
 		<th>Sobres</th>
 		<th>Jueces</th>
 		<th>Tiempo de construcción</th>
-		<th>Investigar</th>
+		<th>Investigar/Requisitos</th>
 	
 		<c:forEach items ="${tecnologias}" var="tecnologia">
 	          <tr id="${tecnologia.getNombre()}">
@@ -32,10 +32,15 @@
 	             
 	             <td>
 	             	<c:if test="${tecnologia.isInvestigada() == true}">
-             			<td>ya se ha investigado</td>
+             			Ya se ha investigado
              		</c:if>
              		<c:if test="${tecnologia.isInvestigada() == false}">
-             			<td>investigar!</td>
+             			<c:if test="${tecnologia.getCumpleRequisitos() == false}">
+             				${tecnologia.getRequisitos()}
+             			</c:if>
+             			<c:if test="${tecnologia.getCumpleRequisitos() == true}">
+             				<a href="">Investigar</a>
+             			</c:if>
              		</c:if>
 	             </td>
 	          </tr>

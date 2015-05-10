@@ -18,7 +18,7 @@ import Repository.CiudadDAO;
 import Repository.UsuarioDAO;
 
 @Controller
-@SessionAttributes("usuario")
+@SessionAttributes({"usuario", "ciudad", "edificios", "tecnologias", "raza"})
 @RequestMapping("/Ajax")
 public class AjaxControlador {
 		
@@ -43,7 +43,7 @@ public class AjaxControlador {
 		if(usuarioDAO.isRegistrado(usuario)){
 			response = "true";
 			session.setAttribute("usuario", usuario.getUsuario());
-			session.setAttribute("raza", (int)usuarioDAO.getRaza(usuario));
+			session.setAttribute("raza", usuarioDAO.getRaza(usuario));
 		}
 		
 		return response;

@@ -57,10 +57,13 @@ public class JDBCEdificioDAO implements EdificioDAO{
 	@Override
 	public List<Edificio> getEdificios(Usuario usuario, Ciudad ciudad) {
 		
+		System.out.println(usuario);
+		System.out.println(ciudad);
+		
 		List<Edificio> listaEdificios = new ArrayList<Edificio>();
 		
 		/*Saca los datos del edificio (nombr y nivel actual) y el tiempo y recursos que costaria aumentarlo al siguiente nivel*/
-		String sql = "Select ce.nombre, ce.nivel, bonus, tiempoConstruccion, antena, sobres, jueces from Ciudad_Edificios ce inner join Edificios e on ce.nombre = e.nombre and e.nivel = ce.nivel + 1 where nombreCiudad = ? AND usuario = ?";
+		String sql = "Select ce.nombre, ce.nivel, bonus, tiempoConstruccion, antena, sobres, jueces from Ciudad_Edificios ce left join Edificios e on ce.nombre = e.nombre and e.nivel = ce.nivel + 1 where nombreCiudad = ? AND usuario = ?";
 		Connection conn = null;
 		ResultSet rs = null;
 		

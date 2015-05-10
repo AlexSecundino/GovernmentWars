@@ -10,5 +10,5 @@ public interface UsuarioDAO {
 
 	    public boolean registrarUsuario(Usuario usuario);
 
-		public int getRaza(Usuario usuario);
+		public String getRaza(Usuario usuario);
 }

@@ -1,6 +1,5 @@
 package Controladores;
 
-import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -16,19 +15,14 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import Classes.Ciudad;
 import Classes.Mensaje;
 import Classes.Produccion;
-import Classes.Raza;
-import Classes.Recursos;
 import Classes.Usuario;
 import Repository.CiudadDAO;
 import Repository.MensajeDAO;
 import Repository.UsuarioDAO;
 
 @Controller
-@SessionAttributes({"usuario", "ciudad", "edificios"})
+@SessionAttributes({"usuario", "ciudad", "edificios", "tecnologias", "raza"})
 @RequestMapping("/Usuario")
-
-
-
 public class UsuarioControlador {
 	
 	@RequestMapping("/Registro")
@@ -41,7 +35,7 @@ public class UsuarioControlador {
 	public String Registrar(
 					@RequestParam("usuario") String nombre,
 					@RequestParam("password") String password,
-					@RequestParam("raza") int raza,
+					@RequestParam("raza") String raza,
 					HttpSession session,
 					Model modelo) {
 		
@@ -52,7 +46,7 @@ public class UsuarioControlador {
 		Usuario usuario = new Usuario();
 		usuario.setUsuario(nombre);
 		usuario.setPass(password);
-		usuario.setRaza(raza);
+		usuario.setFaccion(raza);
 		
 		if(usuarioDAO.registrarUsuario(usuario)){
 			modelo.addAttribute("registroCorrecto", true);
@@ -79,6 +73,11 @@ public class UsuarioControlador {
 		Usuario usuario = new Usuario(session.getAttribute("usuario").toString());
 		Ciudad ciudad = ciudadDAO.getCiudad(usuario);
 		Produccion produccion = ciudadDAO.getProduccion(usuario, ciudad);
+		
+		System.out.println("Datos session: ");
+		System.out.println("1) Ciudad: " + session.getAttribute("ciudad"));
+		System.out.println("2) Edificios: " + session.getAttribute("edificios"));
+		System.out.println("3) Tecnologias: " + session.getAttribute("tecnologias"));
 		
 		session.setAttribute("ciudad", ciudad);
 		
