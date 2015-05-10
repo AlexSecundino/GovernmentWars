@@ -33,10 +33,10 @@
 	             <td>${edificio.formatearTiempo(edificio.getTiempoConstruccion())}</td>
 	             
 	             <td>
-		             <c:if test=${edificio.getNivel() < 10}>
+		             <c:if test="${edificio.getNivel() >= 10}">
 		             	Nivel al maximo
 		             </c:if>
-		             <c:if test=${edificio.getNivel() >= 10}>
+		             <c:if test="${edificio.getNivel() < 10}">
 		             	<a href="">Aumentar nivel</a>
 		             </c:if>
 	             </td>
