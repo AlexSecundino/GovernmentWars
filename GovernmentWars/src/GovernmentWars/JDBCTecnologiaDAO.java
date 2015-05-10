@@ -15,6 +15,7 @@ import Classes.Ciudad;
 import Classes.Edificio;
 import Classes.Raza;
 import Classes.Recursos;
+import Classes.Requisitos;
 import Classes.Tecnologia;
 import Classes.Usuario;
 import Repository.TecnologiaDAO;
@@ -38,10 +39,97 @@ public class JDBCTecnologiaDAO implements TecnologiaDAO{
 	}
 
 	@Override
-	public boolean comprobarRequisitos() {
-		return false;
+	public boolean cumpleRequisitos(Usuario usuario, Ciudad ciudad, String tecnologia) {
+		
+		boolean cumple = false;
+		
+		String sql = "Select count(*) from RequisitosTecnologias rt inner join ciudad_edificios ce on (rt.nombreEdificio = ce.nombre and rt.nivelEdificio <= ce.nivel) inner join ciudad_tecnologias ct on (rt.nombreTecnologia = ct.nombre)"
+				+ " where ((ce.nombreCiudad = ? and ce.usuario = ?) or (ct.nombreCiudad = ? and ct.usuario = ?)) and rt.tecnologia = ?";
+		Connection conn = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, ciudad.getNombre());
+			ps.setString(2, usuario.getUsuario());
+			ps.setString(3, ciudad.getNombre());
+			ps.setString(4, usuario.getUsuario());
+			ps.setString(5, tecnologia);
+			
+			rs = ps.executeQuery();
+
+			if(rs.next()){
+				if(rs.getInt(1) >= 1){
+					cumple = true;
+				}
+			}
+			
+			ps.close();
+ 
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+ 
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {}
+			}
+		}
+		
+		return cumple;
 	}
 
+	@Override
+	public Requisitos getRequisitos(String nombreTecnologia) {
+		String sql = "Select nombreEdificio, nivelEdificio, nombreTecnologia from RequisitosTecnologias where tecnologia = ?";
+		Connection conn = null;
+		ResultSet rs = null;
+		
+		Requisitos requisitos = new Requisitos();
+		
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, nombreTecnologia);
+			
+			rs = ps.executeQuery();
+
+			HashMap<String, Integer> edificios = new HashMap<String, Integer>();
+			List<String> tecnologias = new ArrayList<String>(); 
+					
+			while(rs.next()){
+				
+				if(rs.getString("nombreEdificio") != null){
+					edificios.put(rs.getString("nombreEdificio"), Integer.valueOf(rs.getString("nivelEdificio")));
+				}
+				
+				if(rs.getString("nombreTecnologia") != null){
+					tecnologias.add(rs.getString("nombreTecnologia"));
+				}
+			}
+			
+			requisitos = new Requisitos(edificios, tecnologias);
+			
+			System.out.println("requisitos " + nombreTecnologia + ": " + requisitos);
+			
+			ps.close();
+ 
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+ 
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {}
+			}
+		}
+		
+		return requisitos;
+	}
+	
 	@Override
 	public List<Tecnologia> getTecnologias(Usuario usuario, Ciudad ciudad, String raza) {
 		
@@ -74,12 +162,21 @@ public class JDBCTecnologiaDAO implements TecnologiaDAO{
 				Date tiempoConstruccion = new Date(-3600 * 1000 + tiempo);
 				
 				boolean isInvestigada = false;
+				boolean cumpleRequisitos = true;
+				Requisitos requisitos = new Requisitos();
 				
 				if(rs.getString("nombre") != null && rs.getString("nombreCiudad") != null){
 					isInvestigada = true;
 				}
+				else{
+					if(!cumpleRequisitos(usuario, ciudad, rs.getString("nombreTec"))){
+						cumpleRequisitos = false;
+						requisitos = getRequisitos(rs.getString("nombreTec"));
+						System.out.println("requisitos: " + requisitos);
+					}
+				}
 				
-				Tecnologia tecnologia = new Tecnologia(rs.getString("nombreTec"), listaRecursos, rs.getInt("bonus"), tiempoConstruccion, isInvestigada);
+				Tecnologia tecnologia = new Tecnologia(rs.getString("nombreTec"), listaRecursos, rs.getInt("bonus"), tiempoConstruccion, isInvestigada, cumpleRequisitos, requisitos);
 				System.out.println(tecnologia);
 				listaTecnologias.add(tecnologia);
 			}
@@ -99,5 +196,4 @@ public class JDBCTecnologiaDAO implements TecnologiaDAO{
 		
 		return listaTecnologias;
 	}
-
 }

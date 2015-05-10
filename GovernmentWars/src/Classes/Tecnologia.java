@@ -11,13 +11,17 @@ public class Tecnologia {
 	private int bonus;
 	private Date tiempoConstruccion;
 	private boolean isInvestigada;
-	
-	public Tecnologia(String nombre, HashMap<Recursos, Integer> recursos, int bonus, Date tiempoConstruccion, boolean isInvestigada) {
+	private boolean cumpleRequisitos;
+	private Requisitos requisitos;
+
+	public Tecnologia(String nombre, HashMap<Recursos, Integer> recursos, int bonus, Date tiempoConstruccion, boolean isInvestigada, boolean cumpleRequisitos, Requisitos requisitos) {
 		this.nombre = nombre;
 		this.recursos = recursos;
 		this.bonus = bonus;
 		this.tiempoConstruccion = tiempoConstruccion;
 		this.isInvestigada = isInvestigada;
+		this.cumpleRequisitos = cumpleRequisitos;
+		this.requisitos = requisitos;
 	}
 	
 	public String getNombre() {
@@ -59,14 +63,32 @@ public class Tecnologia {
 	public void setInvestigada(boolean isInvestigada) {
 		this.isInvestigada = isInvestigada;
 	}
+	
+	public boolean getCumpleRequisitos() {
+		return cumpleRequisitos;
+	}
 
-	@Override
-	public String toString() {
-		return "Tecnologia [nombre=" + nombre + ", investigada="
-				+ isInvestigada + ", recursos=" + recursos + ", bonus=" + bonus
-				+ ", tiempoConstruccion=" + tiempoConstruccion + "]";
+	public void setCumpleRequisitos(boolean cumpleRequisitos) {
+		this.cumpleRequisitos = cumpleRequisitos;
 	}
 	
+	public Requisitos getRequisitos() {
+		return requisitos;
+	}
+
+	public void setRequisitos(Requisitos requisitos) {
+		this.requisitos = requisitos;
+	}
+	
+	@Override
+	public String toString() {
+		return "Tecnologia [nombre=" + nombre + ", recursos=" + recursos
+				+ ", bonus=" + bonus + ", tiempoConstruccion="
+				+ tiempoConstruccion + ", isInvestigada=" + isInvestigada
+				+ ", cumpleRequisitos=" + cumpleRequisitos + ", requisitos="
+				+ requisitos + "]";
+	}
+
 	public String formatearTiempo(Date fecha){
 		
 		String cadenaTiempo = "";
