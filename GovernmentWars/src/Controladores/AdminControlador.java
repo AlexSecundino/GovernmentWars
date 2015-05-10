@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
 @SessionAttributes({"usuario", "ciudad", "edificios", "tecnologias", "raza"})
-@RequestMapping("/Ajax")
+@RequestMapping("/Admin")
 public class AdminControlador {
 
 }

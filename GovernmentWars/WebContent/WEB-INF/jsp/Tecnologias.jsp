@@ -10,7 +10,6 @@
 <body>
 
 	<p>Listado de tecnologias</p>
-	<p>Hola que ase</p>
 	
 	<table>
 		<th>Nombre</th>

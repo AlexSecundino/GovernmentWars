@@ -81,6 +81,14 @@
 		<li>jueces: ${produccion.getRecurso("Jueces")}</li>
 	</ul>
 	
+	<p>Lista de unidades</p>
+	
+	<ul>
+		<c:forEach items ="${unidades}" var="unidad">
+	          <li id="${unidad.getNombre()}">${unidad.getCantidad()} - ${unidad.getNombre()}</li>
+	    </c:forEach>
+	</ul>
+	
 	<a href="Perfil">Ir a perfil</a>
 	
 	<a href="Mensajes">Ver mensajes</a>
@@ -89,7 +97,7 @@
 	
 	<a href="/GovernmentWars/Juego/Tecnologias">Ver tecnologias</a>
 	
-	<a href="/GovernmentWars/Juego/Tropas">Ver unidades</a>
+	<a href="/GovernmentWars/Juego/Unidades">Ver unidades</a>
 	
 </body>
 </html>
