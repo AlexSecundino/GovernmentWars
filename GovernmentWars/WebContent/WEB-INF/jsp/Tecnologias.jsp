@@ -32,14 +32,14 @@
 	             
 	             <td>
 	             	<c:if test="${tecnologia.isInvestigada() == true}">
-             			<td>Ya se ha investigado</td>
+             			Ya se ha investigado
              		</c:if>
              		<c:if test="${tecnologia.isInvestigada() == false}">
              			<c:if test="${tecnologia.getCumpleRequisitos() == false}">
-             				<td>${tecnologia.getRequisitos()}</td>
+             				${tecnologia.getRequisitos()}
              			</c:if>
              			<c:if test="${tecnologia.getCumpleRequisitos() == true}">
-             				<td><a href="">Investigar</a></td>
+             				<a href="">Investigar</a>
              			</c:if>
              		</c:if>
 	             </td>
