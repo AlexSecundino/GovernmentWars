@@ -89,7 +89,7 @@
 	
 	<a href="/GovernmentWars/Juego/Tecnologias">Ver tecnologias</a>
 	
-	<a href="/GovernmentWars/Juego/Tropas">Ver unidades</a>
+	<a href="/GovernmentWars/Juego/Unidades">Ver unidades</a>
 	
 </body>
 </html>
