@@ -84,7 +84,7 @@
 	<p>Lista de unidades</p>
 	
 	<ul>
-		<c:forEach items ="${unidades}" var="unidad">
+		<c:forEach items ="${unidadesCiudad}" var="unidad">
 	          <li id="${unidad.getNombre()}">${unidad.getCantidad()} - ${unidad.getNombre()}</li>
 	    </c:forEach>
 	</ul>
