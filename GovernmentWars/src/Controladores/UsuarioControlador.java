@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import Classes.Ciudad;
 import Classes.Mensaje;
 import Classes.Produccion;
+import Classes.Unidad;
 import Classes.Usuario;
 import Repository.CiudadDAO;
 import Repository.MensajeDAO;
+import Repository.UnidadDAO;
 import Repository.UsuarioDAO;
 
 @Controller
@@ -69,22 +71,27 @@ public class UsuarioControlador {
 		
 		CiudadDAO ciudadDAO = (CiudadDAO) context.getBean("CiudadDAO");
 		MensajeDAO mensajeDAO = (MensajeDAO) context.getBean("MensajeDAO");
+		UnidadDAO unidadDAO = (UnidadDAO) context.getBean("UnidadDAO");
 		
 		Usuario usuario = new Usuario(session.getAttribute("usuario").toString());
 		Ciudad ciudad = ciudadDAO.getCiudad(usuario);
+		List<Unidad> unidades = unidadDAO.getUnidades(usuario, ciudad);
 		Produccion produccion = ciudadDAO.getProduccion(usuario, ciudad);
 		
 		System.out.println("Datos session: ");
 		System.out.println("1) Ciudad: " + session.getAttribute("ciudad"));
 		System.out.println("2) Edificios: " + session.getAttribute("edificios"));
 		System.out.println("3) Tecnologias: " + session.getAttribute("tecnologias"));
+		System.out.println("4) Unidades: " + session.getAttribute("unidades"));
 		
 		session.setAttribute("ciudad", ciudad);
+		session.setAttribute("unidadesCiudad", unidades);
 		
 		boolean nuevoMensaje = mensajeDAO.comprobarNuevoMensaje(usuario);
 
 		modelo.addAttribute("nuevoMensaje", nuevoMensaje);
 		modelo.addAttribute("ciudad", ciudad);
+		modelo.addAttribute("unidadesCiudad", unidades);
 		modelo.addAttribute("produccion", produccion);
 		
 		return "ResumenCiudad";
