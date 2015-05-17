@@ -12,6 +12,7 @@ import javax.sql.DataSource;
 
 import Classes.Bonus;
 import Classes.Ciudad;
+import Classes.Produccion;
 import Classes.Recursos;
 import Classes.Usuario;
 import Repository.CiudadDAO;
@@ -26,6 +27,7 @@ public class JDBCCiudadDAO implements CiudadDAO{
 
 	@Override
 	public Ciudad getCiudad(Usuario usuario) {
+
 		Ciudad ciudad = new Ciudad();
 
 		String sql = "Select nombreCiudad, coordenadas, antena, sobres, militantes, jueces, corrupcion, ultimaActualizacion from ciudad where usuario = ?";
@@ -69,6 +71,54 @@ public class JDBCCiudadDAO implements CiudadDAO{
 		System.out.println(ciudad);
 		
 		return ciudad;
+	}
+	
+	public Produccion getProduccion(Usuario usuario, Ciudad ciudad) {
+
+		Produccion produccion = new Produccion();
+
+		String sql = "Select cr.nombre, produccion from ciudad_recursos cr inner join recursos r on cr.nombre = r.nombre and cr.nivel = r.nivel where usuario = ? and nombreCiudad = ?";
+		Connection conn = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, usuario.getUsuario());
+			ps.setString(2, ciudad.getNombre());
+			rs = ps.executeQuery();
+			
+			while(rs.next()){
+				if(rs.getString("nombre").equals("Banco")){
+					System.out.println("banco" + rs.getInt("produccion"));
+					produccion.add(Recursos.Sobres, rs.getInt("produccion"));
+				}
+				else if(rs.getString("nombre").equals("Juzgado")){
+					System.out.println("juzgado" + rs.getInt("produccion"));
+					produccion.add(Recursos.Jueces, rs.getInt("produccion"));
+				}
+				else if(rs.getString("nombre").equals("TV")){
+					System.out.println("antena" + rs.getInt("produccion"));
+					produccion.add(Recursos.Antena, rs.getInt("produccion"));
+				}
+			}
+			
+			ps.close();
+ 
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+ 
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {}
+			}
+		}
+
+		System.out.println(produccion);
+		
+		return produccion;
 	}
 	
 	@Override

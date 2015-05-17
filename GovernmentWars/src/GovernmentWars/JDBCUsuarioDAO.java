@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 import Classes.Gender;
+import Classes.Raza;
 import Classes.Usuario;
 import Repository.UsuarioDAO;
 
@@ -55,11 +56,45 @@ public class JDBCUsuarioDAO implements UsuarioDAO{
 	}
 	
 	@Override
+	public String getRaza(Usuario usuario) {
+		
+		String raza = "";
+		String sql = "Select raza from usuario where usuario = ?";
+		Connection conn = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, usuario.getUsuario());
+			rs = ps.executeQuery();
+			
+			if(rs.next()){
+				raza = rs.getString("raza");
+			}
+			
+			ps.close();
+ 
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+ 
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {}
+			}
+		}
+
+		return raza;
+	}
+	
+	@Override
 	public Usuario getUsuario(Usuario usuario) {
 		
 		Usuario datosUsuario = new Usuario();
 		
-		String sql = "Select usuario, genero, pais, descripcion from perfil where usuario = ?";
+		String sql = "Select p.usuario, genero, pais, descripcion, raza from perfil p inner join usuario u on u.usuario = p.usuario where p.usuario = ?";
 		Connection conn = null;
 		ResultSet rs = null;
 		
@@ -71,13 +106,14 @@ public class JDBCUsuarioDAO implements UsuarioDAO{
 			
 			if(rs.next()){
 				datosUsuario.setUsuario(rs.getString("usuario"));
-				if(rs.getString("genero") == "H"){
+				if(rs.getString("genero").equals("H")){
 					datosUsuario.setGenero(Gender.Hombre);
-				}else if(rs.getString("genero") == "M"){
+				}else if(rs.getString("genero").equals("M")){
 					datosUsuario.setGenero(Gender.Mujer);
 				}
 				datosUsuario.setPais(rs.getString("pais"));
 				datosUsuario.setDescripcion(rs.getString("descripcion"));
+				datosUsuario.setFaccion(rs.getString("raza"));
 			}
 			
 			ps.close();
@@ -100,7 +136,8 @@ public class JDBCUsuarioDAO implements UsuarioDAO{
 	@Override
 	public boolean registrarUsuario(Usuario usuario) {
 		
-		String sql = "Insert into Usuario (usuario, pass, raza) values (?, ?, ?)";
+		/*Los usuarios que se registran nunca son administradores*/
+		String sql = "Insert into Usuario (usuario, pass, raza) values (?, ?, ?, ?)";
 		Connection conn = null;
 		boolean correcto = true;
 		
@@ -109,7 +146,9 @@ public class JDBCUsuarioDAO implements UsuarioDAO{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, usuario.getUsuario());
 			ps.setString(2, usuario.getPass());
-			ps.setString(3, usuario.getRaza().toString());
+			ps.setString(3,usuario.getFaccion());			
+			ps.setBoolean(4, false);
+			
 			ps.executeUpdate();
 			ps.close();
  

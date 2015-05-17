@@ -1,5 +1,5 @@
 package Classes;
 
 public enum Raza {
-	Liberal, Socialdemocrata, Anarquista;
+	Anarquista, Socialdemocrata, Liberal;
 }

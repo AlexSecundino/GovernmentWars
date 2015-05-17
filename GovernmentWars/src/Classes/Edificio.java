@@ -1,5 +1,6 @@
 package Classes;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -76,7 +77,7 @@ public class Edificio {
 	}
 	
 	public String formatearTiempo(Date fecha){
-	
+		
 		String cadenaTiempo = "";
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("d:H:mm:ss");

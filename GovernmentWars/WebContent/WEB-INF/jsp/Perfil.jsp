@@ -15,12 +15,14 @@
 			<th>Genero</th>
 			<th>Pais</th>
 			<th>Descripcion</th>
+			<th>raza</th>
 		</tr>
 		<tr>
 			<td>${datosUsuario.getUsuario()}</td>
 			<td>${datosUsuario.getGenero()}</td>
 			<td>${datosUsuario.getPais()}</td>
 			<td>${datosUsuario.getDescripcion()}</td>
+			<td>${datosUsuario.getFaccion()}</td>
 		</tr>
 	</table>
 

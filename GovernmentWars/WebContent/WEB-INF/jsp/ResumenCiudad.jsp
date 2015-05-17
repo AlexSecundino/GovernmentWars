@@ -55,6 +55,14 @@
 	
 	<p>Bienvenido</p>
 	
+	<c:if test="${nuevoMensaje == true}">
+		tienes un nuevo mensaje!!!
+	</c:if>
+	
+	<c:if test="${nuevoMensaje == false}">
+		no hay nada en el buzon
+	</c:if>
+	
 	<p>Nombre ciudad: <span id="nombre">${ciudad.getNombre()}</span></p><input type="text" id="nuevoNombre"/><input type="button" id="cambiarNombre" value="Cambiar Nombre"/>
 	
 	<p>Antena: ${ciudad.getRecurso("Antena")}</p>
@@ -64,11 +72,32 @@
 	
 	<p>Corrupcion: ${ciudad.getNivelCorrupcion()}</p>
 	
+	
+	<p>Produccion</p>
+	
+	<ul>
+		<li>antena: ${produccion.getRecurso("Antena")}</li>
+		<li>sobres: ${produccion.getRecurso("Sobres")}</li>
+		<li>jueces: ${produccion.getRecurso("Jueces")}</li>
+	</ul>
+	
+	<p>Lista de unidades</p>
+	
+	<ul>
+		<c:forEach items ="${unidadesCiudad}" var="unidad">
+	          <li id="${unidad.getNombre()}">${unidad.getCantidad()} - ${unidad.getNombre()}</li>
+	    </c:forEach>
+	</ul>
+	
 	<a href="Perfil">Ir a perfil</a>
 	
 	<a href="Mensajes">Ver mensajes</a>
 	
-	<a href="../Juego/Edificios">Ver edificios</a>
+	<a href="/GovernmentWars/Juego/Edificios">Ver edificios</a>
+	
+	<a href="/GovernmentWars/Juego/Tecnologias">Ver tecnologias</a>
+	
+	<a href="/GovernmentWars/Juego/Unidades">Ver unidades</a>
 	
 </body>
 </html>
