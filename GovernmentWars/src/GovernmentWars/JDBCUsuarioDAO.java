@@ -137,7 +137,7 @@ public class JDBCUsuarioDAO implements UsuarioDAO{
 	public boolean registrarUsuario(Usuario usuario) {
 		
 		/*Los usuarios que se registran nunca son administradores*/
-		String sql = "Insert into Usuario (usuario, pass, raza) values (?, ?, ?, ?)";
+		String sql = "Insert into Usuario (usuario, pass, raza, admin) values (?, ?, ?, ?)";
 		Connection conn = null;
 		boolean correcto = true;
 		

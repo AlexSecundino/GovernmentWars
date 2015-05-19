@@ -50,18 +50,18 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav">
             <li class=""><a href="/GovernmentWars/"><span class=""></span>Inicio</a></li>
-            <li class=""><a href="/GovernmentWars/"><span class=""></span>Sobre nosotros</a></li>
+            <li class=""><a href="/GovernmentWars/SobreNosotros"><span class=""></span>Sobre nosotros</a></li>
             <li class=""><a href="/GovernmentWars/"><span class=""></span>Ayuda</a></li>
             <li class=""><a href="/GovernmentWars/"><span class=""></span>Foro</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li class="reg"><a href="javascript:void(0)">Login</a></li>
+            <li class="reg"><a href="javascript:void(0)">Identificarse</a></li>
             <div class="hid">
               <em></em>
               <form id='ff'>
                 <fieldset>
-                  <label for="usuario">User</label><input type="text" name="usuario" id="usuario"/><br/>
-                  <label for="password">Password</label><input type="password" name="password" id="password"/><br/>
+                  <label for="usuario">Usuario</label><input type="text" name="usuario" id="usuario"/><br/>
+                  <label for="password">Contraseña</label><input type="password" name="password" id="password"/><br/>
                   <input type="button" value="Send"><span><a href="Usuario/Registro">Aun no te has registrado?</a></span>
                 </fieldset>
               </form>
@@ -191,13 +191,12 @@
   </div>
 
 <script>
-  //Coger solo el link activo? Primera aparicion de la / por la derecha en la URL I guess..
-  /*
   $(document).ready(function() {
-    console.log($('a[href~="' + this.location.search + '"]'));
-    $('a[href="' + this.location.pathname + '"]').parent().addClass('active');
+    var pathArray = window.location.pathname.split( '/' );
+    var actual = pathArray[pathArray.length-1];
+    console.log($('a[href="' + actual + '"]'));
+    $('a[href="' + actual + '"]').parent().addClass('active');
   });
-*/
 </script>
 
 <script>

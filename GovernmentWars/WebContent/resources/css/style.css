@@ -1,7 +1,9 @@
 @font-face {font-family: "Troika"; src: url('../fonts/troika.otf');}
 body {background: url(../img/geometry2.png); font-size: 13px; line-height: 1.6;}
 .wrap {padding:0; margin: 0 auto; max-width: 1170px; overflow: hidden;}
+.wrap-vg {padding:0; margin: 50px auto; max-width: 1170px;}
 .page-header, .page-header>h1 {color: #000; background-color:#950000;text-align:center; padding: 1.7em 0; margin:0;}
+
 
 p,li,li a, label {color: #555}
 a {color: #df1f1f; text-decoration: none;}
@@ -158,6 +160,46 @@ box-shadow:inset 0px 1px 3px #bbb; -webkit-box-shadow:inset 0px 1px 3px #bbb; -m
 }
 }
 
+/*########## VisionGeneral ########## */
+
+@media (min-width: 950px) {
+.resources .navbar-nav>li>a {
+	padding: 10px 15px;
+}
+.resources {font-size: 18px;}
+}
+
+@media (min-width: 768px) {
+.resources .navbar-nav>li>a {
+  padding: 10px 15px;
+}
+}
+
+
+#number1,#number2,#number3,#number4, #number5 {padding: 0 15px; }
+#number1,#number2,#number3,#number4, #number5 span {display: inline-block; width: 55px}
+
+.aside-menu, .bod .container {padding: 0 0; }
+.aside-menu li {background-color: #FFF; text-decoration: none; list-style: none; padding: 0 0; text-align: center; line-height: 100px; border-bottom: 2px solid #777; border-right: 2px solid #777}
+.aside-menu li:hover {background-color: #E7E7E7}
+.aside-menu li a {text-decoration: none; display: block; font-family: 'Troika'; font-size: 18px; color: #777}
+
+.bod .row {margin: 0}
+.bod .col-md-3 {padding: 0; margin: 0}
+.bod .col-md-9 {padding: 0;}
+
+.itm {position:relative; background-color: #FFF; padding: 40px 100px; padding-bottom: 40px; border-bottom: 1px solid #777}
+.first-1 {padding-top: 60px}
+
+.first-1 .ccdd2 p {position: absolute; left: 375px; top: 160px; font-size: 16px;}
+.first-1 .ccdd2 a {position: absolute; top: 300px; left: 375px;}
+
+.ccdd2 p {position: absolute; left: 375px; top: 140px; font-size: 16px;}
+.ccdd2 a {position: absolute; top: 280px; left: 375px;}
+
+.itm h1 {margin: 0; margin-bottom: 15px; font-family: 'Troika' }
+.itm a {margin: 15px 0; background-color: #FFF; color: #777; border-radius: 0; border: 1px solid #777;}
+.itm a:hover {background-color: #777; border: 1px solid #777}
 
 /*########## FOOTER ##########*/
 footer .foot {margin: 0;background-color: #383838; overflow: hidden; padding: 100px 0;}
