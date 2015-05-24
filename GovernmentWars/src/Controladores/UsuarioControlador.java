@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,8 +57,8 @@ public class UsuarioControlador {
 		else{
 			modelo.addAttribute("registroCorrecto", false);
 		}
-		
-		return "index";
+	
+		return "redirect:/index";
 	}
 	
 	@RequestMapping("/Index")

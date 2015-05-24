@@ -228,4 +228,98 @@ public class JDBCUnidadDAO implements UnidadDAO{
 		
 		return listaUnidades;
 	}
+
+	@Override
+	public String crearCola(Usuario usuario, Ciudad ciudad, Unidad unidad, HashMap<Recursos, Integer> recursos) {
+		
+		String respuesta = "";
+		
+		if(recursosNecesarios(unidad, recursos)){
+			System.out.println(usuario);
+			System.out.println(ciudad);
+			
+			/*Crear un PA que lo haga en plan transaccion. Inserta en cola y actualiza los recursos*/
+			String sql = "insert into ColaConstruccionUnidades (nombreCiudad, usuario, unidad, cantidad, horaInicio) values(?, ?, ?, ?, ?)";
+			Connection conn = null;
+			ResultSet rs = null;
+			
+			try {
+				conn = dataSource.getConnection();
+				PreparedStatement ps = conn.prepareStatement(sql);
+				ps.setString(1, ciudad.getNombre());
+				ps.setString(2, usuario.getUsuario());
+				ps.setString(3, unidad.getNombre());
+				ps.setInt(4, unidad.getCantidad());
+				
+				Date fecha = new Date();
+				
+				ps.setDate(5, new java.sql.Date(fecha.getTime()));
+				
+				if(ps.executeUpdate() == 1){
+					respuesta = "true";
+				}
+				
+				ps.close();
+	 
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+	 
+			} finally {
+				if (conn != null) {
+					try {
+						conn.close();
+					} catch (SQLException e) {}
+				}
+			}
+		}
+		else{
+			respuesta = "Recursos insuficientes";
+		}
+		return respuesta;
+	}
+
+	@Override
+	public boolean recursosNecesarios(Unidad unidad, HashMap<Recursos, Integer> recursos) {
+		
+		boolean recursosNecesarios = false;
+		
+		String sql = "Select count(*) from unidades where unidad = ? and (sobres * ? <= ? and antena  * ? <= ? and jueces * ? <= ? and militantes * ? <= ?)";
+		Connection conn = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, unidad.getNombre());
+			ps.setInt(2, unidad.getCantidad());
+			ps.setInt(3, recursos.get(Recursos.Sobres));
+			ps.setInt(4, unidad.getCantidad());
+			ps.setInt(5, recursos.get(Recursos.Antena));
+			ps.setInt(6, unidad.getCantidad());
+			ps.setInt(7, recursos.get(Recursos.Jueces));
+			ps.setInt(8, unidad.getCantidad());
+			ps.setInt(9, recursos.get(Recursos.Militantes));
+			
+			rs = ps.executeQuery();
+
+			if(rs.next()){
+				if(rs.getInt(1) >= 1){
+					recursosNecesarios = true;
+				}
+			}
+			
+			ps.close();
+ 
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+ 
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {}
+			}
+		}
+		return recursosNecesarios;
+	}
 }

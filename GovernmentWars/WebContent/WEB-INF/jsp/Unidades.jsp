@@ -9,6 +9,46 @@
 </head>
 <body>
 
+	<script>
+		var unidad;
+		var cantidad;
+		var crearUnidad;
+		var xhr;
+		
+		function ajax(evento) {
+			xhr = new XMLHttpRequest();
+			xhr.addEventListener('readystatechange', gestionarRespuesta, false);
+			xhr.open('get', "/GovernmentWars/Ajax/CrearUnidad?unidad=" + unidad + "&cantidad=" + cantidad, true);
+			xhr.send(null);
+		}
+		
+		function gestionarRespuesta(evento){
+			if (evento.target.readyState == 4 && evento.target.status == 200) {	
+				if(evento.target.responseText == "true"){
+					alert("creando unidades...");
+				}
+				else{
+					alert(evento.target.responseText);	
+				}
+			}
+		}
+	
+	
+		function crearUnidad(u){
+			unidad = u;
+			cantidad = document.getElementById(unidad).value;
+			
+			if(u != "" && (cantidad != "" || cantidad > 0)){
+				ajax();
+				
+			}
+			else{
+				alert("inserte una cantidad valida (n>0)");
+			}
+			
+		}
+	</script>
+
 	<p>Listado de unidades</p>
 	
 	<table>
@@ -22,10 +62,11 @@
 		<th>Jueces</th>
 		<th>Militantes</th>
 		<th>Tiempo de construcción</th>
+		<th>Cantidad</th>
 		<th>Crear/Requisitos</th>
 	
-		<c:forEach items ="${unidades}" var="unidad">
-			<tr id="${unidad.getNombre()}">
+		<c:forEach items ="${unidades}" var="unidad">	
+			<tr>
 				<td>${unidad.getNombre()}</td>
 				<td>${unidad.getAtaque()}</td>
 				<td>${unidad.getDefensa()}</td>
@@ -37,14 +78,17 @@
 				</c:forEach>
 				
 				<td>${unidad.formatearTiempo(unidad.getTiempoConstruccion())}</td>
-				<td>
-					<c:if test="${unidad.getCumpleRequisitos() == false}">
-						${unidad.getRequisitos()}
-					</c:if>
-					<c:if test="${unidad.getCumpleRequisitos() == true}">
-						<a href="">Crear Unidad</a>
-					</c:if>
-             	</td>
+				
+				<c:if test="${unidad.getCumpleRequisitos() == false}">
+					<td>${unidad.getRequisitos()}</td>
+				</c:if>
+				<c:if test="${unidad.getCumpleRequisitos() == true}">
+						<td><label for="${unidad.getNombre()}"><input type="text" id="${unidad.getNombre()}"></label></td>
+						<td><input type="button" onclick="crearUnidad('${unidad.getNombre()}')" value="Crear Unidad"/><td>
+				</c:if>
+				<td><label for="${unidad.getNombre()}"><input type="text" id="${unidad.getNombre()}"></label></td>
+						<td><input type="button" onclick="crearUnidad('${unidad.getNombre()}')" value="Crear Unidad"/><td>
+             	
              </tr>
         </c:forEach>  
     </table>
