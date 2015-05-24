@@ -1,14 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 
+<<<<<<< HEAD
 	<script>
 		var unidad;
 		var cantidad;
@@ -65,8 +58,44 @@
 		<th>Cantidad</th>
 		<th>Crear/Requisitos</th>
 	
-		<c:forEach items ="${unidades}" var="unidad">	
-			<tr>
+<jsp:include page="base.jsp" />
+<c:forEach items ="${unidades}" var="unidad">
+<div class="row">
+	<div class="itm first-1">
+		<div class="ccdd">
+			<h1>${unidad.getNombre()}   <span>${unidad.getAtaque()}/${unidad.getSpeed()}/${unidad.getDefensa()}/${unidad.getCapacidad()}</span></h1>
+			<img src="<c:url value='/resources/img/edif.jpg'/>" alt="">     
+	    </div> 
+	    <div class="ccdd2">
+ 		    <table>
+		    	<tr>
+		    		<td>Sobres</td>
+		    		<td>Militantes</td>
+		    		<td>Jueces</td>
+		    		<td>Antena</td>
+		    	</tr>
+		    	<tr>
+	    	<c:forEach items="${unidad.getRecursos()}" var="recurso">	
+				<td>${recurso.value}</td>
+			</c:forEach>
+			</tr>
+			</table>
+			<a href="" class="btn btn-primary btn-lg">Crear unidad</a>
+	   	</div>
+	</div>
+</div>
+</c:forEach>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- 
+
+<c:forEach items ="${unidades}" var="unidad">
+			<tr id="${unidad.getNombre()}">
+>>>>>>> refs/heads/master
 				<td>${unidad.getNombre()}</td>
 				<td>${unidad.getAtaque()}</td>
 				<td>${unidad.getDefensa()}</td>
@@ -91,7 +120,6 @@
              	
              </tr>
         </c:forEach>  
-    </table>
-    
-</body>
-</html>
+
+
+ -->

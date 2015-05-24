@@ -33,8 +33,10 @@ public class AjaxControlador {
 				@RequestParam("usuario") String name,
 				@RequestParam("password") String password, HttpSession sessionAnterior, HttpServletRequest request) {
 		
+		System.out.println(name);System.out.println(password);
 
 		/*Deletea la session anterior y crea una nueva*/
+		/*No va*/
 		sessionAnterior.invalidate();
 		HttpSession session = request.getSession(true);
 		
@@ -48,7 +50,8 @@ public class AjaxControlador {
 		
 		if(usuarioDAO.isRegistrado(usuario)){
 			response = "true";
-			session.setAttribute("usuario", usuario.getUsuario());
+			usuario.setPass("");
+			session.setAttribute("usuario", usuario);
 			session.setAttribute("raza", usuarioDAO.getRaza(usuario));
 		}
 		
@@ -68,7 +71,7 @@ public class AjaxControlador {
 		
 		CiudadDAO ciudadDAO = (CiudadDAO) context.getBean("CiudadDAO");
 		
-		if(ciudadDAO.cambiarNombre(antiguoNombre, nombre, new Usuario(session.getAttribute("usuario").toString()))){
+		if(ciudadDAO.cambiarNombre(antiguoNombre, nombre, (Usuario)session.getAttribute("usuario"))){
 			response = "true";
 			
 			//actualizar la ciudad en la sesion

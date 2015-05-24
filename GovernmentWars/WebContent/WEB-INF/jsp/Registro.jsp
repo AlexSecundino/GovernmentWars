@@ -7,7 +7,7 @@
 <head>
   <meta charset="utf-8">
   <title>GovWars || Registro</title>
-  <link rel="icon" type="image/png" href="favicon.ico">
+  <link rel="icon" type="image/png" href="<c:url value='/resources/img/favicon.ico'/>">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
@@ -119,21 +119,24 @@
               <h4 class="modal-title" id="myModalLabel">Formulario de registro</h4>
             </div>
             <div class="modal-body">
+            <form action="/GovernmentWars/Usuario/Registrar" method="get" id="ff">
               <div class="input-group marginsm">
                 <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
-                <input class="form-control" type="text" placeholder="Usuario" name="usr">
+                <input class="form-control" type="text" placeholder="Usuario" name="usuario" id="usuario">
               </div>
               <div class="input-group marginsm">
                 <span class="input-group-addon"><i class="fa fa-key fa-fw"></i></span>
-                <input class="form-control" type="password" placeholder="Contraseña" name="pwd">
+                <input class="form-control" type="password" placeholder="Contraseña" name="password" id="password">
               </div>
               <div class="input-group marginsm">
-                <button type="submit" class="btn btn-default">Crear cuenta</button>
+                <button type="submit" class="btn btn-default" id="ffc">Crear cuenta</button>
+                <input type="hidden" id="rz" name="raza" value=""/>
               </div>
+              </form>
             </div>
           </div>
         </div>
-</div>
+	   </div>
 
     </div>
 
@@ -142,12 +145,38 @@
     
     
 <script>
-  //Coger solo el link activo? Primera aparicion de la / por la derecha en la URL I guess..
   $(document).ready(function() {
-    console.log($('a[href~="' + this.location.search + '"]'));
-    $('a[href="' + this.location.pathname + '"]').parent().addClass('active');
+    var pathArray = window.location.pathname.split( '/' );
+    var actual = pathArray[pathArray.length-1];
+    console.log($('a[href="' + actual + '"]'));
+    $('a[href="' + actual + '"]').parent().addClass('active');
+  });
+  
+  $('#ff input').keydown(function(e) {
+	    if (e.keyCode == 13) {
+	        $('#ffc').click();
+	  	}
+	});
+</script>
+
+  
+<script>
+  var raza;
+  
+  $(".obj img[src*=2]").click(function(event) {
+	  raza = $(this).attr("src").replace("2","");
+	  if (raza.indexOf('anarchy')!=-1)
+		  raza = 'Anarquista';
+	  else if (raza.indexOf('edificio')!=-1)
+		  raza = 'Socialdemocrata';
+	  else if (raza.indexOf('corona')!=-1)
+		  raza = 'Liberal';
+	  
+	  $("#rz").val(raza);
   });
 </script>
+
+
 </body>
 
 </html>

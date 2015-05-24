@@ -19,6 +19,7 @@ import Classes.Usuario;
 import Repository.EdificioDAO;
 import Repository.TecnologiaDAO;
 import Repository.UnidadDAO;
+import Repository.UsuarioDAO;
 
 @Controller
 @SessionAttributes({"usuario", "ciudad", "edificios", "tecnologias", "unidadesCiudad", "unidades", "raza"})
@@ -36,12 +37,14 @@ public class JuegoControlador {
 		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 		
 		EdificioDAO edificioDAO = (EdificioDAO) context.getBean("EdificioDAO");
+		UsuarioDAO usuarioDAO = (UsuarioDAO) context.getBean("UsuarioDAO");
 		
-		List<Edificio> listaEdificios = edificioDAO.getEdificios(new Usuario(session.getAttribute("usuario").toString()), (Ciudad)session.getAttribute("ciudad"));
+		List<Edificio> listaEdificios = edificioDAO.getEdificios((Usuario)session.getAttribute("usuario"), (Ciudad)session.getAttribute("ciudad"));
+		Usuario usuario = (Usuario)session.getAttribute("usuario");
 		
 		session.setAttribute("edificios", listaEdificios);
-
 		modelo.addAttribute("edificios", listaEdificios);
+		modelo.addAttribute("usuario", usuario);
 		
 		return "Edificios";
 	}
@@ -57,13 +60,14 @@ public class JuegoControlador {
 		
 		TecnologiaDAO tecnologiaDAO = (TecnologiaDAO) context.getBean("TecnologiaDAO");
 		
-		List<Tecnologia> listaTecnologias = tecnologiaDAO.getTecnologias(new Usuario(session.getAttribute("usuario").toString()), (Ciudad)session.getAttribute("ciudad"), session.getAttribute("raza").toString());
+		List<Tecnologia> listaTecnologias = tecnologiaDAO.getTecnologias((Usuario)session.getAttribute("usuario"), (Ciudad)session.getAttribute("ciudad"), session.getAttribute("raza").toString());
 		
 		session.setAttribute("tecnologias", listaTecnologias);
 
 		modelo.addAttribute("tecnologias", listaTecnologias);
 		
 		return "Tecnologias";
+		//return "Copy of Tecnologias";
 	}
 	
 	@RequestMapping("/Unidades")
@@ -77,13 +81,14 @@ public class JuegoControlador {
 		
 		UnidadDAO unidadDAO = (UnidadDAO) context.getBean("UnidadDAO");
 		
-		List<Unidad> listaUnidades = unidadDAO.getTodasUnidades(new Usuario(session.getAttribute("usuario").toString()), (Ciudad)session.getAttribute("ciudad"), session.getAttribute("raza").toString());
-	
+		List<Unidad> listaUnidades = unidadDAO.getTodasUnidades((Usuario)session.getAttribute("usuario"), (Ciudad)session.getAttribute("ciudad"), session.getAttribute("raza").toString());
+		
 		session.setAttribute("unidades", listaUnidades);
 
 		modelo.addAttribute("unidades", listaUnidades);
 		
 		return "Unidades";
+		//return "Copy of Unidades";
 	}
 	
 	

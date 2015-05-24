@@ -47,7 +47,7 @@
 	
 	</table>
 	
-	<a href="Usuario/NuevoMensaje">Nuevo mensaje</a>
+	<a href="/GovernmentWars/Usuario/NuevoMensaje">Nuevo mensaje</a>
 	
 </body>
 </html>

@@ -37,6 +37,7 @@ public class JDBCCiudadDAO implements CiudadDAO{
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
+			System.out.println("GET USUARIO: " + usuario.getUsuario());
 			ps.setString(1, usuario.getUsuario());
 			rs = ps.executeQuery();
 			
