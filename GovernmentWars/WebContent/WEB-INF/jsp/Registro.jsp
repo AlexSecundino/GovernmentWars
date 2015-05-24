@@ -119,7 +119,7 @@
               <h4 class="modal-title" id="myModalLabel">Formulario de registro</h4>
             </div>
             <div class="modal-body">
-            <form action="/GovernmentWars/Usuario/Registrar" method="get">
+            <form action="/GovernmentWars/Usuario/Registrar" method="get" id="ff">
               <div class="input-group marginsm">
                 <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
                 <input class="form-control" type="text" placeholder="Usuario" name="usuario" id="usuario">
@@ -129,7 +129,7 @@
                 <input class="form-control" type="password" placeholder="Contraseña" name="password" id="password">
               </div>
               <div class="input-group marginsm">
-                <button type="submit" class="btn btn-default" id="registrar">Crear cuenta</button>
+                <button type="submit" class="btn btn-default" id="ffc">Crear cuenta</button>
                 <input type="hidden" id="rz" name="raza" value=""/>
               </div>
               </form>
@@ -151,6 +151,12 @@
     console.log($('a[href="' + actual + '"]'));
     $('a[href="' + actual + '"]').parent().addClass('active');
   });
+  
+  $('#ff input').keydown(function(e) {
+	    if (e.keyCode == 13) {
+	        $('#ffc').click();
+	  	}
+	});
 </script>
 
   

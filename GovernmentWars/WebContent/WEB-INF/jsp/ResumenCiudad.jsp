@@ -108,7 +108,7 @@
 				    	</ul>
 	    			</div>
    				</div>
-   				<div class="col-md-9">
+   				<div class="col-md-9 nopad">
    					<div class="container">
    						<div class="row">
    							<div class="itm first-1">

@@ -186,16 +186,17 @@ box-shadow:inset 0px 1px 3px #bbb; -webkit-box-shadow:inset 0px 1px 3px #bbb; -m
 
 .bod .row {margin: 0}
 .bod .col-md-3 {padding: 0; margin: 0}
-.bod .col-md-9 {padding: 0;}
+.nopad {padding: 0;}
 
 .itm {position:relative; background-color: #FFF; padding: 40px 100px; padding-bottom: 40px; border-bottom: 1px solid #777}
 .first-1 {padding-top: 60px}
 
-.first-1 .ccdd2 p {position: absolute; left: 375px; top: 160px; font-size: 16px;}
-.first-1 .ccdd2 a {position: absolute; top: 300px; left: 375px;}
 
-.ccdd2 p {position: absolute; left: 375px; top: 140px; font-size: 16px;}
-.ccdd2 a {position: absolute; top: 280px; left: 375px;}
+/*.first-1 .ccdd2 p {position: absolute; left: 375px; top: 160px; font-size: 16px;}*/
+/*.first-1 .ccdd2 a {position: absolute; top: 300px; left: 375px;}*/
+
+/*.ccdd2 p {position: absolute; left: 375px; top: 140px; font-size: 16px;}*/
+/*.ccdd2 a {position: absolute; top: 280px; left: 375px;}*/
 
 .itm h1 {margin: 0; margin-bottom: 15px; font-family: 'Troika' }
 .itm a {margin: 15px 0; background-color: #FFF; color: #777; border-radius: 0; border: 1px solid #777;}

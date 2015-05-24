@@ -19,6 +19,7 @@ import Classes.Usuario;
 import Repository.EdificioDAO;
 import Repository.TecnologiaDAO;
 import Repository.UnidadDAO;
+import Repository.UsuarioDAO;
 
 @Controller
 @SessionAttributes({"usuario", "ciudad", "edificios", "tecnologias", "unidadesCiudad", "unidades", "raza"})
@@ -36,12 +37,14 @@ public class JuegoControlador {
 		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 		
 		EdificioDAO edificioDAO = (EdificioDAO) context.getBean("EdificioDAO");
+		UsuarioDAO usuarioDAO = (UsuarioDAO) context.getBean("UsuarioDAO");
 		
 		List<Edificio> listaEdificios = edificioDAO.getEdificios(new Usuario(session.getAttribute("usuario").toString()), (Ciudad)session.getAttribute("ciudad"));
+		Usuario usuario = new Usuario(session.getAttribute("usuario").toString());
 		
 		session.setAttribute("edificios", listaEdificios);
-
 		modelo.addAttribute("edificios", listaEdificios);
+		modelo.addAttribute("usuario", usuario);
 		
 		return "Edificios";
 	}
@@ -78,7 +81,7 @@ public class JuegoControlador {
 		UnidadDAO unidadDAO = (UnidadDAO) context.getBean("UnidadDAO");
 		
 		List<Unidad> listaUnidades = unidadDAO.getTodasUnidades(new Usuario(session.getAttribute("usuario").toString()), (Ciudad)session.getAttribute("ciudad"), session.getAttribute("raza").toString());
-	
+		
 		session.setAttribute("unidades", listaUnidades);
 
 		modelo.addAttribute("unidades", listaUnidades);

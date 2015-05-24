@@ -80,7 +80,7 @@
 	            <ul class="nav navbar-nav navbar-right">
 					<li><a href="Mensajes"><i class="fa fa-diamond"></i>Mensajes</a></li>
 	                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span
-	                    class="fa fa-diamond"></span>Admin <b class="caret"></b></a>
+	                    class="fa fa-diamond"></span>${usuario.getUsuario()} <b class="caret"></b></a>
 	                    <ul class="dropdown-menu">
 	                        <li><a href="#"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
 	                        <li class="divider"></li>
@@ -106,5 +106,5 @@
 				    	</ul>
 	    			</div>
    				</div>
-   				<div class="col-md-9">
+   				<div class="col-md-9 nopad">
    					<div class="container">

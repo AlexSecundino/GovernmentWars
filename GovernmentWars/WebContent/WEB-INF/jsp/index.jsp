@@ -62,7 +62,7 @@
                 <fieldset>
                   <label for="usuario">Usuario</label><input type="text" name="usuario" id="usuario"/><br/>
                   <label for="password">Contraseña</label><input type="password" name="password" id="password"/><br/>
-                  <input type="button" value="Send"><span><a href="Usuario/Registro">Aun no te has registrado?</a></span>
+                  <input type="button" value="Send" id="ffc"><span><a href="/Usuario/Registro">Aun no te has registrado?</a></span>
                 </fieldset>
               </form>
             </div>
@@ -104,7 +104,7 @@
               <p>Gestiona tu propio partido político, tomando las decisiones que lo llevarán a la cumbre o a las más inmuda de las ignominias.</p>
             </div>
             <div class="col-md-3 pl-20">
-              <a href="Usuario/Registro" class="btn btn-primary btn-lg">Registrate ya</a>
+              <a href="/Usuario/Registro" class="btn btn-primary btn-lg">Registrate ya</a>
             </div>
           </div>
         </div>
@@ -196,6 +196,12 @@
     var actual = pathArray[pathArray.length-1];
     console.log($('a[href="' + actual + '"]'));
     $('a[href="' + actual + '"]').parent().addClass('active');
+  });
+  
+  $('#ff input').keydown(function(e) {
+	    if (e.keyCode == 13) {
+	        $('#ffc').click();
+	  	}
   });
 </script>
 

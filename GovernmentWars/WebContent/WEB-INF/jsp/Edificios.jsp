@@ -10,9 +10,18 @@
 			<img src="<c:url value='/resources/img/edif.jpg'/>" alt="">     
 	    </div> 
 	    <div class="ccdd2">
+	    	<table>
+	    	<tr>
+	    		<td>Sobres</td>
+	    		<td>Jueces</td>
+	    		<td>Antena</td>
+	    	</tr>
+	    	<tr>
 	    	<c:forEach items="${edificio.getRecursos()}" var="recurso">	
-				<p>${recurso.value}</p>
+				<td>${recurso.value}</td>
 			</c:forEach>
+			</tr>
+			</table>
 			<a href="" class="btn btn-primary btn-lg">Subir nivel</a>
 	   	</div>
 	</div>

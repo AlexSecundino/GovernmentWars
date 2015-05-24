@@ -6,14 +6,23 @@
 <div class="row">
 	<div class="itm first-1">
 		<div class="ccdd">
-			<h1>${unidad.getNombre()}</h1>
-			<h2>${unidad.getAtaque()}/${unidad.getSpeed()}/${unidad.getDefensa()}/${unidad.getCapacidad()}</h2>
+			<h1>${unidad.getNombre()}   <span>${unidad.getAtaque()}/${unidad.getSpeed()}/${unidad.getDefensa()}/${unidad.getCapacidad()}</span></h1>
 			<img src="<c:url value='/resources/img/edif.jpg'/>" alt="">     
 	    </div> 
 	    <div class="ccdd2">
+ 		    <table>
+		    	<tr>
+		    		<td>Sobres</td>
+		    		<td>Militantes</td>
+		    		<td>Jueces</td>
+		    		<td>Antena</td>
+		    	</tr>
+		    	<tr>
 	    	<c:forEach items="${unidad.getRecursos()}" var="recurso">	
-				<p>${recurso.value}</p>
+				<td>${recurso.value}</td>
 			</c:forEach>
+			</tr>
+			</table>
 			<a href="" class="btn btn-primary btn-lg">Crear unidad</a>
 	   	</div>
 	</div>
