@@ -62,7 +62,7 @@
                 <fieldset>
                   <label for="usuario">Usuario</label><input type="text" name="usuario" id="usuario"/><br/>
                   <label for="password">Contraseña</label><input type="password" name="password" id="password"/><br/>
-                  <input type="button" value="Send" id="ffc"><span><a href="/Usuario/Registro">Aun no te has registrado?</a></span>
+                  <input type="button" value="Send" id="ffc"><span><a href="/GovernmentWars/Usuario/Registro">Aun no te has registrado?</a></span>
                 </fieldset>
               </form>
             </div>

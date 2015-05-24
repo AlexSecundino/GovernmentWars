@@ -89,9 +89,9 @@
 	    </c:forEach>
 	</ul>
 	
-	<a href="Perfil">Ir a perfil</a>
+	<a href="/GovernmentWars/Usuario/Perfil">Ir a perfil</a>
 	
-	<a href="Mensajes">Ver mensajes</a>
+	<a href="/GovernmentWars/Usuario/Mensajes">Ver mensajes</a>
 	
 	<a href="/GovernmentWars/Juego/Edificios">Ver edificios</a>
 	

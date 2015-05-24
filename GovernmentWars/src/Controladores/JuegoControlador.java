@@ -39,8 +39,8 @@ public class JuegoControlador {
 		EdificioDAO edificioDAO = (EdificioDAO) context.getBean("EdificioDAO");
 		UsuarioDAO usuarioDAO = (UsuarioDAO) context.getBean("UsuarioDAO");
 		
-		List<Edificio> listaEdificios = edificioDAO.getEdificios(new Usuario(session.getAttribute("usuario").toString()), (Ciudad)session.getAttribute("ciudad"));
-		Usuario usuario = new Usuario(session.getAttribute("usuario").toString());
+		List<Edificio> listaEdificios = edificioDAO.getEdificios((Usuario)session.getAttribute("usuario"), (Ciudad)session.getAttribute("ciudad"));
+		Usuario usuario = (Usuario)session.getAttribute("usuario");
 		
 		session.setAttribute("edificios", listaEdificios);
 		modelo.addAttribute("edificios", listaEdificios);
@@ -60,13 +60,14 @@ public class JuegoControlador {
 		
 		TecnologiaDAO tecnologiaDAO = (TecnologiaDAO) context.getBean("TecnologiaDAO");
 		
-		List<Tecnologia> listaTecnologias = tecnologiaDAO.getTecnologias(new Usuario(session.getAttribute("usuario").toString()), (Ciudad)session.getAttribute("ciudad"), session.getAttribute("raza").toString());
+		List<Tecnologia> listaTecnologias = tecnologiaDAO.getTecnologias((Usuario)session.getAttribute("usuario"), (Ciudad)session.getAttribute("ciudad"), session.getAttribute("raza").toString());
 		
 		session.setAttribute("tecnologias", listaTecnologias);
 
 		modelo.addAttribute("tecnologias", listaTecnologias);
 		
 		return "Tecnologias";
+		//return "Copy of Tecnologias";
 	}
 	
 	@RequestMapping("/Unidades")
@@ -80,13 +81,14 @@ public class JuegoControlador {
 		
 		UnidadDAO unidadDAO = (UnidadDAO) context.getBean("UnidadDAO");
 		
-		List<Unidad> listaUnidades = unidadDAO.getTodasUnidades(new Usuario(session.getAttribute("usuario").toString()), (Ciudad)session.getAttribute("ciudad"), session.getAttribute("raza").toString());
+		List<Unidad> listaUnidades = unidadDAO.getTodasUnidades((Usuario)session.getAttribute("usuario"), (Ciudad)session.getAttribute("ciudad"), session.getAttribute("raza").toString());
 		
 		session.setAttribute("unidades", listaUnidades);
 
 		modelo.addAttribute("unidades", listaUnidades);
 		
 		return "Unidades";
+		//return "Copy of Unidades";
 	}
 	
 	

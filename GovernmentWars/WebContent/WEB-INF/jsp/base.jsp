@@ -78,13 +78,13 @@
 	                <li><a><i class="fa fa-diamond"></i>Corrupcion <span id="number5">${ciudad.getNivelCorrupcion()} %</span></a></li>
 	            </ul>
 	            <ul class="nav navbar-nav navbar-right">
-					<li><a href="Mensajes"><i class="fa fa-diamond"></i>Mensajes</a></li>
+					<li><a href="/GovernmentWars/Usuario/Mensajes"><i class="fa fa-diamond"></i>Mensajes</a></li>
 	                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span
 	                    class="fa fa-diamond"></span>${usuario.getUsuario()} <b class="caret"></b></a>
 	                    <ul class="dropdown-menu">
-	                        <li><a href="#"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
+	                        <li><a href="/GovernmentWars/Usuario/Perfil"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
 	                        <li class="divider"></li>
-	                        <li><a href="#"><span class="glyphicon glyphicon-off"></span>Logout</a></li>
+	                        <li><a href="/GovernmentWars/Usuario/Logout"><span class="glyphicon glyphicon-off"></span>Logout</a></li>
 	                    </ul>
 	                </li>
 	            </ul>
