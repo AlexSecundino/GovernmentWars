@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 
-<<<<<<< HEAD
 	<script>
 		var unidad;
 		var cantidad;
@@ -41,22 +40,6 @@
 			
 		}
 	</script>
-
-	<p>Listado de unidades</p>
-	
-	<table>
-		<th>Nombre</th>
-		<th>Ataque</th>
-		<th>Defensa</th>
-		<th>Velocidad</th>
-		<th>Capacidad</th>
-		<th>Antena</th>
-		<th>Sobres</th>
-		<th>Jueces</th>
-		<th>Militantes</th>
-		<th>Tiempo de construcción</th>
-		<th>Cantidad</th>
-		<th>Crear/Requisitos</th>
 	
 <jsp:include page="base.jsp" />
 <c:forEach items ="${unidades}" var="unidad">
@@ -73,14 +56,21 @@
 		    		<td>Militantes</td>
 		    		<td>Jueces</td>
 		    		<td>Antena</td>
+		    		<td>Requisitos/Crear unidad</td>
 		    	</tr>
 		    	<tr>
-	    	<c:forEach items="${unidad.getRecursos()}" var="recurso">	
-				<td>${recurso.value}</td>
-			</c:forEach>
-			</tr>
+		    		<c:forEach items="${unidad.getRecursos()}" var="recurso">	
+						<td>${recurso.value}</td>
+					</c:forEach>
+					<c:if test="${unidad.getCumpleRequisitos() == false}">
+						<td>${unidad.getRequisitos()}</td>
+					</c:if>
+					<c:if test="${unidad.getCumpleRequisitos() == true}">
+						<td><a href="" class="btn btn-primary btn-lg">Crear unidad</a></td>
+					</c:if>
+				</tr>
 			</table>
-			<a href="" class="btn btn-primary btn-lg">Crear unidad</a>
+			
 	   	</div>
 	</div>
 </div>
@@ -95,7 +85,6 @@
 
 <c:forEach items ="${unidades}" var="unidad">
 			<tr id="${unidad.getNombre()}">
->>>>>>> refs/heads/master
 				<td>${unidad.getNombre()}</td>
 				<td>${unidad.getAtaque()}</td>
 				<td>${unidad.getDefensa()}</td>

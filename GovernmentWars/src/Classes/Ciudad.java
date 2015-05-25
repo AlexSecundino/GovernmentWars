@@ -51,9 +51,6 @@ public class Ciudad {
 	}
 	
 	public int getRecurso(Recursos recurso) {
-		System.out.println("METODO");
-		System.out.println("Parametro: " + recurso);
-		System.out.println("Listado recursos " + recursos);
 		switch(recurso.toString()){
 			case "Antena":
 				return recursos.get(Recursos.Antena);

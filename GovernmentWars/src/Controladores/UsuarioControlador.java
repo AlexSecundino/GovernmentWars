@@ -30,7 +30,7 @@ import Repository.UnidadDAO;
 import Repository.UsuarioDAO;
 
 @Controller
-@SessionAttributes({"usuario", "ciudad", "edificios", "tecnologias", "raza"})
+//@SessionAttributes({"usuario", "ciudad", "edificios", "tecnologias", "raza"})
 @RequestMapping("/Usuario")
 public class UsuarioControlador {
 	
@@ -64,7 +64,7 @@ public class UsuarioControlador {
 			modelo.addAttribute("registroCorrecto", false);
 		}
 	
-		return "redirect:/index";
+		return "index";
 	}
 	
 	@RequestMapping("/Index")
@@ -88,11 +88,11 @@ public class UsuarioControlador {
 		session.setAttribute("ciudad", ciudad);
 		session.setAttribute("unidadesCiudad", unidades);
 		
-		System.out.println("Datos session: ");
+		/*System.out.println("Datos session: ");
 		System.out.println("1) Ciudad: " + session.getAttribute("ciudad"));
 		System.out.println("2) Edificios: " + session.getAttribute("edificios"));
 		System.out.println("3) Tecnologias: " + session.getAttribute("tecnologias"));
-		System.out.println("4) Unidades: " + session.getAttribute("unidades"));
+		System.out.println("4) Unidades: " + session.getAttribute("unidades"));*/
 		
 		
 		boolean nuevoMensaje = mensajeDAO.comprobarNuevoMensaje(usuario);
@@ -126,21 +126,14 @@ public class UsuarioControlador {
 	}
 	
 	@RequestMapping("/Logout")
-	public void Logout(Model modelo, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
-
+	public String Logout(Model modelo, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
 		
-		/*No va*/
 		session.invalidate();
-		HttpSession sessionNueva = request.getSession(true);
+		session = request.getSession(true);
 		
-		try {
-			response.sendRedirect("Index");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return;
+		System.out.println("usuario despues de logout: " + session.getAttribute("usuario"));
+
+		return "index";
 	}
 	
 	@RequestMapping("/Mensajes")

@@ -87,7 +87,6 @@ public class JDBCEdificioDAO implements EdificioDAO{
 				Date tiempoConstruccion = new Date(-3600 * 1000 + tiempo);
 				
 				Edificio edificio = new Edificio(rs.getString("nombre"), rs.getInt("nivel"), listaRecursos, tiempoConstruccion);
-				System.out.println(edificio);
 				listaEdificios.add(edificio);
 			}
 			

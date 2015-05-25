@@ -13,7 +13,20 @@
 	    	<c:forEach items="${tecnologia.getRecursos()}" var="recurso">	
 				<p>${recurso.value}</p>
 			</c:forEach>
-			<a href="" class="btn btn-primary btn-lg">Investigar</a>
+			
+			<c:if test="${tecnologia.isInvestigada() == true}">
+             	<p>Ya se ha investigado</p>
+             </c:if>
+             <c:if test="${tecnologia.isInvestigada() == false}">
+             	<c:if test="${tecnologia.getCumpleRequisitos() == false}">
+             		<p>${tecnologia.getRequisitos()}</p>
+             	</c:if>
+             	<c:if test="${tecnologia.getCumpleRequisitos() == true}">
+             		<a href="" class="btn btn-primary btn-lg">Investigar</a>
+             	</c:if>
+             </c:if>
+			
+		
 	   	</div>
 	</div>
 </div>

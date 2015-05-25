@@ -52,7 +52,6 @@ public class JDBCUnidadDAO implements UnidadDAO{
 			while(rs.next()){
 				
 				Unidad unidad = new Unidad(rs.getString("unidad"), rs.getInt("cantidad"));
-				System.out.println(unidad);
 				listaUnidades.add(unidad);
 			}
 			
@@ -76,8 +75,7 @@ public class JDBCUnidadDAO implements UnidadDAO{
 	public boolean cumpleRequisitos(Usuario usuario, Ciudad ciudad, String unidad) {
 		
 		boolean cumple = false;
-		
-		String sql = "Select count(*) from RequisitosUnidades ru inner join ciudad_edificios ce on (ru.nombreEdificio = ce.nombre and ru.nivelEdificio <= ce.nivel) inner join ciudad_tecnologias ct on (ru.nombreTecnologia = ct.nombre) "
+		String sql = "Select count(*) from RequisitosUnidades ru inner join ciudad_edificios ce on (ru.nombreEdificio = ce.nombre and ru.nivelEdificio <= ce.nivel) inner join ciudad_tecnologias ct on (ru.nombreTecnologia = ct.nombre or ru.nombreTecnologia is null) "
 				+ "where ((ce.nombreCiudad = ? and ce.usuario = ?) or (ct.nombreCiudad = ? and ct.usuario = ?)) and ru.unidad = ?";
 		Connection conn = null;
 		ResultSet rs = null;
@@ -146,8 +144,6 @@ public class JDBCUnidadDAO implements UnidadDAO{
 			
 			requisitos = new Requisitos(edificios, tecnologias);
 			
-			System.out.println("requisitos " + unidad + ": " + requisitos);
-			
 			ps.close();
  
 		} catch (SQLException e) {
@@ -172,16 +168,14 @@ public class JDBCUnidadDAO implements UnidadDAO{
 		
 		List<Unidad> listaUnidades = new ArrayList<Unidad>();
 		
-		String sql = "Select cu.unidad, cu.nombreCiudad, u.unidad as nombreUnidad, ataque, defensa, velocidad, capacidad, antena, sobres, jueces, militantes, tiempoConstruccion from Ciudad_Unidades cu right join Unidades u on u.unidad = cu.unidad where (cu.nombreCiudad = ? or cu.nombreCiudad is null) AND (cu.usuario = ? or cu.usuario is null) and (raza = ? or raza is null)";
+		String sql = "Select u.unidad as nombreUnidad, ataque, defensa, velocidad, capacidad, antena, sobres, jueces, militantes, tiempoConstruccion from Unidades u where (raza = ? or raza is null);";
 		Connection conn = null;
 		ResultSet rs = null;
 		
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, ciudad.getNombre());
-			ps.setString(2, usuario.getUsuario());
-			ps.setString(3, raza);
+			ps.setString(1, raza);
 			
 			rs = ps.executeQuery();
 
@@ -209,7 +203,6 @@ public class JDBCUnidadDAO implements UnidadDAO{
 				}
 				
 				Unidad unidad = new Unidad(rs.getString("nombreUnidad"), rs.getInt("ataque"), rs.getInt("defensa"), rs.getInt("velocidad"), rs.getInt("capacidad"), listaRecursos, tiempoConstruccion, cumpleRequisitos, requisitos);
-				System.out.println(unidad);
 				listaUnidades.add(unidad);
 			}
 			
@@ -235,8 +228,6 @@ public class JDBCUnidadDAO implements UnidadDAO{
 		String respuesta = "";
 		
 		if(recursosNecesarios(unidad, recursos)){
-			System.out.println(usuario);
-			System.out.println(ciudad);
 			
 			/*Crear un PA que lo haga en plan transaccion. Inserta en cola y actualiza los recursos*/
 			String sql = "insert into ColaConstruccionUnidades (nombreCiudad, usuario, unidad, cantidad, horaInicio) values(?, ?, ?, ?, ?)";

@@ -37,7 +37,6 @@ public class JDBCCiudadDAO implements CiudadDAO{
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
-			System.out.println("GET USUARIO: " + usuario.getUsuario());
 			ps.setString(1, usuario.getUsuario());
 			rs = ps.executeQuery();
 			
@@ -68,9 +67,6 @@ public class JDBCCiudadDAO implements CiudadDAO{
 				} catch (SQLException e) {}
 			}
 		}
-
-		System.out.println(ciudad);
-		
 		return ciudad;
 	}
 	
@@ -91,15 +87,12 @@ public class JDBCCiudadDAO implements CiudadDAO{
 			
 			while(rs.next()){
 				if(rs.getString("nombre").equals("Banco")){
-					System.out.println("banco" + rs.getInt("produccion"));
 					produccion.add(Recursos.Sobres, rs.getInt("produccion"));
 				}
 				else if(rs.getString("nombre").equals("Juzgado")){
-					System.out.println("juzgado" + rs.getInt("produccion"));
 					produccion.add(Recursos.Jueces, rs.getInt("produccion"));
 				}
 				else if(rs.getString("nombre").equals("TV")){
-					System.out.println("antena" + rs.getInt("produccion"));
 					produccion.add(Recursos.Antena, rs.getInt("produccion"));
 				}
 			}
@@ -116,9 +109,6 @@ public class JDBCCiudadDAO implements CiudadDAO{
 				} catch (SQLException e) {}
 			}
 		}
-
-		System.out.println(produccion);
-		
 		return produccion;
 	}
 	

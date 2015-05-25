@@ -24,21 +24,16 @@ import Repository.UnidadDAO;
 import Repository.UsuarioDAO;
 
 @Controller
-@SessionAttributes({"usuario", "ciudad", "edificios", "tecnologias", "raza"})
+//@SessionAttributes({"usuario", "ciudad", "edificios", "tecnologias", "raza"})
 @RequestMapping("/Ajax")
 public class AjaxControlador {
 		
 	@RequestMapping(value="/Login", method=RequestMethod.GET)
 	public @ResponseBody String processAJAXRequest(
 				@RequestParam("usuario") String name,
-				@RequestParam("password") String password, HttpSession sessionAnterior, HttpServletRequest request) {
-		
-		System.out.println(name);System.out.println(password);
+				@RequestParam("password") String password, HttpSession session, HttpServletRequest request) {
 
-		/*Deletea la session anterior y crea una nueva*/
-		/*No va*/
-		sessionAnterior.invalidate();
-		HttpSession session = request.getSession(true);
+		session.invalidate();
 		
 		String response = "false";
 		
@@ -51,6 +46,7 @@ public class AjaxControlador {
 		if(usuarioDAO.isRegistrado(usuario)){
 			response = "true";
 			usuario.setPass("");
+			session = request.getSession(true);
 			session.setAttribute("usuario", usuario);
 			session.setAttribute("raza", usuarioDAO.getRaza(usuario));
 		}

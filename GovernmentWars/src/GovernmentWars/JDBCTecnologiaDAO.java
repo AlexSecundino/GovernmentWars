@@ -43,7 +43,7 @@ public class JDBCTecnologiaDAO implements TecnologiaDAO{
 		
 		boolean cumple = false;
 		
-		String sql = "Select count(*) from RequisitosTecnologias rt inner join ciudad_edificios ce on (rt.nombreEdificio = ce.nombre and rt.nivelEdificio <= ce.nivel) inner join ciudad_tecnologias ct on (rt.nombreTecnologia = ct.nombre)"
+		String sql = "Select count(*) from RequisitosTecnologias rt inner join ciudad_edificios ce on (rt.nombreEdificio = ce.nombre and rt.nivelEdificio <= ce.nivel) inner join ciudad_tecnologias ct on (rt.nombreTecnologia = ct.nombre or rt.nombreTecnologia is null)"
 				+ " where ((ce.nombreCiudad = ? and ce.usuario = ?) or (ct.nombreCiudad = ? and ct.usuario = ?)) and rt.tecnologia = ?";
 		Connection conn = null;
 		ResultSet rs = null;
@@ -112,8 +112,6 @@ public class JDBCTecnologiaDAO implements TecnologiaDAO{
 			
 			requisitos = new Requisitos(edificios, tecnologias);
 			
-			System.out.println("requisitos " + nombreTecnologia + ": " + requisitos);
-			
 			ps.close();
  
 		} catch (SQLException e) {
@@ -136,16 +134,14 @@ public class JDBCTecnologiaDAO implements TecnologiaDAO{
 		List<Tecnologia> listaTecnologias = new ArrayList<Tecnologia>();
 		
 		/*Saca los datos de las tecnologias nombre, tiempo y recursos que costaria investigarlas y te indica las que tienes creadas*/
-		String sql = "Select ctec.nombre, ctec.nombreCiudad, tec.nombre as nombreTec, bonus, antena, sobres, jueces, tiempo from Ciudad_Tecnologias ctec right join Tecnologias tec on tec.nombre = ctec.nombre where (ctec.nombreCiudad = ? or ctec.nombreCiudad is null) AND (ctec.usuario = ? or ctec.usuario is null) and (raza = ? or raza is null)";
+		String sql = "Select ctec.nombre, ctec.nombreCiudad, tec.nombre as nombreTec, bonus, antena, sobres, jueces, tiempo from Ciudad_Tecnologias ctec right join (select * from tecnologias where raza is null or raza = ?) as tec on tec.nombre = ctec.nombre";
 		Connection conn = null;
 		ResultSet rs = null;
 		
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, ciudad.getNombre());
-			ps.setString(2, usuario.getUsuario());
-			ps.setString(3, raza);
+			ps.setString(1, raza);
 			
 			rs = ps.executeQuery();
 
@@ -165,7 +161,7 @@ public class JDBCTecnologiaDAO implements TecnologiaDAO{
 				boolean cumpleRequisitos = true;
 				Requisitos requisitos = new Requisitos();
 				
-				if(rs.getString("nombre") != null && rs.getString("nombreCiudad") != null){
+				if(rs.getString("nombre") != null && rs.getString("nombreCiudad") != null && (rs.getString("nombreCiudad").equals(ciudad.getNombre()))){
 					isInvestigada = true;
 				}
 				else{

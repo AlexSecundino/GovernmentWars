@@ -106,10 +106,12 @@ public class JDBCUsuarioDAO implements UsuarioDAO{
 			
 			if(rs.next()){
 				datosUsuario.setUsuario(rs.getString("usuario"));
-				if(rs.getString("genero").equals("H")){
-					datosUsuario.setGenero(Gender.Hombre);
-				}else if(rs.getString("genero").equals("M")){
-					datosUsuario.setGenero(Gender.Mujer);
+				if(rs.getString("genero") != null){
+					if(rs.getString("genero").equals("H")){
+						datosUsuario.setGenero(Gender.Hombre);
+					}else if(rs.getString("genero").equals("M")){
+						datosUsuario.setGenero(Gender.Mujer);
+					}
 				}
 				datosUsuario.setPais(rs.getString("pais"));
 				datosUsuario.setDescripcion(rs.getString("descripcion"));

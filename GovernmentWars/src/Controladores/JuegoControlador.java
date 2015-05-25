@@ -22,7 +22,7 @@ import Repository.UnidadDAO;
 import Repository.UsuarioDAO;
 
 @Controller
-@SessionAttributes({"usuario", "ciudad", "edificios", "tecnologias", "unidadesCiudad", "unidades", "raza"})
+//@SessionAttributes({"usuario", "ciudad", "edificios", "tecnologias", "unidadesCiudad", "unidades", "raza"})
 @RequestMapping("/Juego")
 public class JuegoControlador {
 	

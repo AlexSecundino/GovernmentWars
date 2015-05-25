@@ -78,7 +78,7 @@
                 <fieldset>
                   <label for="usr">User</label><input type="text" name="usr"/><br/>
                   <label for="pwd">Password</label><input type="text" name="pwd"/><br/>
-                  <input type="button" value="Send"><span><a href="Usuario/Registro">Aun no te has registrado?</a></span>
+                  <input type="button" value="Send"><span><a href="/GovernmentWars/Usuario/Registro">Aun no te has registrado?</a></span>
                 </fieldset>
               </form>
             </div>
