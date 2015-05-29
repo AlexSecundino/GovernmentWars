@@ -14,6 +14,10 @@ public class Tecnologia {
 	private boolean cumpleRequisitos;
 	private Requisitos requisitos;
 
+	public Tecnologia(String nombre){
+		this.nombre = nombre;
+	}
+	
 	public Tecnologia(String nombre, HashMap<Recursos, Integer> recursos, int bonus, Date tiempoConstruccion, boolean isInvestigada, boolean cumpleRequisitos, Requisitos requisitos) {
 		this.nombre = nombre;
 		this.recursos = recursos;

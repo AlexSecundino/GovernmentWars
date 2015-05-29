@@ -11,7 +11,7 @@ import Classes.Usuario;
 
 public interface UnidadDAO {
 
-	public String crearCola(Usuario usuario, Ciudad ciudad, Unidad unidad, HashMap<Recursos, Integer> recursos);
+	public boolean crearCola(Usuario usuario, Ciudad ciudad, Unidad unidad, HashMap<Recursos, Long> recursos);
 	
 	public boolean recursosNecesarios(Unidad unidad, HashMap<Recursos, Integer> recursos);
 	

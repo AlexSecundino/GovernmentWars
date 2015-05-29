@@ -17,6 +17,7 @@ import Classes.Raza;
 import Classes.Recursos;
 import Classes.Requisitos;
 import Classes.Tecnologia;
+import Classes.Unidad;
 import Classes.Usuario;
 import Repository.TecnologiaDAO;
 
@@ -29,8 +30,46 @@ public class JDBCTecnologiaDAO implements TecnologiaDAO{
 	}
 	
 	@Override
-	public boolean crearCola() {
-		return false;
+	public boolean crearCola(Usuario usuario, Ciudad ciudad, Tecnologia tecnologia, HashMap<Recursos, Long> recursos) {
+
+		boolean correcto = true;
+		
+		String sql = "call crearColaTecnologia(?, ?, ?, ?, ?, ?);";
+		Connection conn = null;
+		ResultSet rs = null;
+			
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, ciudad.getNombre());
+			ps.setString(2, usuario.getUsuario());
+			ps.setString(3, tecnologia.getNombre());
+			ps.setLong(5, recursos.get(Recursos.Sobres));
+			ps.setLong(6, recursos.get(Recursos.Antena));
+			ps.setLong(7, recursos.get(Recursos.Jueces));
+				
+			rs = ps.executeQuery();
+			
+			if(rs.getInt("correcto") >= 1){
+				correcto = true;
+			}
+			else{
+				correcto = false;
+			}
+			
+			ps.close();
+	 
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+	 
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {}
+			}
+		}
+		return correcto;
 	}
 
 	@Override
