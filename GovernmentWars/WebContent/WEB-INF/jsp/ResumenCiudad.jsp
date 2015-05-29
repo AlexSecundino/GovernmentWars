@@ -125,7 +125,14 @@
 				</div>
 			</div>
 		</div>
+		
+			<ul>Lista de colas</ul>
+	
+			<c:forEach items ="${colas}" var="cola">
+				<li>${cola.getNombre()} - ${cola.formatearTiempo(cola.getTiempoRestante())}</li>
+			</c:forEach>
 	</div>
+</div>
 </div>
 </body>
 </html>

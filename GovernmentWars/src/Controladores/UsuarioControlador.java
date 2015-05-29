@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import Classes.Ciudad;
+import Classes.ColaConstruccion;
 import Classes.Mensaje;
 import Classes.Produccion;
 import Classes.Unidad;
 import Classes.Usuario;
 import Repository.CiudadDAO;
+import Repository.ColasDAO;
 import Repository.MensajeDAO;
 import Repository.UnidadDAO;
 import Repository.UsuarioDAO;
@@ -73,10 +75,12 @@ public class UsuarioControlador {
 		CiudadDAO ciudadDAO = (CiudadDAO) context.getBean("CiudadDAO");
 		MensajeDAO mensajeDAO = (MensajeDAO) context.getBean("MensajeDAO");
 		UnidadDAO unidadDAO = (UnidadDAO) context.getBean("UnidadDAO");
+		ColasDAO colasDAO = (ColasDAO) context.getBean("ColasDAO");
 		
 		Usuario usuario = (Usuario)session.getAttribute("usuario");
 		Ciudad ciudad = ciudadDAO.getCiudad(usuario);
 		List<Unidad> unidades = unidadDAO.getUnidades(usuario, ciudad);
+		List<ColaConstruccion> colas = colasDAO.getColas(usuario, ciudad);
 		Produccion produccion = ciudadDAO.getProduccion(usuario, ciudad);
 
 		session.setAttribute("ciudad", ciudad);
@@ -95,6 +99,7 @@ public class UsuarioControlador {
 		modelo.addAttribute("ciudad", ciudad);
 		modelo.addAttribute("unidadesCiudad", unidades);
 		modelo.addAttribute("produccion", produccion);
+		modelo.addAttribute("colas", colas);
 		
 		return "ResumenCiudad";
 	}
