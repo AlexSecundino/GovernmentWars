@@ -29,6 +29,11 @@ public class Edificio {
 		this.tiempoConstruccion = tiempoConstruccion;
 	}
 	
+	public Edificio(String nombre, int nivel) {
+		this.nombre = nombre;
+		this.nivel = nivel;
+	}
+	
 	public String getNombre() {
 		return nombre;
 	}

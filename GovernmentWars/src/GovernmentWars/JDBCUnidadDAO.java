@@ -223,50 +223,48 @@ public class JDBCUnidadDAO implements UnidadDAO{
 	}
 
 	@Override
-	public String crearCola(Usuario usuario, Ciudad ciudad, Unidad unidad, HashMap<Recursos, Integer> recursos) {
+	public boolean crearCola(Usuario usuario, Ciudad ciudad, Unidad unidad, HashMap<Recursos, Long> recursos) {
 		
-		String respuesta = "";
+		boolean correcto = false;
 		
-		if(recursosNecesarios(unidad, recursos)){
+		String sql = "call crearColaUnidad(?, ?, ?, ?, ?, ?, ?);";
+		Connection conn = null;
+		ResultSet rs = null;
 			
-			/*Crear un PA que lo haga en plan transaccion. Inserta en cola y actualiza los recursos*/
-			String sql = "insert into ColaConstruccionUnidades (nombreCiudad, usuario, unidad, cantidad, horaInicio) values(?, ?, ?, ?, ?)";
-			Connection conn = null;
-			ResultSet rs = null;
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, ciudad.getNombre());
+			ps.setString(2, usuario.getUsuario());
+			ps.setString(3, unidad.getNombre());
+			ps.setInt(4, unidad.getCantidad());
+			ps.setLong(5, recursos.get(Recursos.Sobres));
+			ps.setLong(6, recursos.get(Recursos.Antena));
+			ps.setLong(7, recursos.get(Recursos.Jueces));
+				
+			rs = ps.executeQuery();
 			
-			try {
-				conn = dataSource.getConnection();
-				PreparedStatement ps = conn.prepareStatement(sql);
-				ps.setString(1, ciudad.getNombre());
-				ps.setString(2, usuario.getUsuario());
-				ps.setString(3, unidad.getNombre());
-				ps.setInt(4, unidad.getCantidad());
-				
-				Date fecha = new Date();
-				
-				ps.setDate(5, new java.sql.Date(fecha.getTime()));
-				
-				if(ps.executeUpdate() == 1){
-					respuesta = "true";
-				}
-				
-				ps.close();
+			if(rs.getInt("correcto") >= 1){
+				correcto = true;
+			}
+			else{
+				correcto = false;
+			}
+			
+			ps.close();
 	 
-			} catch (SQLException e) {
-				throw new RuntimeException(e);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
 	 
-			} finally {
-				if (conn != null) {
-					try {
-						conn.close();
-					} catch (SQLException e) {}
-				}
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {}
 			}
 		}
-		else{
-			respuesta = "Recursos insuficientes";
-		}
-		return respuesta;
+		
+		return correcto;
 	}
 
 	@Override

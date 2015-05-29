@@ -1,23 +1,17 @@
 package Controladores;
 
-import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.ws.Response;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionAttributeStore;
-import org.springframework.web.bind.support.SessionStatus;
 
 import Classes.Ciudad;
 import Classes.Mensaje;
@@ -126,12 +120,10 @@ public class UsuarioControlador {
 	}
 	
 	@RequestMapping("/Logout")
-	public String Logout(Model modelo, HttpSession session, HttpServletRequest request, HttpServletResponse response) {
+	public String Logout(Model modelo, HttpSession session, HttpServletRequest request) {
 		
 		session.invalidate();
 		session = request.getSession(true);
-		
-		System.out.println("usuario despues de logout: " + session.getAttribute("usuario"));
 
 		return "index";
 	}
