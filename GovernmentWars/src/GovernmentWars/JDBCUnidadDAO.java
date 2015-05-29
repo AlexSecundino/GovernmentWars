@@ -244,8 +244,13 @@ public class JDBCUnidadDAO implements UnidadDAO{
 				
 			rs = ps.executeQuery();
 			
-			if(rs.getInt("correcto") >= 1){
-				correcto = true;
+			if(rs.next()){
+				if(rs.getInt("correcto") >= 1){
+					correcto = true;
+				}
+				else{
+					correcto = false;
+				}
 			}
 			else{
 				correcto = false;
