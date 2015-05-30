@@ -89,4 +89,48 @@ public class JDBCColasDAO implements ColasDAO{
 		
 		return colas;
 	}
+	
+	public boolean implementarColas(Usuario usuario, Ciudad ciudad){
+		
+		boolean correcto = true;
+		
+		String sql = "call actualizarJuego(?, ?);";
+		Connection conn = null;
+		ResultSet rs = null;
+			
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, ciudad.getNombre());
+			ps.setString(2, usuario.getUsuario());
+				
+			rs = ps.executeQuery();
+			
+			if(rs.next()){
+				if(rs.getInt("correcto") >= 1){
+					correcto = true;
+				}
+				else{
+					correcto = false;
+				}
+			}
+			else{
+				correcto = false;
+			}
+			
+			ps.close();
+	 
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+	 
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {}
+			}
+		}
+		
+		return correcto;
+	}
 }
