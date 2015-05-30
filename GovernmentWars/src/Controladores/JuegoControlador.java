@@ -40,9 +40,11 @@ public class JuegoControlador {
 		UsuarioDAO usuarioDAO = (UsuarioDAO) context.getBean("UsuarioDAO");
 		
 		List<Edificio> listaEdificios = edificioDAO.getEdificios((Usuario)session.getAttribute("usuario"), (Ciudad)session.getAttribute("ciudad"));
+		
 		Usuario usuario = (Usuario)session.getAttribute("usuario");
 		
 		session.setAttribute("edificios", listaEdificios);
+		
 		modelo.addAttribute("edificios", listaEdificios);
 		modelo.addAttribute("usuario", usuario);
 		

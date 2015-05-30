@@ -107,7 +107,9 @@ public class JDBCEdificioDAO implements EdificioDAO{
 		List<Edificio> listaEdificios = new ArrayList<Edificio>();
 		
 		/*Saca los datos del edificio (nombr y nivel actual) y el tiempo y recursos que costaria aumentarlo al siguiente nivel*/
-		String sql = "Select ce.nombre, ce.nivel, bonus, tiempoConstruccion, antena, sobres, jueces from Ciudad_Edificios ce left join Edificios e on ce.nombre = e.nombre and e.nivel = ce.nivel + 1 where nombreCiudad = ? AND usuario = ?";
+		String sql = "Select ce.nombre, ce.nivel, tiempoConstruccion, antena, sobres, jueces from Ciudad_Edificios ce left join Edificios e on ce.nombre = e.nombre and e.nivel = ce.nivel + 1 where nombreCiudad = ? AND usuario = ?"
+				+ " union "
+				+ "Select cr.nombre, cr.nivel, tiempoConstruccion, antena, sobres, jueces from Ciudad_Recursos cr inner join Recursos r on cr.nombre = r.nombre and r.nivel = cr.nivel + 1 where nombreCiudad = ? AND usuario = ?";
 		Connection conn = null;
 		ResultSet rs = null;
 		
@@ -116,6 +118,8 @@ public class JDBCEdificioDAO implements EdificioDAO{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, ciudad.getNombre());
 			ps.setString(2, usuario.getUsuario());
+			ps.setString(3, ciudad.getNombre());
+			ps.setString(4, usuario.getUsuario());
 			
 			rs = ps.executeQuery();
 			
@@ -149,5 +153,4 @@ public class JDBCEdificioDAO implements EdificioDAO{
 		
 		return listaEdificios;
 	}
-
 }

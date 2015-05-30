@@ -9,4 +9,6 @@ import Classes.Usuario;
 public interface ColasDAO {
 
 	public List<ColaConstruccion> getColas(Usuario usuario, Ciudad ciudad);
+	
+	public boolean implementarColas(Usuario usuario, Ciudad ciudad);
 }

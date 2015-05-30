@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,7 +65,7 @@ public class UsuarioControlador {
 	}
 	
 	@RequestMapping("/Index")
-	public String Bienvenido(Model modelo, HttpSession session) {
+	public String Bienvenido(Model modelo, HttpSession session, HttpServletRequest request) {
 		
 		if(session.getAttribute("usuario") == null){
 			return "index";
@@ -79,6 +80,12 @@ public class UsuarioControlador {
 		
 		Usuario usuario = (Usuario)session.getAttribute("usuario");
 		Ciudad ciudad = ciudadDAO.getCiudad(usuario);
+		
+		/*Actualizar ciudad*/
+		if(colasDAO.implementarColas(usuario, ciudad)){
+			System.out.println("actualizacion correcta");
+		}
+		
 		List<Unidad> unidades = unidadDAO.getUnidades(usuario, ciudad);
 		List<ColaConstruccion> colas = colasDAO.getColas(usuario, ciudad);
 		Produccion produccion = ciudadDAO.getProduccion(usuario, ciudad);
