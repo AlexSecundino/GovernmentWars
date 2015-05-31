@@ -50,6 +50,25 @@ public class Edificio {
 		this.nivel = nivel;
 	}
 	
+	public int getRecurso(String recurso) {
+		  
+		  int rec = 0;
+		  
+		  switch(recurso){
+		   case "Sobres":
+		    rec = recursos.get(Recursos.Sobres);
+		    break;
+		   case "Antena":
+		    rec = recursos.get(Recursos.Antena);
+		    break;
+		   case "Jueces":
+		    rec = recursos.get(Recursos.Jueces);
+		    break;
+		  
+		  }
+		  return rec; 
+		 }	
+	
 	public HashMap<Recursos, Integer> getRecursos() {
 		return recursos;
 	}

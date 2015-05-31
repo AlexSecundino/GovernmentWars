@@ -25,20 +25,21 @@
 	    <div class="row">
 	    		<div class="col-md-6">
 	    			<div class="recurses">
-		    			<c:forEach items="${tecnologia.getRecursos()}" var="recurso">
-							<span class="rcr"><i class="fa fa-diamond"></i><span>${recurso.value}</span></span>
-						</c:forEach>
+						<span class="rcr"><i class="fa fa-diamond"></i><span>${tecnologia.getRecurso('Sobres')}</span></span>
+						<span class="rcr"><i class="fa fa-diamond"></i><span>${tecnologia.getRecurso('Antena')}</span></span>
+						<span class="rcr"><i class="fa fa-diamond"></i><span>${tecnologia.getRecurso('Jueces')}</span></span>
 					</div>
 				</div>
 				<div class="col-md-6">
 					<c:if test="${tecnologia.getCumpleRequisitos() == false}">
-             			<p>${tecnologia.getRequisitos()}</p>
-             			<a href="javascript:void(0)" class="btn btn-primary btn-lg sbm dsb" id="${edificio.getNombre()}&${edificio.getNivel()}">No cumples los requisitos</a>
+             			<a href="javascript:void(0)" class="btn btn-primary btn-lg sbm dsb" id="${tecnologia.getNombre()}" title="${tecnologia.getRequisitos()}">No cumples los requisitos</a>
              		</c:if>
              		<c:if test="${tecnologia.getCumpleRequisitos() == true}">
-             			<a href="javascript:void(0)" class="btn btn-primary btn-lg sbm" id="${edificio.getNombre()}&${edificio.getNivel()}">Investigar</a>
+             			<a href="javascript:void(0)" class="btn btn-primary btn-lg sbm" id="${tecnologia.getNombre()}}">Investigar</a>
              		</c:if>
-					
+					<c:if test="${tecnologia.isInvestigada() == true}">
+             			<a href="javascript:void(0)" class="btn btn-primary btn-lg sbm dsb" id="${tecnologia.getNombre()}}">Ya se ha investigado</a>
+             		</c:if>
 				</div>
 	   	</div>
 	   	<div style="clear:both"></div>

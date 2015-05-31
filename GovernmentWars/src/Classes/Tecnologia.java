@@ -79,6 +79,25 @@ public class Tecnologia {
 	public Requisitos getRequisitos() {
 		return requisitos;
 	}
+	
+	public int getRecurso(String recurso) {
+		  
+		  int rec = 0;
+		  
+		  switch(recurso){
+		   case "Sobres":
+		    rec = recursos.get(Recursos.Sobres);
+		    break;
+		   case "Antena":
+		    rec = recursos.get(Recursos.Antena);
+		    break;
+		   case "Jueces":
+		    rec = recursos.get(Recursos.Jueces);
+		    break;
+		  
+		  }
+		  return rec; 
+		 }	
 
 	public void setRequisitos(Requisitos requisitos) {
 		this.requisitos = requisitos;
