@@ -1,5 +1,7 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,11 +17,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   	<script>
   		$(document).ready(function() {
-  			if (sessionStorage.msg == 1)
-  				$('.msg').css("color","green");
-  			else
-  				$('.msg').css("color","#777");
-  			
   			if (typeof sm == 'undefined') {
   				var sm = 0;
   			}
@@ -113,3 +110,29 @@
    				</div>
    				<div class="col-md-9 nopad">
    					<div class="container">
+   						<div class="row">
+   							<div class="itm first-1">
+   								<div class="ccdd">
+   									<h1>Vision general</h1>
+   									<img src="<c:url value='/resources/img/edif.jpg'/>" alt="">
+   								</div>
+								<div class="ccdd2">
+									<p>asd</p>
+									<a href="" class="btn btn-primary btn-lg">Subir nivel</a>
+								</div>
+							</div>
+   						</div>
+				</div>
+			</div>
+		</div>
+		
+			<ul>Lista de colas</ul>
+	
+			<c:forEach items ="${colas}" var="cola">
+				<li>${cola.getNombre()} - ${cola.formatearTiempo(cola.getTiempoRestante())}</li>
+			</c:forEach>
+	</div>
+</div>
+</div>
+</body>
+</html>

@@ -181,7 +181,7 @@ public class JDBCColasDAO implements ColasDAO{
 			ps.close();
 	 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			correcto = false;
 	 
 		} finally {
 			if (conn != null) {

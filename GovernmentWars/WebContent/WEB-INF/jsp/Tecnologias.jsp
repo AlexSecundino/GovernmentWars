@@ -5,29 +5,43 @@
 <c:forEach items ="${tecnologias}" var="tecnologia">
 <div class="row">
 	<div class="itm first-1">
-		<div class="ccdd">
-			<h1>${tecnologia.getNombre()}</h1>
-			<img src="<c:url value='/resources/img/edif.jpg'/>" alt="">     
-	    </div> 
-	    <div class="ccdd2">
-	    	<c:forEach items="${tecnologia.getRecursos()}" var="recurso">	
-				<p>${recurso.value}</p>
-			</c:forEach>
-			
-			<c:if test="${tecnologia.isInvestigada() == true}">
-             	<p>Ya se ha investigado</p>
-             </c:if>
-             <c:if test="${tecnologia.isInvestigada() == false}">
-             	<c:if test="${tecnologia.getCumpleRequisitos() == false}">
-             		<p>${tecnologia.getRequisitos()}</p>
-             	</c:if>
-             	<c:if test="${tecnologia.getCumpleRequisitos() == true}">
-             		<a href="" class="btn btn-primary btn-lg">Investigar</a>
-             	</c:if>
-             </c:if>
-			
-		
+		<div class="row">
+	    		<div class="col-md-6">
+					<div class="ccdd">
+						<h1>${tecnologia.getNombre()}</h1>
+						<img src="<c:url value='/resources/img/edif.jpg'/>" alt="">     
+				    </div>
+				</div> 
+	    		<div class="col-md-6">
+	    			<div class="ccdd2">
+	    				<p>Como la madriguera para los conejos, el nido para los pájaros y la caja de cartón para los
+							gusanos de seda, la sede lo es para los políticos. Es el centro neurológico de tu partido. Allí se 
+							toman todas las órdenes que le llevarán al Gobierno o le sumirán en el más profundo de los 
+							olvidos. Es el edificio más importante ya que desde allí conseguirás los militantes necesarios 
+							para conseguir un ejecito de políticos que haga templar a tus enemigos.</p>
+	    			</div>
+	    		</div>
+	    </div>
+	    <div class="row">
+	    		<div class="col-md-6">
+	    			<div class="recurses">
+		    			<c:forEach items="${tecnologia.getRecursos()}" var="recurso">
+							<span class="rcr"><i class="fa fa-diamond"></i><span>${recurso.value}</span></span>
+						</c:forEach>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<c:if test="${tecnologia.getCumpleRequisitos() == false}">
+             			<p>${tecnologia.getRequisitos()}</p>
+             			<a href="javascript:void(0)" class="btn btn-primary btn-lg sbm dsb" id="${edificio.getNombre()}&${edificio.getNivel()}">No cumples los requisitos</a>
+             		</c:if>
+             		<c:if test="${tecnologia.getCumpleRequisitos() == true}">
+             			<a href="javascript:void(0)" class="btn btn-primary btn-lg sbm" id="${edificio.getNombre()}&${edificio.getNivel()}">Investigar</a>
+             		</c:if>
+					
+				</div>
 	   	</div>
+	   	<div style="clear:both"></div>
 	</div>
 </div>
 </c:forEach>
@@ -37,33 +51,13 @@
 </div>
 </div>
 
-
+<script>
+	
+</script>
 <!-- 
 
-<c:forEach items ="${tecnologias}" var="tecnologia">
-	          <tr id="${tecnologia.getNombre()}">
-	             <td>${tecnologia.getNombre()}</td>
-	             
-	             <c:forEach items="${tecnologia.getRecursos()}" var="recurso">
-    					<td>${recurso.value}</td>
-				 </c:forEach>
-	             
-	             <td>${tecnologia.formatearTiempo(tecnologia.getTiempoConstruccion())}</td>
-	             
-	             <td>
-	             	<c:if test="${tecnologia.isInvestigada() == true}">
-             			Ya se ha investigado
-             		</c:if>
-             		<c:if test="${tecnologia.isInvestigada() == false}">
-             			<c:if test="${tecnologia.getCumpleRequisitos() == false}">
-             				${tecnologia.getRequisitos()}
-             			</c:if>
-             			<c:if test="${tecnologia.getCumpleRequisitos() == true}">
-             				<a href="">Investigar</a>
-             			</c:if>
-             		</c:if>
-	             </td>
-	          </tr>
-</c:forEach>
 
+			<c:if test="${tecnologia.isInvestigada() == true}">
+             	<p>Ya se ha investigado</p>
+             </c:if>
  -->

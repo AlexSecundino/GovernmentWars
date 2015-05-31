@@ -104,7 +104,7 @@
               <p>Gestiona tu propio partido político, tomando las decisiones que lo llevarán a la cumbre o a las más inmuda de las ignominias.</p>
             </div>
             <div class="col-md-3 pl-20">
-              <a href="/Usuario/Registro" class="btn btn-primary btn-lg">Registrate ya</a>
+              <a href="/GovernmentWars/Usuario/Registro" class="btn btn-primary btn-lg">Registrate ya</a>
             </div>
           </div>
         </div>
