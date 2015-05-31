@@ -114,7 +114,6 @@ public class JDBCCiudadDAO implements CiudadDAO{
 	
 	@Override
 	public boolean cambiarNombre(String antiguoNombre, String nombre, Usuario usuario) {
-
 		boolean correcto = false;
 
 		String sql = "update ciudad set nombreCiudad = ? where nombreCiudad = ? AND usuario = ?";
