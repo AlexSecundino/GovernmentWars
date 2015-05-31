@@ -33,7 +33,9 @@ public class JuegoControlador {
 		if(session.getAttribute("usuario") == null){
 			return "index";
 		}
-		
+		else if((boolean)session.getAttribute("isAdmin")){
+			return "Admin";
+		}
 		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 		
 		EdificioDAO edificioDAO = (EdificioDAO) context.getBean("EdificioDAO");
@@ -57,6 +59,9 @@ public class JuegoControlador {
 		if(session.getAttribute("usuario") == null){
 			return "index";
 		}
+		else if((boolean)session.getAttribute("isAdmin")){
+			return "Admin";
+		}
 		
 		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 		
@@ -78,6 +83,9 @@ public class JuegoControlador {
 		if(session.getAttribute("usuario") == null){
 			return "index";
 		}
+		else if((boolean)session.getAttribute("isAdmin")){
+			return "Admin";
+		}
 		
 		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 		
@@ -91,6 +99,27 @@ public class JuegoControlador {
 		
 		return "Unidades";
 		//return "Copy of Unidades";
+	}
+	
+	@RequestMapping("/Mapa")
+	public String Mapa(Model modelo, HttpSession session) {
+		
+		if(session.getAttribute("usuario") == null){
+			return "index";
+		}
+		else if((boolean)session.getAttribute("isAdmin")){
+			return "Admin";
+		}
+		
+		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
+		
+		UsuarioDAO usuarioDAO = (UsuarioDAO) context.getBean("UsuarioDAO");
+		
+		List<Usuario> listaUsuarios = usuarioDAO.getCiudadesAtacar();
+
+		modelo.addAttribute("listaUsuarios", listaUsuarios);
+		
+		return "Mapa";
 	}
 	
 	

@@ -70,6 +70,9 @@ public class UsuarioControlador {
 		if(session.getAttribute("usuario") == null){
 			return "index";
 		}
+		else if((boolean)session.getAttribute("isAdmin")){
+			return "redirect:/Admin/Usuarios";
+		}
 		
 		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 		
@@ -117,11 +120,14 @@ public class UsuarioControlador {
 		if(session.getAttribute("usuario") == null){
 			return "index";
 		}
+		else if((boolean)session.getAttribute("isAdmin")){
+			return "Admin";
+		}
 		
 		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 		
 		UsuarioDAO usuarioDAO = (UsuarioDAO) context.getBean("UsuarioDAO");
-			
+		
 		Usuario usuario = (Usuario)session.getAttribute("usuario");
 
 		Usuario datosUsuario = usuarioDAO.getUsuario(usuario);
@@ -157,6 +163,12 @@ public class UsuarioControlador {
 
 		modelo.addAttribute("listaMensajes", listaMensajes);
 		
-		return "Mensajes";
+
+		if((boolean)session.getAttribute("isAdmin")){
+			return "MensajesAdmin";
+		}
+		else{
+			return "Mensajes";
+		}
 	}
 }

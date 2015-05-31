@@ -8,7 +8,10 @@ public class Usuario {
 	//private String email;	
 	private String descripcion;
 	private String pais;
+	private Coordenadas coordenadas;
 	private Raza faccion;
+	private boolean bloqueado;
+	private String nCiudad;
 	
 	public Usuario() {
 		super();
@@ -16,6 +19,18 @@ public class Usuario {
 
 	public Usuario(String usuario) {
 		this.usuario = usuario;
+	}
+	
+	public Usuario(String usuario, Raza faccion, boolean bloqueado) {
+		this.usuario = usuario;
+		this.faccion = faccion;
+		this.bloqueado = bloqueado;
+	}
+	
+	public Usuario(String usuario, Coordenadas coordenadas, String nCiudad) {
+		this.usuario = usuario;
+		this.coordenadas = coordenadas;
+		this.nCiudad = nCiudad;
 	}
 	
 	public Usuario(String usuario, String pass) {
@@ -97,6 +112,29 @@ public class Usuario {
 				this.faccion = Raza.Liberal;
 				break;
 		}	
+	}
+	
+	public boolean getBloqueado() {
+		return bloqueado;
+	}
+
+	public void setBloqueado(boolean bloqueado) {
+		this.bloqueado = bloqueado;
+	}
+	public Coordenadas getCoordenadas() {
+		return coordenadas;
+	}
+
+	public void setCoordenadas(Coordenadas coordenadas) {
+		this.coordenadas = coordenadas;
+	}
+
+	public String getnCiudad() {
+		return nCiudad;
+	}
+
+	public void setnCiudad(String nCiudad) {
+		this.nCiudad = nCiudad;
 	}
 
 	@Override
