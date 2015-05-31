@@ -182,8 +182,8 @@ public class JDBCUnidadDAO implements UnidadDAO{
 			while(rs.next()){
 				
 				HashMap<Recursos,Integer> listaRecursos = new HashMap<Recursos,Integer>();
-				listaRecursos.put(Recursos.Antena, rs.getInt("antena"));
 				listaRecursos.put(Recursos.Sobres, rs.getInt("sobres"));
+				listaRecursos.put(Recursos.Antena, rs.getInt("antena"));
 				listaRecursos.put(Recursos.Jueces, rs.getInt("jueces"));
 				listaRecursos.put(Recursos.Militantes, rs.getInt("militantes"));
 				

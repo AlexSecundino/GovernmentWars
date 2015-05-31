@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -124,9 +125,12 @@ public class JDBCEdificioDAO implements EdificioDAO{
 			rs = ps.executeQuery();
 			
 			while(rs.next()){
+				
+				LinkedHashMap<Recursos, Integer> map = new LinkedHashMap<Recursos, Integer>();
+				
 				HashMap<Recursos,Integer> listaRecursos = new HashMap<Recursos,Integer>();
-				listaRecursos.put(Recursos.Antena, rs.getInt("antena"));
 				listaRecursos.put(Recursos.Sobres, rs.getInt("sobres"));
+				listaRecursos.put(Recursos.Antena, rs.getInt("antena"));
 				listaRecursos.put(Recursos.Jueces, rs.getInt("jueces"));
 				
 				/*Las fechas necesitan milisegundos*/
