@@ -46,9 +46,17 @@ public class AjaxControlador {
 		Usuario usuario = new Usuario(name, password);
 		
 		if(usuarioDAO.isRegistrado(usuario)){
+			
 			response = "true";
 			usuario.setPass("");
 			session = request.getSession(true);
+			
+			if(usuarioDAO.isAdmin(usuario)){
+				session.setAttribute("isAdmin", true);
+			}
+			else{
+				session.setAttribute("isAdmin", false);
+			}
 			session.setAttribute("usuario", usuario);
 			session.setAttribute("raza", usuarioDAO.getRaza(usuario));
 		}
