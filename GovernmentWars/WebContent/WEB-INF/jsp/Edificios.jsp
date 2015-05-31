@@ -13,13 +13,15 @@
 	    	<table>
 	    	<tr>
 	    		<td>Sobres</td>
-	    		<td>Jueces</td>
 	    		<td>Antena</td>
+	    		<td>Jueces</td>
 	    	</tr>
 	    	<tr>
-	    	<c:forEach items="${edificio.getRecursos()}" var="recurso">	
-				<td>${recurso.value}</td>
-			</c:forEach>
+	    	
+	    	<td>${edificio.getRecurso('Sobres')}</td>
+	    	<td>${edificio.getRecurso('Antena')}</td>
+	    	<td>${edificio.getRecurso('Jueces')}</td>
+			
 			</tr>
 			</table>
 			<a href="" class="btn btn-primary btn-lg">Subir nivel</a>

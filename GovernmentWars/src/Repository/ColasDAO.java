@@ -11,4 +11,6 @@ public interface ColasDAO {
 	public List<ColaConstruccion> getColas(Usuario usuario, Ciudad ciudad);
 	
 	public boolean implementarColas(Usuario usuario, Ciudad ciudad);
+	
+	public boolean crearColaAtaque(Usuario usuario, Ciudad ciudad, Usuario usuarioDefensor, Ciudad ciudadDefensor);
 }

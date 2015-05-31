@@ -26,11 +26,20 @@
 				<td>${usuario.getUsuario()}</td>
 				<td>${usuario.getFaccion()}</td>
 				<td>${usuario.getCoordenadas()}</td>
-				<td><a href="">Atacar</a></td>
+				<!-- AJAX???? -->
+				<td><a href="/GovernmentWars/Juego/Atacar?usuario=${usuario.getUsuario()}&ciudad=${usuario.getnCiudad()}">Atacar</a></td>
 			</tr>
 	    	
 		</c:forEach>
 	</table>
+	
+	
+	<c:if test="${atacar == true}">
+		<p>Se ha enviado el ataque</p>
+	</c:if>
+	<c:if test="${atacar == false}">
+		<p>Fallo al atacar</p>
+	</c:if>
 
 </body>
 </html>

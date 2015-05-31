@@ -6,12 +6,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.sql.DataSource;
 
 import Classes.Ciudad;
 import Classes.ColaConstruccion;
+import Classes.Edificio;
 import Classes.Recursos;
 import Classes.Usuario;
 import Classes.Utils;
@@ -121,7 +123,7 @@ public class JDBCColasDAO implements ColasDAO{
 			ps.close();
 	 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			correcto = false;
 	 
 		} finally {
 			if (conn != null) {
@@ -131,6 +133,63 @@ public class JDBCColasDAO implements ColasDAO{
 			}
 		}
 		
+		return correcto;
+	}
+	
+
+	@Override
+	public boolean crearColaAtaque(Usuario usuario, Ciudad ciudad, Usuario usuarioDefensor, Ciudad ciudadDefensor) {
+		
+		boolean correcto = true;
+		
+		if(usuario.getUsuario().equals(usuarioDefensor.getUsuario())){
+			return false;
+		}
+		
+		String sql = "call crearColaAtaque(?, ?, ?, ?, ?, ?);";
+		Connection conn = null;
+		ResultSet rs = null;
+			
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, ciudad.getNombre());
+			ps.setString(2, ciudadDefensor.getNombre());
+			ps.setString(3, usuario.getUsuario());
+			ps.setString(4, usuarioDefensor.getUsuario());
+			
+			String coords = ciudad.getCoordenadas();
+			String coordsXY[] = coords.split(":");
+			
+			ps.setInt(5, Integer.valueOf(coordsXY[0]));
+			ps.setInt(6, Integer.valueOf(coordsXY[1]));
+				
+			rs = ps.executeQuery();
+			
+			if(rs.next()){
+				if(rs.getInt("correcto") >= 1){
+					correcto = true;
+				}
+				else{
+					correcto = false;
+				}
+			}
+			else{
+				correcto = false;
+			}
+			
+			ps.close();
+	 
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+	 
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {}
+			}
+		}
 		return correcto;
 	}
 }

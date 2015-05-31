@@ -9,6 +9,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import Classes.Ciudad;
@@ -16,6 +17,7 @@ import Classes.Edificio;
 import Classes.Tecnologia;
 import Classes.Unidad;
 import Classes.Usuario;
+import Repository.ColasDAO;
 import Repository.EdificioDAO;
 import Repository.TecnologiaDAO;
 import Repository.UnidadDAO;
@@ -122,5 +124,36 @@ public class JuegoControlador {
 		return "Mapa";
 	}
 	
+	@RequestMapping("/Atacar")
+	public String Atacar(Model modelo, HttpSession session
+			, @RequestParam("usuario") String usuarioDefensor
+			, @RequestParam("ciudad") String ciudadDefensor) {
+		
+		if(session.getAttribute("usuario") == null){
+			return "index";
+		}
+		else if((boolean)session.getAttribute("isAdmin")){
+			return "Admin";
+		}
+		
+		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
+		
+		ColasDAO colasDAO = (ColasDAO) context.getBean("ColasDAO");
+		
+		Usuario defensor = new Usuario(usuarioDefensor);
+		Ciudad cDefensor = new Ciudad(ciudadDefensor);
+		
+		boolean correcto = colasDAO.crearColaAtaque((Usuario)session.getAttribute("usuario"), (Ciudad)session.getAttribute("ciudad"), defensor, cDefensor);
+				
+		UsuarioDAO usuarioDAO = (UsuarioDAO) context.getBean("UsuarioDAO");
+		
+		List<Usuario> listaUsuarios = usuarioDAO.getCiudadesAtacar();
+
+		modelo.addAttribute("listaUsuarios", listaUsuarios);
+		
+		modelo.addAttribute("atacar", correcto);
+		
+		return "Mapa";
+	}
 	
 }
