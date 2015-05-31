@@ -93,6 +93,28 @@ public class Unidad {
 		this.capacidad = capacidad;
 	}
 
+	public int getRecurso(String recurso) {
+		
+		int rec = 0;
+		
+		switch(recurso){
+			case "Sobres":
+				rec = recursos.get(Recursos.Sobres);
+				break;
+			case "Antena":
+				rec = recursos.get(Recursos.Antena);
+				break;
+			case "Jueces":
+				rec = recursos.get(Recursos.Jueces);
+				break;
+			case "Militantes":
+				rec = recursos.get(Recursos.Militantes);
+				break;
+		
+		}
+		return rec; 
+	}
+	
 	public HashMap<Recursos, Integer> getRecursos() {
 		return recursos;
 	}
