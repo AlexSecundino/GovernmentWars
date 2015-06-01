@@ -35,10 +35,12 @@
              			<a href="javascript:void(0)" class="btn btn-primary btn-lg sbm dsb" id="${tecnologia.getNombre()}" title="${tecnologia.getRequisitos()}">No cumples los requisitos</a>
              		</c:if>
              		<c:if test="${tecnologia.getCumpleRequisitos() == true}">
-             			<a href="javascript:void(0)" class="btn btn-primary btn-lg sbm" id="${tecnologia.getNombre()}}">Investigar</a>
-             		</c:if>
-					<c:if test="${tecnologia.isInvestigada() == true}">
-             			<a href="javascript:void(0)" class="btn btn-primary btn-lg sbm dsb" id="${tecnologia.getNombre()}}">Ya se ha investigado</a>
+	             		<c:if test="${tecnologia.isInvestigada() == true}">
+	             			<a href="javascript:void(0)" class="btn btn-primary btn-lg sbm dsb" id="${tecnologia.getNombre()}}">Ya se ha investigado</a>
+	             		</c:if>
+	             		<c:if test="${tecnologia.isInvestigada() == false}">
+	             				<a href="javascript:void(0)" class="btn btn-primary btn-lg sbm" id="${tecnologia.getNombre()}}">Investigar</a>
+	             		</c:if>
              		</c:if>
 				</div>
 	   	</div>

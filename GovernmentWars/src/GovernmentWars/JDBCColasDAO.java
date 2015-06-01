@@ -14,6 +14,7 @@ import javax.sql.DataSource;
 import Classes.Ciudad;
 import Classes.ColaConstruccion;
 import Classes.Edificio;
+import Classes.LogAtaques;
 import Classes.Recursos;
 import Classes.Usuario;
 import Classes.Utils;
@@ -191,5 +192,88 @@ public class JDBCColasDAO implements ColasDAO{
 			}
 		}
 		return correcto;
+	}
+	
+	@Override
+	public boolean comprobarNuevoLogAtaque(Usuario usuario) {
+		
+		boolean nuevoLogAtaque = false;
+		
+		String sql = "Select count(*) from LogAtaque where (usuarioAtacante = ? or usuarioDefensor = ?) AND leido = ?";
+		Connection conn = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, usuario.getUsuario());
+			ps.setString(2, usuario.getUsuario());
+			ps.setBoolean(3, false);
+			rs = ps.executeQuery();
+			
+			if(rs.next()){
+				if(rs.getInt(1) >= 1){
+					nuevoLogAtaque = true;
+				}
+			}
+			
+			ps.close();
+ 
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+ 
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {}
+			}
+		}
+		return nuevoLogAtaque;
+	}
+
+	public List<LogAtaques> getLogsAtaques(Usuario usuario){
+		
+		List<LogAtaques> logsAtaques = new ArrayList<LogAtaques>();
+		
+		String sql = "Select nombreCiudadAtacante, usuarioAtacante, nombreCiudadDefensor, usuarioDefensor, nTropasVivasAtacante, nPerdidasAtacante, nTropasVivasDefensor, nTropasPerdidasDefensor, botin, leido, fechaAtaque from LogAtaque where (usuarioAtacante = ? or usuarioDefensor = ?)";
+		
+		Connection conn = null;
+		ResultSet rs = null;
+			
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, usuario.getUsuario());
+			ps.setString(2, usuario.getUsuario());
+				
+			rs = ps.executeQuery();
+			
+			while(rs.next()){
+				
+				HashMap<Recursos, Integer> botin = new HashMap<Recursos, Integer>();
+				String b = rs.getString("botin");
+				String[] rec = b.split(":");
+				botin.put(Recursos.Sobres, Integer.valueOf(rec[0]));
+				botin.put(Recursos.Antena, Integer.valueOf(rec[1]));
+				botin.put(Recursos.Jueces, Integer.valueOf(rec[2]));
+				LogAtaques log = new LogAtaques(new Usuario(rs.getString(1)), rs.getString(2), new Usuario(rs.getString(3)), rs.getString(4), rs.getInt(5), rs.getInt(6), rs.getInt(7), rs.getInt(8), botin, rs.getDate(11), rs.getBoolean(10));
+				logsAtaques.add(log);
+			}
+			
+			ps.close();
+	 
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+	 
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {}
+			}
+		}
+		
+		return logsAtaques;
 	}
 }

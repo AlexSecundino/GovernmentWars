@@ -104,7 +104,10 @@ public class UsuarioControlador {
 		
 		
 		boolean nuevoMensaje = mensajeDAO.comprobarNuevoMensaje(usuario);
+		
+		boolean nuevoLogAtaque = colasDAO.comprobarNuevoLogAtaque(usuario);
 
+		modelo.addAttribute("nuevoLogAtaque", nuevoLogAtaque);
 		modelo.addAttribute("nuevoMensaje", nuevoMensaje);
 		modelo.addAttribute("ciudad", ciudad);
 		modelo.addAttribute("unidadesCiudad", unidades);
