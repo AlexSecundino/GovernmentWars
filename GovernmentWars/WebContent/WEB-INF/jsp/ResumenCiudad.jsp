@@ -37,6 +37,9 @@
 	$('.msg').css("color","green");
 	sessionStorage.msg = 1;
 </c:if>
+<c:if test="${nuevoLogAtaque == true}">
+	alert('nuevo log ataque!!!');
+</c:if>
 
 $('#cmb').dblclick(function(){
     $('#hdn').show(); 

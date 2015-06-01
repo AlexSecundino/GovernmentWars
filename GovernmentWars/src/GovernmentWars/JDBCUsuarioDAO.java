@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.management.RuntimeErrorException;
 import javax.sql.DataSource;
 
 import Classes.Coordenadas;
@@ -203,6 +204,7 @@ public class JDBCUsuarioDAO implements UsuarioDAO{
 				} catch (SQLException e) {}
 			}
 		}
+		System.out.println(correcto);
 		
 		return correcto;
 	}

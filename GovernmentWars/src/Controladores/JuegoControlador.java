@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 import Classes.Ciudad;
 import Classes.Edificio;
+import Classes.LogAtaques;
 import Classes.Tecnologia;
 import Classes.Unidad;
 import Classes.Usuario;
@@ -154,5 +155,26 @@ public class JuegoControlador {
 		modelo.addAttribute("atacar", correcto);
 		
 		return "Mapa";
+	}
+	
+	@RequestMapping("/Historial")
+	public String Historial(Model modelo, HttpSession session) {
+		
+		if(session.getAttribute("usuario") == null){
+			return "index";
+		}
+		else if((boolean)session.getAttribute("isAdmin")){
+			return "Admin";
+		}
+		
+		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
+		
+		ColasDAO colasDAO = (ColasDAO) context.getBean("ColasDAO");
+		
+		List<LogAtaques> listaLogAtaques = colasDAO.getLogsAtaques((Usuario)session.getAttribute("usuario"));
+
+		modelo.addAttribute("listaLogAtaques", listaLogAtaques);
+		
+		return "Historial";
 	}
 }
