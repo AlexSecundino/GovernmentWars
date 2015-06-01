@@ -128,5 +128,3 @@ public class Edificio {
 		return cadenaTiempo;
 	}
 }
-
-

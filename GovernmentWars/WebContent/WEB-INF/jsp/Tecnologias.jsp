@@ -38,7 +38,21 @@
              		<c:if test="${tecnologia.getCumpleRequisitos() == true}">
              			<a href="javascript:void(0)" class="btn btn-primary btn-lg sbm" id="${edificio.getNombre()}&${edificio.getNivel()}">Investigar</a>
              		</c:if>
-					
+						<span class="rcr"><i class="fa fa-diamond"></i><span>${tecnologia.getRecurso('Sobres')}</span></span>
+						<span class="rcr"><i class="fa fa-diamond"></i><span>${tecnologia.getRecurso('Antena')}</span></span>
+						<span class="rcr"><i class="fa fa-diamond"></i><span>${tecnologia.getRecurso('Jueces')}</span></span>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<c:if test="${tecnologia.getCumpleRequisitos() == false}">
+             			<a href="javascript:void(0)" class="btn btn-primary btn-lg sbm dsb" id="${tecnologia.getNombre()}" title="${tecnologia.getRequisitos()}">No cumples los requisitos</a>
+             		</c:if>
+             		<c:if test="${tecnologia.getCumpleRequisitos() == true}">
+             			<a href="javascript:void(0)" class="btn btn-primary btn-lg sbm" id="${tecnologia.getNombre()}}">Investigar</a>
+             		</c:if>
+					<c:if test="${tecnologia.isInvestigada() == true}">
+             			<a href="javascript:void(0)" class="btn btn-primary btn-lg sbm dsb" id="${tecnologia.getNombre()}}">Ya se ha investigado</a>
+             		</c:if>
 				</div>
 	   	</div>
 	   	<div style="clear:both"></div>
