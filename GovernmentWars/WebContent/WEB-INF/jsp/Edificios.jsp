@@ -106,7 +106,7 @@ for (var i=0; i<sbm.length; i++)
   }
  
 	function ajax() {
-  		var parametros = {"edificio" : edificio,"nivel" : nivel, "sobres" : sobres, "antena" : antena, "jueces" : jueces};
+  		var parametros = {"edificio" : edificio,"nivel" : nivel*1+1, "sobres" : sobres, "antena" : antena, "jueces" : jueces};
   		console.log(parametros);
       	$.ajax({
         	data:  parametros,
@@ -114,8 +114,46 @@ for (var i=0; i<sbm.length; i++)
             type:  'get',
             success:  function (response) {
             	console.log(response);
-            	if (response == 'true')
-            		console.log('Esto al contador: '+tiempo);
+            	if (response == 'true') {
+            		
+            		tiempo = tiempo.split(':');
+            		if (tiempo.length == 3) {
+            			var h = tiempo[0].substring(tiempo[0],tiempo[0].length-1);
+            			var m = tiempo[1].substring(tiempo[1],tiempo[1].length-1);
+            			var s = tiempo[2].substring(tiempo[2],tiempo[2].length-1);
+            		} else if (tiempo.length == 4) {
+            			var d = tiempo[0].substring(tiempo[0],tiempo[0].length-1);
+            			var h = tiempo[1].substring(tiempo[1],tiempo[1].length-1);
+            			var m = tiempo[2].substring(tiempo[2],tiempo[2].length-1);
+            			var s = tiempo[3].substring(tiempo[3],tiempo[3].length-1);
+            		}
+            		
+            		var e = new Date();
+            		console.log('ANTES DE LA MOVIDA: '+e);
+            		var emas;
+            		
+            		if (typeof d !== 'undefined')
+            			emas = e.setDate(e.getDate() + 1 );
+            		else {
+            			emas = e.setHours(e.getHours() + 0);
+            			e = new Date(emas);
+            			emas = e.setMinutes(e.getMinutes() + 0);
+            			e = new Date(emas);
+            			emas = e.setSeconds(e.getSeconds() + 10);
+            			e = new Date(emas);
+      				}
+
+            		console.log('DESPUES DE LA MOVIDA: '+e);
+            		var cola_edificio = {'nombre': edificio, 'nivel' : nivel*1+1, 'tm': e};
+            		
+            		
+            		localStorage.setItem('tmp_edificio', JSON.stringify(cola_edificio));
+
+            		var object = JSON.parse(localStorage.getItem('tmp_edificio'));
+            		
+            		location.reload();
+            	}
+            		
             	else if (response == 'false')
             		alert('no tienes recursos suficientes');
           	}
@@ -125,16 +163,23 @@ for (var i=0; i<sbm.length; i++)
 </script>
 <!-- 
 
-<td>${edificio.formatearTiempo(edificio.getTiempoConstruccion())}</td>
-	             
-	             <td>
-		             <c:if test="${edificio.getNivel() >= 10}">
-		             	Nivel al maximo
-		             </c:if>
-		             <c:if test="${edificio.getNivel() < 10}">
-		             	<a href="">Aumentar nivel</a>
-		             </c:if>
-	             </td>
-	          </tr>
+var e = new Date();
+var emas = e.setSeconds(e.getSeconds() + 10);
 
+setInterval(function(){
+    console.log('TIEMPO ACTUAL: '+new Date().getTime());
+    console.log('TIEMPO DEFINIDO 5 SEGUNDOS DESPUES: '+emas);
+
+    if (new Date().getTime()  >= emas)
+        $('#c').html('FINISH');
+    }, 1000);
+    
+CODIGO USABLE:
+	if (localStorage.getItem("username") === null) {	
+
+	var cola_tecnologia = {'nombre': tecnologia, 'tm': e.getTime()};
+    var cola_unidades = {'nombre': tecnologia, 'num': 'cantidad', 'tm': e.getTime()};
+    
+    localStorage.setItem('tmp_edificio', JSON.stringify(object));
+    localStorage.setItem('tmp_edificio', JSON.stringify(object));
  -->
