@@ -6,7 +6,8 @@
 <head>
 	<meta charset="UTF-8">
 	<title>GovWars || Vision general</title>
-	<link rel="icon" type="image/png" href="favicon.ico">
+	<link rel="icon" type="image/png" href="<c:url value='/resources/img/favicon.ico'/>" >
+	<script src="<c:url value='/resources/js/countdown.min.js'/>"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 	<link rel="stylesheet" href="<c:url value='/resources/css/style.css'/>" >
@@ -15,6 +16,13 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   	<script>
   		$(document).ready(function() {
+			
+  			if (localStorage.getItem("tmp_edificio") !== null) {
+				var tm = JSON.parse(localStorage.getItem("tmp_edificio"));
+				checkTime(tm.tm,'tmp_edificio');
+			}
+			
+  			
   			if (sessionStorage.msg == 1)
   				$('.msg').css("color","green");
   			else
@@ -23,6 +31,7 @@
   			if (typeof sm == 'undefined') {
   				var sm = 0;
   			}
+  			
 			var timer = window.setInterval(function(){
 			number = 1200/3600;
 			number += sm;
@@ -43,6 +52,38 @@
     		document.getElementById('number2').innerHTML = document.getElementById('number2').innerHTML*1+number;
     		document.getElementById('number3').innerHTML = document.getElementById('number3').innerHTML*1+number;	
 		}, 1000);
+		
+					
+		window.addEventListener("beforeunload", function (event) {
+			sessionStorage.setItem('recursos', JSON.stringify( {'Sobres': document.getElementById('number1').innerHTML*1+1, 
+				'Antena': document.getElementById('number2').innerHTML*1+1, 'Jueces': document.getElementById('number3').innerHTML*1+1, 'Militantes': document.getElementById('number4').innerHTML, 
+				'Corrupcion': document.getElementById('number5').innerHTML} ));
+			event.preventDefault();
+		});
+		
+		window.addEventListener("load", function (event) {
+			if (sessionStorage.getItem('recursos')!== null) {
+				document.getElementById('number1').innerHTML = JSON.parse(sessionStorage.getItem('recursos')).Sobres;
+	    		document.getElementById('number2').innerHTML = JSON.parse(sessionStorage.getItem('recursos')).Antena;
+	    		document.getElementById('number3').innerHTML = JSON.parse(sessionStorage.getItem('recursos')).Jueces;
+	    		document.getElementById('number4').innerHTML = JSON.parse(sessionStorage.getItem('recursos')).Militantes;
+	    		document.getElementById('number5').innerHTML = JSON.parse(sessionStorage.getItem('recursos')).Corrupcion;
+			}
+			event.preventDefault();
+		});
+			
+		function checkTime(tm,tmp_c) {
+    		window.setInterval(function(){
+        		if (new Date() >= new Date(tm)) {
+        			window.location.replace("/GovernmentWars/Usuario/Index");
+        			if (typeof timerId !== 'undefined') {
+        				window.clearInterval(timerId);
+        				localStorage.removeItem(tmp_c);
+        			}
+        		}
+        			
+        	}, 500);
+		}
 
 		function getPartNumber(number,part,decimals) {
   			if ((decimals <= 0) || (decimals == null)) decimals =1;

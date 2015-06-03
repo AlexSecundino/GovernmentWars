@@ -21,6 +21,7 @@
 		    </c:forEach>
 		</div>
 		<div style="clear:both"></div>
+		<span id = 'edificio_cola'></span><span id = 'fecha'></span>
 	</div>
 	<div></div>
 </div>
@@ -33,6 +34,15 @@
 </div>
 
 <script>
+if (localStorage.getItem("tmp_edificio") !== null) {
+	var dest = new Date(JSON.parse(localStorage.getItem('tmp_edificio')).tm);
+	$('#edificio_cola').html(JSON.parse(localStorage.getItem('tmp_edificio')).nombre+' '+JSON.parse(localStorage.getItem('tmp_edificio')).nivel+' - ');
+	var timerId = countdown(new Date(dest),function(ts) {document.getElementById('fecha').innerHTML = ts.toHTML("strong");},null,countdown.HOURS|countdown.MINUTES|countdown.SECONDS);
+}
+
+//var dest = JSON.parse(localStorage.getItem('tmp_edificio'));
+//$('#fecha').html(countdown(null, dest.tm, units, max, digits));
+
 <c:if test="${nuevoMensaje == true}">
 	$('.msg').css("color","green");
 	sessionStorage.msg = 1;
