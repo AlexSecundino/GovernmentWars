@@ -76,8 +76,8 @@
 	        <!-- Collect the nav links, forms, and other content for toggling -->
 	        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	            <ul class="nav navbar-nav">
-	                <li><a><i class="fa fa-diamond"></i>Sobres <span id="number1">${ciudad.getRecurso("Antena")}</span></a></li>
-	                <li><a><i class="fa fa-diamond"></i>Antena <span id="number2">${ciudad.getRecurso("Sobres")}</span></a></li>
+	                <li><a><i class="fa fa-diamond"></i>Sobres <span id="number1">${ciudad.getRecurso("Sobres")}</span></a></li>
+	                <li><a><i class="fa fa-diamond"></i>Antena <span id="number2">${ciudad.getRecurso("Antena")}</span></a></li>
 	                <li><a><i class="fa fa-diamond"></i>Jueces<span id="number3">${ciudad.getRecurso("Jueces")}</span></a></li>
 	                <li><a><i class="fa fa-diamond"></i>Militantes<span id="number4">${ciudad.getRecurso("Militantes")}/100</span></a></li>
 	                <li><a><i class="fa fa-diamond"></i>Corrupcion <span id="number5">${ciudad.getNivelCorrupcion()} %</span></a></li>
