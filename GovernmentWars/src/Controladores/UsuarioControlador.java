@@ -12,6 +12,7 @@ import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import Classes.Ciudad;
@@ -37,7 +38,7 @@ public class UsuarioControlador {
 		return "Registro";
 	}
 	
-	@RequestMapping("/Registrar")
+	@RequestMapping(value="/Registrar", method=RequestMethod.POST)
 	public String Registrar(
 					@RequestParam("usuario") String nombre,
 					@RequestParam("password") String password,

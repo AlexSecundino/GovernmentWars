@@ -75,8 +75,7 @@ public class JDBCUnidadDAO implements UnidadDAO{
 	public boolean cumpleRequisitos(Usuario usuario, Ciudad ciudad, String unidad) {
 		
 		boolean cumple = false;
-		String sql = "Select count(*) from RequisitosUnidades ru inner join ciudad_edificios ce on (ru.nombreEdificio = ce.nombre and ru.nivelEdificio <= ce.nivel) inner join ciudad_tecnologias ct on (ru.nombreTecnologia = ct.nombre or ru.nombreTecnologia is null) "
-				+ "where ((ce.nombreCiudad = ? and ce.usuario = ?) or (ct.nombreCiudad = ? and ct.usuario = ?)) and ru.unidad = ?";
+		String sql = "Select count(*), ru.nombreTecnologia, ct.nombreCiudad from RequisitosUnidades ru inner join ciudad_edificios ce on (ru.nombreEdificio = ce.nombre and ru.nivelEdificio <= ce.nivel) left join ciudad_tecnologias ct on ((ru.nombreTecnologia = ct.nombre or ru.nombreTecnologia is null) and (ct.nombreCiudad = ? and ct.usuario = ?)) where ((ce.nombreCiudad = ? and ce.usuario = ?) or (ct.nombreCiudad = ? and ct.usuario = ?)) and ru.unidad = ?";
 		Connection conn = null;
 		ResultSet rs = null;
 		
@@ -87,13 +86,25 @@ public class JDBCUnidadDAO implements UnidadDAO{
 			ps.setString(2, usuario.getUsuario());
 			ps.setString(3, ciudad.getNombre());
 			ps.setString(4, usuario.getUsuario());
-			ps.setString(5, unidad);
+			ps.setString(5, ciudad.getNombre());
+			ps.setString(6, usuario.getUsuario());
+			ps.setString(7, unidad);
 			
 			rs = ps.executeQuery();
 
 			if(rs.next()){
 				if(rs.getInt(1) >= 1){
-					cumple = true;
+					if(rs.getString("nombreTecnologia") != null){
+						if(rs.getString("nombreCiudad") != null){
+							cumple = true;
+						}
+						else{
+							cumple = false;
+						}
+					}
+					else{
+						cumple = true;
+					}
 				}
 			}
 			

@@ -119,7 +119,7 @@
               <h4 class="modal-title" id="myModalLabel">Formulario de registro</h4>
             </div>
             <div class="modal-body">
-            <form action="/GovernmentWars/Usuario/Registrar" method="get" id="ff">
+            <form action="/GovernmentWars/Usuario/Registrar" method="post" id="ff">
               <div class="input-group marginsm">
                 <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
                 <input class="form-control" type="text" placeholder="Usuario" name="usuario" id="usuario">
