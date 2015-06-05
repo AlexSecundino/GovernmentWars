@@ -79,27 +79,6 @@ public class JDBCEdificioDAO implements EdificioDAO{
 	}
 
 	@Override
-	public boolean aumentarNivelEdificio() {
-		boolean correcto = true;
-		
-		return correcto;
-	}
-
-	@Override
-	public boolean eliminarCola() {
-		boolean correcto = true;
-		
-		return correcto;
-	}
-
-	@Override
-	public boolean comprobarRequisitos() {
-		boolean correcto = true;
-		
-		return correcto;
-	}
-
-	@Override
 	public List<Edificio> getEdificios(Usuario usuario, Ciudad ciudad) {
 		
 		System.out.println(usuario);

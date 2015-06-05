@@ -31,13 +31,13 @@ import Repository.UsuarioDAO;
 public class AjaxControlador {
 		
 	@RequestMapping(value="/Login", method=RequestMethod.GET)
-	public @ResponseBody String processAJAXRequest(
+	public @ResponseBody String Login(
 				@RequestParam("usuario") String name,
 				@RequestParam("password") String password, HttpSession session, HttpServletRequest request) {
 
 		session.invalidate();
 		
-		String response = "false";
+		String response = "0";
 		
 		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 		
@@ -47,18 +47,24 @@ public class AjaxControlador {
 		
 		if(usuarioDAO.isRegistrado(usuario)){
 			
-			response = "true";
-			usuario.setPass("");
-			session = request.getSession(true);
-			
-			if(usuarioDAO.isAdmin(usuario)){
-				session.setAttribute("isAdmin", true);
+			if(usuarioDAO.isBloqueado(usuario)){
+				response = "2";
 			}
 			else{
-				session.setAttribute("isAdmin", false);
+				usuario.setPass("");
+				session = request.getSession(true);
+				
+				if(usuarioDAO.isAdmin(usuario)){
+					session.setAttribute("isAdmin", true);
+				}
+				else{
+					session.setAttribute("isAdmin", false);
+				}
+				session.setAttribute("usuario", usuario);
+				session.setAttribute("raza", usuarioDAO.getRaza(usuario));
+
+				response = "1";
 			}
-			session.setAttribute("usuario", usuario);
-			session.setAttribute("raza", usuarioDAO.getRaza(usuario));
 		}
 		
 		return response;

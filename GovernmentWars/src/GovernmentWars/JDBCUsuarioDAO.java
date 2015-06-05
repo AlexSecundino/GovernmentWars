@@ -96,6 +96,40 @@ public class JDBCUsuarioDAO implements UsuarioDAO{
 	}
 	
 	@Override
+	public boolean isBloqueado(Usuario usuario) {
+		String sql = "Select count(*) from usuario u inner join bloqueado b on u.usuario = b.usuario where u.usuario = ?";
+		Connection conn = null;
+		ResultSet rs = null;
+		boolean isBloqueado = false;
+		
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, usuario.getUsuario());
+			rs = ps.executeQuery();
+			
+			if(rs.next()){
+				if(rs.getInt(1) >= 1){
+					isBloqueado = true;
+				}
+			}
+			
+			ps.close();
+ 
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+ 
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {}
+			}
+		}
+		return isBloqueado;
+	}
+	
+	@Override
 	public String getRaza(Usuario usuario) {
 		
 		String raza = "";

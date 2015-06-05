@@ -9,6 +9,8 @@ public interface UsuarioDAO {
 		public boolean isRegistrado(Usuario usuario); 
 		
 		public boolean isAdmin(Usuario usuario); 
+		
+		public boolean isBloqueado(Usuario usuario);
 	
 	    public Usuario getUsuario(Usuario usuario);
 

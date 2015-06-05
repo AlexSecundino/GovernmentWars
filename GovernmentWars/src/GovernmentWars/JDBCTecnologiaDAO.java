@@ -76,12 +76,7 @@ public class JDBCTecnologiaDAO implements TecnologiaDAO{
 		}
 		return correcto;
 	}
-
-	@Override
-	public boolean eliminarCola() {
-		return false;
-	}
-
+	
 	@Override
 	public boolean cumpleRequisitos(Usuario usuario, Ciudad ciudad, String tecnologia) {
 		

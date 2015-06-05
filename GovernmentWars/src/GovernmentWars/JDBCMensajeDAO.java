@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -22,13 +23,65 @@ public class JDBCMensajeDAO implements MensajeDAO{
 	}
 	
 	@Override
-	public boolean enviarMensaje(Usuario destinatario) {
-		return false;
+	public boolean enviarMensaje(Usuario remitente, Usuario destinatario, Mensaje mensaje) {
+		
+		boolean correcto = true;
+		
+		String sql = "Insert into Mensajes (fecha, remitente, destinatario, asunto, mensaje) values (?, ?, ?, ?, ?)";
+		Connection conn = null;
+		
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setDate(1, new java.sql.Date(new Date().getTime()));
+			ps.setString(2, remitente.getUsuario());
+			ps.setString(3, destinatario.getUsuario());
+			ps.setString(4, mensaje.getAsunto());			
+			ps.setString(5, mensaje.getMensaje());
+			
+			ps.executeUpdate();
+			ps.close();
+ 
+		} catch (SQLException e) {
+			correcto = false;
+ 
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {}
+			}
+		}
+		return correcto;
 	}
 
 	@Override
 	public boolean eliminarMensaje(Mensaje mensaje) {
-		return false;
+		boolean correcto = false;
+		
+		String sql = "delete from mensajes where idMensaje = ?";
+		Connection conn = null;
+		
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, mensaje.getId());
+			
+			if(ps.executeUpdate() >= 1){
+					correcto  = true;
+			}
+			ps.close();
+ 
+		} catch (SQLException e) {
+			correcto = false;
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {}
+			}
+		}
+		return correcto;
 	}
 	
 	@Override
@@ -73,7 +126,7 @@ public class JDBCMensajeDAO implements MensajeDAO{
 		
 		List<Mensaje> listaMensajes = new ArrayList<>();
 		
-		String sql = "Select remitente, destinatario, asunto, mensaje, fecha, leido from mensajes where destinatario = ?";
+		String sql = "Select idMensaje, remitente, destinatario, asunto, mensaje, fecha, leido from mensajes where destinatario = ?";
 		Connection conn = null;
 		ResultSet rs = null;
 		
@@ -84,7 +137,7 @@ public class JDBCMensajeDAO implements MensajeDAO{
 			rs = ps.executeQuery();
 			
 			while(rs.next()){
-				Mensaje mensaje = new Mensaje(rs.getString("remitente"), rs.getString("destinatario"), rs.getString("asunto"), rs.getString("mensaje"), rs.getDate("fecha"), rs.getBoolean("leido"));
+				Mensaje mensaje = new Mensaje(rs.getInt("idMensaje"), rs.getString("remitente"), rs.getString("destinatario"), rs.getString("asunto"), rs.getString("mensaje"), rs.getDate("fecha"), rs.getBoolean("leido"));
 				System.out.println(mensaje);
 				listaMensajes.add(mensaje);
 			}
@@ -102,11 +155,6 @@ public class JDBCMensajeDAO implements MensajeDAO{
 			}
 		}
 		return listaMensajes;
-	}
-
-	@Override
-	public List<Mensaje> cargarTodosLosMensajes() {
-		return null;
 	}
 
 }
