@@ -140,6 +140,17 @@ public class UsuarioControlador {
 		return "Perfil";
 	}
 	
+	@RequestMapping("/NuevoMensaje")
+	 public String NuevoMensaje(Model modelo, HttpSession session,
+	   @RequestParam("destinatario") String destinatario) {
+	  
+	  Usuario usuario = new Usuario(destinatario);
+	  
+	  modelo.addAttribute("destinatario", usuario);
+	  
+	  return "NuevoMensaje";
+	 }
+	
 	@RequestMapping("/Logout")
 	public String Logout(Model modelo, HttpSession session, HttpServletRequest request) {
 		

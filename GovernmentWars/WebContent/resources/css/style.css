@@ -292,7 +292,9 @@ a.dsb,a.dsb:active,a.dsb.focus,a.dsb:focus {background-color: #97282C; color: #F
    clear: both;
 }
 
-
+.noleido {background-color:#AAF20C}
+.noleido:hover {background-color:#99da0b}
+.elim {cursor:pointer; text-decoration: none;}
 
 /* TABLE GENERATOR */
 

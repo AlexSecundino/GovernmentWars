@@ -12,10 +12,11 @@
 	    				<div class="nat-accordion-button clearfix noleido">${mensaje.getAsunto()}<div class="remitent">${mensaje.getRemitente()}</div><div>${dateString}</div></div>
 	    			</c:if>
 	    			<c:if test="${mensaje.isLeido() == true}">
-	    				<div class="nat-accordion-button clearfix noleido">${mensaje.getAsunto()}<div class="remitent">${mensaje.getRemitente()}</div><div>${dateString}</div></div>
+	    				<div class="nat-accordion-button clearfix">${mensaje.getAsunto()}<div class="remitent">${mensaje.getRemitente()}</div><div>${dateString}</div></div>
 	    			</c:if>
 	    			<div class="nat-accordion-content">
 	      				<p>${mensaje.getMensaje()}</p>
+	      				<a class="elim" id="${mensaje.getId()}">Eliminar</a> 
 	    			</div>
     			</c:forEach>
     		</div>
@@ -34,6 +35,17 @@
 
 <script>
 $(document).ready(function() {
+	$(document).on("click", ".noleido", function (e) { 
+		$(this).removeClass("noleido");
+		e.stopPropagation();
+		
+		if ($('.noleido').length==0) {
+			sessionStorage.removeItem('msg');
+		}
+});
+	
+	
+	
 	  var oneAtTime = true;
 	  $(".nat-accordion-button").click(function() {
 	    $(".nat-accordion-button").removeClass("active");
@@ -47,8 +59,29 @@ $(document).ready(function() {
 	      $(this).next(".nat-accordion-content").slideDown();
 	      $(this).addClass("active");
 	    }
-	  });	  
+	  });	
+	  
+	  
+	  $(document).on("click", ".elim", function (e) {
+			ajax($(this).attr("id"))		
+		})
 	});
+	
+	
+	function ajax(id) {
+  		var parametros = {"id" : id};
+  		console.log(parametros);
+      	$.ajax({
+        	data:  parametros,
+            url:   '/GovernmentWars/Ajax/ColaEdificio',
+            type:  'get',
+            success:  function (response) {
+            	if (response=='true') {
+            		location.reload();
+            	}
+            }
+      	});
+	}
 </script>
 <!-- 
 <c:if test="${mensaje.isLeido() == true}">
