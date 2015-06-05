@@ -133,7 +133,7 @@
              		<c:if test="${unidad.getCumpleRequisitos() == true}">
              			<a href="javascript:void(0)" class="btn btn-primary btn-lg sbm" id="${unidad.getNombre()}">Crear unidad</a>
              		</c:if>
-					
+             		<a href="javascript:void(0)" class="btn btn-primary btn-lg tiempoq" disabled="disabled">${unidad.formatearTiempo(unidad.getTiempoConstruccion())}</a>
 				</div>
 	   	</div>
 	   	<div style="clear:both"></div>

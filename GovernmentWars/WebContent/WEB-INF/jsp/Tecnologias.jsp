@@ -107,6 +107,7 @@
 	             				<a href="javascript:void(0)" class="btn btn-primary btn-lg sbm" id="${tecnologia.getNombre()}&${edificio.formatearTiempo(edificio.getTiempoConstruccion())}">Investigar</a>
 	             		</c:if>
              		</c:if>
+             		<a href="javascript:void(0)" class="btn btn-primary btn-lg tiempoq" disabled="disabled">${tecnologia.formatearTiempo(tecnologia.getTiempoConstruccion())}</a>
 				</div>
 	   	</div>
 	   	<div style="clear:both"></div>

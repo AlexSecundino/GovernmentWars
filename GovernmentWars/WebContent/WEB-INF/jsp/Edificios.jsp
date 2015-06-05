@@ -60,6 +60,7 @@
 				</div>
 				<div class="col-md-6">
 					<a href="javascript:void(0)" class="btn btn-primary btn-lg sbm" id="${edificio.getNombre()}&${edificio.getNivel()}&${edificio.formatearTiempo(edificio.getTiempoConstruccion())}">Subir nivel</a>
+					<a href="javascript:void(0)" class="btn btn-primary btn-lg tiempoq" disabled="disabled">${edificio.formatearTiempo(edificio.getTiempoConstruccion())}</a>
 				</div>
 	   	</div>
 	   	<div style="clear:both"></div>
