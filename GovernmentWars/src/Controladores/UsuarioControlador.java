@@ -97,7 +97,6 @@ public class UsuarioControlador {
 		Produccion produccion = ciudadDAO.getProduccion(usuario, ciudad);
 
 		session.setAttribute("ciudad", ciudad);
-		session.setAttribute("unidadesCiudad", unidades);
 		
 		/*System.out.println("Datos session: ");
 		System.out.println("1) Ciudad: " + session.getAttribute("ciudad"));
