@@ -74,6 +74,9 @@ public class UsuarioControlador {
 		else if((boolean)session.getAttribute("isAdmin")){
 			return "redirect:/Admin/Usuarios";
 		}
+		else if((boolean)session.getAttribute("isAdmin")){
+			return "redirect:/Admin/Usuarios";
+		}
 		
 		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 		

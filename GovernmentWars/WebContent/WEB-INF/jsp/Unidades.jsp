@@ -120,10 +120,10 @@
 	    <div class="row">
 	    		<div class="col-md-6">
 	    			<div class="recurses">
-						<span class="rcr"><i class="fa fa-diamond"></i><span>${unidad.getRecurso('Sobres')}</span></span>
-						<span class="rcr"><i class="fa fa-diamond"></i><span>${unidad.getRecurso('Antena')}</span></span>
-						<span class="rcr"><i class="fa fa-diamond"></i><span>${unidad.getRecurso('Jueces')}</span></span>
-						<span class="rcr"><i class="fa fa-diamond"></i><span>${unidad.getRecurso('Militantes')}</span></span>
+						<span class="rcr"><i class="fa fa-envelope" title="Sobres"></i><span> ${unidad.getRecurso('Sobres')}</span></span>
+						<span class="rcr"><i class="fa fa-bullseye" title="Antena"></i><span> ${unidad.getRecurso('Antena')}</span></span>
+						<span class="rcr"><i class="fa fa-gavel" title="Jueces"></i><span> ${unidad.getRecurso('Jueces')}</span></span>
+						<span class="rcr"><i class="fa fa-user" title="Militantes"></i><span> ${unidad.getRecurso('Militantes')}</span></span>
 					</div>
 				</div>
 				<div class="col-md-6">
@@ -133,7 +133,7 @@
              		<c:if test="${unidad.getCumpleRequisitos() == true}">
              			<a href="javascript:void(0)" class="btn btn-primary btn-lg sbm" id="${unidad.getNombre()}">Crear unidad</a>
              		</c:if>
-					
+             		<a href="javascript:void(0)" class="btn btn-primary btn-lg tiempoq" disabled="disabled">${unidad.formatearTiempo(unidad.getTiempoConstruccion())}</a>
 				</div>
 	   	</div>
 	   	<div style="clear:both"></div>
@@ -145,7 +145,15 @@
 </div>
 </div>
 </div>
+</div>
+</div>
 
+<script>
+
+</script>
+
+</body>
+</html>
 <!-- 
 
  -->
