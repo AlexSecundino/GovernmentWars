@@ -53,9 +53,9 @@
 	    <div class="row">
 	    		<div class="col-md-6">
 	    			<div class="recurses">
-	    				<span class="rcr"><i class="fa fa-diamond"></i><span>${edificio.getRecurso('Sobres')}</span></span>
-						<span class="rcr"><i class="fa fa-diamond"></i><span>${edificio.getRecurso('Antena')}</span></span>
-						<span class="rcr"><i class="fa fa-diamond"></i><span>${edificio.getRecurso('Jueces')}</span></span>
+	    				<span class="rcr"><i class="fa fa-envelope" title="Sobres"></i><span> ${edificio.getRecurso('Sobres')}</span></span>
+						<span class="rcr"><i class="fa fa-bullseye" title="Antena"></i><span> ${edificio.getRecurso('Antena')}</span></span>
+						<span class="rcr"><i class="fa fa-gavel" title="Jueces"></i><span> ${edificio.getRecurso('Jueces')}</span></span>
 					</div>
 				</div>
 				<div class="col-md-6">
@@ -72,7 +72,8 @@
 </div>
 </div>
 </div>
-
+</div>
+</div>
 
 <script>
 var edificio;
@@ -92,8 +93,8 @@ for (var i=0; i<sbm.length; i++)
   
   function inicializar(evento) {
    if (document.readyState == 'complete') {
-	sobres = $('#number2').html();
-    antena = $('#number1').html();
+	sobres = $('#number1').html();
+    antena = $('#number2').html();
 	jueces = $('#number3').html();
 	militantes = $('#number4').html().substring(0, $('#number4').html().length-4);
 	corrupcion = $('#number5').html().substring(0, $('#number4').html().length-6);
@@ -117,11 +118,16 @@ for (var i=0; i<sbm.length; i++)
             	if (response == 'true') {
             		
             		tiempo = tiempo.split(':');
+            		
+            		console.log('TIEMPO QUE TARDA:');
+            		console.log(tiempo);
             		if (tiempo.length == 3) {
+            			console.log('Sin la d');
             			var h = tiempo[0].substring(tiempo[0],tiempo[0].length-1);
             			var m = tiempo[1].substring(tiempo[1],tiempo[1].length-1);
             			var s = tiempo[2].substring(tiempo[2],tiempo[2].length-1);
             		} else if (tiempo.length == 4) {
+            			console.log('Con la d');
             			var d = tiempo[0].substring(tiempo[0],tiempo[0].length-1);
             			var h = tiempo[1].substring(tiempo[1],tiempo[1].length-1);
             			var m = tiempo[2].substring(tiempo[2],tiempo[2].length-1);
@@ -132,16 +138,27 @@ for (var i=0; i<sbm.length; i++)
             		console.log('ANTES DE LA MOVIDA: '+e);
             		var emas;
             		
+            		console.log('PARSEADO: '+h+' '+m+' '+s);
+            		
             		if (typeof d !== 'undefined')
-            			emas = e.setDate(e.getDate() + 1 );
-            		else {
-            			emas = e.setHours(e.getHours() + 0);
-            			e = new Date(emas);
-            			emas = e.setMinutes(e.getMinutes() + 0);
-            			e = new Date(emas);
-            			emas = e.setSeconds(e.getSeconds() + 10);
-            			e = new Date(emas);
-      				}
+            			emas = e.setDate(e.getDate() + d*1);
+            			
+            		if (h!=='0') {
+            				emas = e.setHours(e.getHours() + h*1);
+            				console.log('suma horas '+emas);
+            				e = new Date(emas);
+            				console.log('suma horas '+e);
+           			}
+           			if (m!=='0') {
+           				emas = e.setMinutes(e.getMinutes() + m*1);
+           				console.log('suma minutos '+emas);
+           				e = new Date(emas);
+           				console.log('suma minutos '+e);
+           			}
+           			emas = e.setSeconds(e.getSeconds() + s*1);
+           			console.log('suma segundos '+emas);
+           			e = new Date(emas);
+           			console.log('suma segundos '+e);
 
             		console.log('DESPUES DE LA MOVIDA: '+e);
             		var cola_edificio = {'nombre': edificio, 'nivel' : nivel*1+1, 'tm': e};
@@ -151,7 +168,7 @@ for (var i=0; i<sbm.length; i++)
 
             		var object = JSON.parse(localStorage.getItem('tmp_edificio'));
             		
-            		location.reload();
+            		//location.reload();
             	}
             		
             	else if (response == 'false')
@@ -161,6 +178,9 @@ for (var i=0; i<sbm.length; i++)
 	}
   
 </script>
+
+</body>
+</html>
 <!-- 
 
 var e = new Date();

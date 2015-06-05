@@ -90,21 +90,21 @@
 	    <div class="row">
 	    		<div class="col-md-6">
 	    			<div class="recurses">
-						<span class="rcr"><i class="fa fa-diamond"></i><span>${tecnologia.getRecurso('Sobres')}</span></span>
-						<span class="rcr"><i class="fa fa-diamond"></i><span>${tecnologia.getRecurso('Antena')}</span></span>
-						<span class="rcr"><i class="fa fa-diamond"></i><span>${tecnologia.getRecurso('Jueces')}</span></span>
+						<span class="rcr"><i class="fa fa-envelope" title="Sobres"></i><span>${tecnologia.getRecurso('Sobres')}</span></span>
+						<span class="rcr"><i class="fa fa-bullseye" title="Antena"></i><span>${tecnologia.getRecurso('Antena')}</span></span>
+						<span class="rcr"><i class="fa fa-gavel" title="Jueces"></i><span>${tecnologia.getRecurso('Jueces')}</span></span>
 					</div>
 				</div>
 				<div class="col-md-6">
 					<c:if test="${tecnologia.getCumpleRequisitos() == false}">
-             			<a href="javascript:void(0)" class="btn btn-primary btn-lg sbm dsb" id="${tecnologia.getNombre()}" title="${tecnologia.getRequisitos()}">No cumples los requisitos</a>
+             			<a href="javascript:void(0)" class="btn btn-primary btn-lg dsb" id="${tecnologia.getNombre()}" title="${tecnologia.getRequisitos()}">No cumples los requisitos</a>
              		</c:if>
              		<c:if test="${tecnologia.getCumpleRequisitos() == true}">
 	             		<c:if test="${tecnologia.isInvestigada() == true}">
-	             			<a href="javascript:void(0)" class="btn btn-primary btn-lg sbm dsb" id="${tecnologia.getNombre()}}">Ya se ha investigado</a>
+	             			<a href="javascript:void(0)" class="btn btn-primary btn-lg dsb" id="${tecnologia.getNombre()}}">Ya se ha investigado</a>
 	             		</c:if>
 	             		<c:if test="${tecnologia.isInvestigada() == false}">
-	             				<a href="javascript:void(0)" class="btn btn-primary btn-lg sbm" id="${tecnologia.getNombre()}}">Investigar</a>
+	             				<a href="javascript:void(0)" class="btn btn-primary btn-lg sbm" id="${tecnologia.getNombre()}&${edificio.formatearTiempo(edificio.getTiempoConstruccion())}">Investigar</a>
 	             		</c:if>
              		</c:if>
 				</div>
@@ -118,10 +118,113 @@
 </div>
 </div>
 </div>
+</div>
+</div>
 
 <script>
-	
+var edificio;
+var tiempo;
+var sobres;
+var antena;
+var jueces;
+var militantes;
+var corrupcion;
+var sbm = $('.sbm');
+var e;
+
+for (var i=0; i<sbm.length; i++)
+	sbm[i].addEventListener('click',inicializar,false);
+
+  
+  function inicializar(evento) {
+   if (document.readyState == 'complete') {
+	sobres = $('#number1').html();
+    antena = $('#number2').html();
+	jueces = $('#number3').html();
+	militantes = $('#number4').html().substring(0, $('#number4').html().length-4);
+	corrupcion = $('#number5').html().substring(0, $('#number4').html().length-6);
+	e = evento.target.id.split('&');
+	tecnologia = e[0];
+	tiempo = e[1];
+	ajax();
+   }
+  }
+ 
+  function ajax() {
+		var parametros = {"tecnologia" : tecnologia,"sobres" : sobres, "antena" : antena, "jueces" : jueces};
+		console.log(parametros);
+    	$.ajax({
+      	data:  parametros,
+          url:   '/GovernmentWars/Ajax/ColaTecnologia',
+          type:  'get',
+          success:  function (response) {
+          	console.log(response);
+          	if (response == 'true') {
+          		
+          		tiempo = tiempo.split(':');
+          		
+          		console.log('TIEMPO QUE TARDA:');
+          		console.log(tiempo);
+          		if (tiempo.length == 3) {
+          			console.log('Sin la d');
+          			var h = tiempo[0].substring(tiempo[0],tiempo[0].length-1);
+          			var m = tiempo[1].substring(tiempo[1],tiempo[1].length-1);
+          			var s = tiempo[2].substring(tiempo[2],tiempo[2].length-1);
+          		} else if (tiempo.length == 4) {
+          			console.log('Con la d');
+          			var d = tiempo[0].substring(tiempo[0],tiempo[0].length-1);
+          			var h = tiempo[1].substring(tiempo[1],tiempo[1].length-1);
+          			var m = tiempo[2].substring(tiempo[2],tiempo[2].length-1);
+          			var s = tiempo[3].substring(tiempo[3],tiempo[3].length-1);
+          		}
+          		
+          		var e = new Date();
+          		console.log('ANTES DE LA MOVIDA: '+e);
+          		var emas;
+          		
+          		console.log('PARSEADO: '+h+' '+m+' '+s);
+          		
+          		if (typeof d !== 'undefined')
+          			emas = e.setDate(e.getDate() + d*1);
+          			
+          		if (h!=='0') {
+          				emas = e.setHours(e.getHours() + h*1);
+          				console.log('suma horas '+emas);
+          				e = new Date(emas);
+          				console.log('suma horas '+e);
+         			}
+         			if (m!=='0') {
+         				emas = e.setMinutes(e.getMinutes() + m*1);
+         				console.log('suma minutos '+emas);
+         				e = new Date(emas);
+         				console.log('suma minutos '+e);
+         			}
+         			emas = e.setSeconds(e.getSeconds() + s*1);
+         			console.log('suma segundos '+emas);
+         			e = new Date(emas);
+         			console.log('suma segundos '+e);
+
+          		console.log('DESPUES DE LA MOVIDA: '+e);
+          		var cola_tecnologia = {'nombre': edificio,'tm': e};
+          		
+          		
+          		localStorage.setItem('tmp_tecnologia', JSON.stringify(cola_tecnologia));
+
+          		var object = JSON.parse(localStorage.getItem('tmp_tecnologia'));
+          		
+          		//location.reload();
+          	}
+          		
+          	else if (response == 'false')
+          		alert('no tienes recursos suficientes');
+        	}
+    	});
+	}
+  
 </script>
+
+</body>
+</html>
 <!-- 
 
 

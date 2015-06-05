@@ -5,7 +5,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>GovWars || Vision general</title>
+	<title>GovernmentWars</title>
 	<link rel="icon" type="image/png" href="<c:url value='/resources/img/favicon.ico'/>" >
 	<script src="<c:url value='/resources/js/countdown.min.js'/>"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -16,12 +16,20 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   	<script>
   		$(document).ready(function() {
-			
+			$('#lgout').click(function() {
+				window.removeEventListener("beforeunload", saveResources);
+				sessionStorage.removeItem('recursos');
+			});	
+  			
   			if (localStorage.getItem("tmp_edificio") !== null) {
 				var tm = JSON.parse(localStorage.getItem("tmp_edificio"));
 				checkTime(tm.tm,'tmp_edificio');
 			}
 			
+  			if (localStorage.getItem("tmp_tecnologia") !== null) {
+				var tm = JSON.parse(localStorage.getItem("tmp_tecnologia"));
+				checkTime(tm.tm,'tmp_tecnologia');
+			}
   			
   			if (sessionStorage.msg == 1)
   				$('.msg').css("color","green");
@@ -54,12 +62,7 @@
 		}, 1000);
 		
 					
-		window.addEventListener("beforeunload", function (event) {
-			sessionStorage.setItem('recursos', JSON.stringify( {'Sobres': document.getElementById('number1').innerHTML*1+1, 
-				'Antena': document.getElementById('number2').innerHTML*1+1, 'Jueces': document.getElementById('number3').innerHTML*1+1, 'Militantes': document.getElementById('number4').innerHTML, 
-				'Corrupcion': document.getElementById('number5').innerHTML} ));
-			event.preventDefault();
-		});
+		window.addEventListener("beforeunload", saveResources);
 		
 		window.addEventListener("load", function (event) {
 			if (sessionStorage.getItem('recursos')!== null) {
@@ -72,6 +75,13 @@
 			event.preventDefault();
 		});
 			
+		function saveResources() {
+			sessionStorage.setItem('recursos', JSON.stringify( {'Sobres': document.getElementById('number1').innerHTML*1+1, 
+				'Antena': document.getElementById('number2').innerHTML*1+1, 'Jueces': document.getElementById('number3').innerHTML*1+1, 'Militantes': document.getElementById('number4').innerHTML, 
+				'Corrupcion': document.getElementById('number5').innerHTML} ));
+		}
+		
+		
 		function checkTime(tm,tmp_c) {
     		window.setInterval(function(){
         		if (new Date() >= new Date(tm)) {
@@ -82,7 +92,7 @@
         			}
         		}
         			
-        	}, 500);
+        	}, 1000);
 		}
 
 		function getPartNumber(number,part,decimals) {
@@ -117,11 +127,11 @@
 	        <!-- Collect the nav links, forms, and other content for toggling -->
 	        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	            <ul class="nav navbar-nav">
-	                <li><a><i class="fa fa-diamond"></i>Sobres <span id="number1">${ciudad.getRecurso("Antena")}</span></a></li>
-	                <li><a><i class="fa fa-diamond"></i>Antena <span id="number2">${ciudad.getRecurso("Sobres")}</span></a></li>
-	                <li><a><i class="fa fa-diamond"></i>Jueces<span id="number3">${ciudad.getRecurso("Jueces")}</span></a></li>
-	                <li><a><i class="fa fa-diamond"></i>Militantes<span id="number4">${ciudad.getRecurso("Militantes")}/100</span></a></li>
-	                <li><a><i class="fa fa-diamond"></i>Corrupcion <span id="number5">${ciudad.getNivelCorrupcion()} %</span></a></li>
+	                <li><a><i class="fa fa-envelope"></i> Sobres <span id="number1">${ciudad.getRecurso("Sobres")}</span></a></li>
+	                <li><a><i class="fa fa-bullseye"></i> Antena <span id="number2">${ciudad.getRecurso("Antena")}</span></a></li>
+	                <li><a><i class="fa fa-gavel"></i> Jueces<span id="number3">${ciudad.getRecurso("Jueces")}</span></a></li>
+	                <li><a><i class="fa fa-users"></i> Militantes<span id="number4">${ciudad.getRecurso("Militantes")}/100</span></a></li>
+	                <li><a><i class="fa fa-diamond"></i> Corrupcion <span id="number5">${ciudad.getNivelCorrupcion()} %</span></a></li>
 	            </ul>
 	            <ul class="nav navbar-nav navbar-right">
 					<li><a href="/GovernmentWars/Usuario/Mensajes" class="msg"><i class="fa fa-diamond"></i>Mensajes</a></li>
@@ -130,7 +140,7 @@
 	                    <ul class="dropdown-menu">
 	                        <li><a href="/GovernmentWars/Usuario/Perfil"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
 	                        <li class="divider"></li>
-	                        <li><a href="/GovernmentWars/Usuario/Logout"><span class="glyphicon glyphicon-off"></span>Logout</a></li>
+	                        <li><a href="/GovernmentWars/Usuario/Logout" id="lgout"><span class="glyphicon glyphicon-off"></span>Logout</a></li>
 	                    </ul>
 	                </li>
 	            </ul>
