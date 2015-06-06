@@ -172,13 +172,11 @@ public class AjaxControlador {
 	
 	@RequestMapping(value="/ColaTecnologia", method=RequestMethod.GET)
 	public @ResponseBody String CrearColaTecnologia(
-				@RequestParam("edificio") String nTecnologia,
+				@RequestParam("tecnologia") String nTecnologia,
 				@RequestParam("sobres") long sobres,
 				@RequestParam("antena") long antena,
 				@RequestParam("jueces") long jueces,
 				HttpSession session) {
-		
-		System.out.println("edificio" + nTecnologia);
 		
 		String respuesta = "";
 		boolean response = false;

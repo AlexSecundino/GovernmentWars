@@ -1,11 +1,16 @@
 package Classes;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
-public class Tecnologia {
+public class Tecnologia implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String nombre;
 	private HashMap<Recursos, Integer> recursos;
 	private int bonus;

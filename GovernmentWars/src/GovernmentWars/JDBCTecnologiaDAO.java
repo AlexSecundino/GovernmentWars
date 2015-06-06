@@ -34,7 +34,7 @@ public class JDBCTecnologiaDAO implements TecnologiaDAO{
 
 		boolean correcto = true;
 		
-		String sql = "call crearColaTecnologia(?, ?, ?, ?, ?, ?);";
+		String sql = "call crearColaTecnologia(?, ?, ?, ?, ?, ?)";
 		Connection conn = null;
 		ResultSet rs = null;
 			
@@ -44,9 +44,9 @@ public class JDBCTecnologiaDAO implements TecnologiaDAO{
 			ps.setString(1, ciudad.getNombre());
 			ps.setString(2, usuario.getUsuario());
 			ps.setString(3, tecnologia.getNombre());
-			ps.setLong(5, recursos.get(Recursos.Sobres));
-			ps.setLong(6, recursos.get(Recursos.Antena));
-			ps.setLong(7, recursos.get(Recursos.Jueces));
+			ps.setLong(4, recursos.get(Recursos.Sobres));
+			ps.setLong(5, recursos.get(Recursos.Antena));
+			ps.setLong(6, recursos.get(Recursos.Jueces));
 				
 			rs = ps.executeQuery();
 			

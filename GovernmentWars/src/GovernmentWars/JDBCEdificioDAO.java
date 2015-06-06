@@ -51,8 +51,12 @@ public class JDBCEdificioDAO implements EdificioDAO{
 				
 			rs = ps.executeQuery();
 			
+			System.out.println("in");
+			
 			if(rs.next()){
+				System.out.println("hay");
 				if(rs.getInt("correcto") >= 1){
+					System.out.println("ups");
 					correcto = true;
 				}
 				else{

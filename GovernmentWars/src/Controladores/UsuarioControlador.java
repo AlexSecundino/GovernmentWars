@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import Classes.Ciudad;
 import Classes.ColaConstruccion;
+import Classes.Gender;
 import Classes.Mensaje;
 import Classes.Produccion;
 import Classes.Unidad;
@@ -178,5 +179,69 @@ public class UsuarioControlador {
 		else{
 			return "Mensajes";
 		}
+	}
+	
+	@RequestMapping("/NuevoMensaje")
+	public String NuevoMensaje(Model modelo, HttpSession session,
+			@RequestParam("destinatario") String destinatario) {
+		
+		Usuario usuario = new Usuario(destinatario);
+		
+		modelo.addAttribute("destinatario", usuario);
+		
+		return "NuevoMensaje";
+	}
+	
+	@RequestMapping(value="/CambiarPerfil", method=RequestMethod.POST)
+	public String CambiarPerfil(
+					@RequestParam("usuario") String us,
+					@RequestParam("genero") String genero,
+					@RequestParam("descripcion") String descripcion,
+					@RequestParam("pais") String pais,
+					HttpSession session,
+					Model modelo) {
+		
+		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
+		
+		UsuarioDAO usuarioDAO = (UsuarioDAO) context.getBean("UsuarioDAO");
+		
+		Usuario usuario = new Usuario();
+		usuario.setUsuario(us);
+		
+		if(genero != null){
+			if(genero.equals(Gender.Hombre)){
+				usuario.setGenero(Gender.Hombre);
+			}
+			else{
+				usuario.setGenero(Gender.Mujer);
+			}
+		}
+		else{
+			usuario.setGenero(Gender.Hombre);
+		}
+		
+		if(descripcion != null){
+			usuario.setDescripcion(descripcion);
+		}
+		else{
+			usuario.setDescripcion("");
+		}
+		
+		if(pais != null){
+			usuario.setPais(pais);
+		}
+		else{
+			usuario.setPais("España");
+		}
+		
+		if(usuarioDAO.actualizarPerfil(usuario)){
+			modelo.addAttribute("correcto", true);
+		}
+		else{
+			modelo.addAttribute("correcto", false);
+		}
+		
+	
+		return "Perfil";
 	}
 }

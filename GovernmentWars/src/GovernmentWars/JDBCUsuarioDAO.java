@@ -400,4 +400,46 @@ public class JDBCUsuarioDAO implements UsuarioDAO{
         }
         return listaUsuarios;
 	}
+
+	public boolean actualizarPerfil(Usuario usuario){
+		
+		boolean correcto = false;
+		
+		String sql = "update perfil set genero = ?, descripcion = ?, pais = ? where usuario = ?";
+		Connection conn = null;
+		
+		try {
+			conn = dataSource.getConnection();
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+
+			if(usuario.getGenero().equals(Gender.Hombre)){
+				ps.setString(1, "H");
+			}
+			else if(usuario.getGenero().equals(Gender.Mujer)){
+				ps.setString(1, "M");
+			}
+			ps.setString(2, usuario.getDescripcion());
+			ps.setString(3, usuario.getPais());
+			
+			if(ps.executeUpdate() == 1){
+				correcto = true;
+			}
+			
+			
+			ps.close();
+ 
+		} catch (SQLException e) {
+			correcto = false;
+			 
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {}
+			}
+		}
+		
+		return correcto;
+	}
 }

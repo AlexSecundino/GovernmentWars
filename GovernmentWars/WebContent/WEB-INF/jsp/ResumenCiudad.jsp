@@ -9,8 +9,8 @@
 	<div>
 		<div class="vg-normal pd-right-high">
 			<h1>Produccion</h1>
-				<p><i class="fa fa-envelope" title="Sobres"></i> ${produccion.getRecurso("Antena")}/h</p>
-				<p><i class="fa fa-bullseye" title="Antena"></i> ${produccion.getRecurso("Sobres")}/h</p>
+				<p><i class="fa fa-envelope" title="Sobres"></i> ${produccion.getRecurso("Sobres")}/h</p>
+				<p><i class="fa fa-bullseye" title="Antena"></i> ${produccion.getRecurso("Antena")}/h</p>
 				<p><i class="fa fa-gavel" title="Jueces"></i> ${produccion.getRecurso("Jueces")}/h</p>
 		</div>
 		

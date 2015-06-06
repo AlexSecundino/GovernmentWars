@@ -25,4 +25,6 @@ public interface UsuarioDAO {
 		public boolean desbloquearUsuario(Usuario usuario);
 		
 		public List<Usuario> getCiudadesAtacar();
+		
+		public boolean actualizarPerfil(Usuario usuario);
 }

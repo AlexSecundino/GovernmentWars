@@ -16,7 +16,8 @@
 				<br>
 				<label for="faccion">Usuario</label><input type="text" name="faccion" value="${datosUsuario.getFaccion()}" disabled="disabled"></input>
 				<br>
-				<input type="button" id="chg-prf" value="Guardar">
+				<!-- input type="button" id="chg-prf" value="Guardar">-->
+				<a href="/GovernmentWars/Usuario/CambiarPerfil">Guardar</a>
 		</div>
 	</div>
 </div>
