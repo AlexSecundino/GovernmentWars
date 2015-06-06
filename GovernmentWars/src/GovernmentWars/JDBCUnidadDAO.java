@@ -93,32 +93,31 @@ public class JDBCUnidadDAO implements UnidadDAO{
 	   rs = ps.executeQuery();
 
 	   if(rs.next()){
-	    if(rs.getInt(1) >= 1){
-	     if(rs.getString("nombreTecnologia") != null){
-	      if(rs.getString("nombreCiudad") != null){
-	       cumple = true;
-	      }
-	      else{
-	       cumple = false;
-	      }
-	     }
-	     else{
-	      cumple = true;
-	     }
-	    }
+		   if(rs.getInt(1) >= 1){
+			   if(rs.getString("nombreTecnologia") != null){
+				  if(rs.getString("nombreCiudad") != null){
+					  cumple = true;
+				  }
+				  else{
+					  cumple = false;
+				  }
+			   }
+			   else{
+				   cumple = true;
+			   }
+		   }
 	   }
 	   
 	   ps.close();
 	 
-	  } catch (SQLException e) {
-	   throw new RuntimeException(e);
-	 
+	  }catch (SQLException e) {
+		  throw new RuntimeException(e);
 	  } finally {
-	   if (conn != null) {
-	    try {
-	     conn.close();
-	    } catch (SQLException e) {}
-	   }
+		  if (conn != null) {
+			  try {
+				  conn.close();
+			  } catch (SQLException e) {}
+		  }
 	  }
 	  
 	  return cumple;

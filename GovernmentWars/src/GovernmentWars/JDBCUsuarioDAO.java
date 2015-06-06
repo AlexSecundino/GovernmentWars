@@ -96,6 +96,40 @@ public class JDBCUsuarioDAO implements UsuarioDAO{
 	}
 	
 	@Override
+	public boolean isBloqueado(Usuario usuario) {
+		String sql = "Select count(*) from usuario u inner join bloqueado b on u.usuario = b.usuario where u.usuario = ?";
+		Connection conn = null;
+		ResultSet rs = null;
+		boolean isBloqueado = false;
+		
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, usuario.getUsuario());
+			rs = ps.executeQuery();
+			
+			if(rs.next()){
+				if(rs.getInt(1) >= 1){
+					isBloqueado = true;
+				}
+			}
+			
+			ps.close();
+ 
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+ 
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {}
+			}
+		}
+		return isBloqueado;
+	}
+	
+	@Override
 	public String getRaza(Usuario usuario) {
 		
 		String raza = "";
@@ -205,7 +239,6 @@ public class JDBCUsuarioDAO implements UsuarioDAO{
 			}
 		}
 		System.out.println(correcto);
-		
 		return correcto;
 	}
 	
@@ -255,42 +288,6 @@ public class JDBCUsuarioDAO implements UsuarioDAO{
         }
         return listaUsuarios;
      }
-	
-	@Override
-	public boolean bloquearUsuario(Usuario usuario){
-		
-		boolean correcto = true;
-		
-		String sql = "insert into bloqueado values (?, ?)";
-        Connection conn = null;
-        ResultSet rs = null;
-            
-        try {
-        	conn = dataSource.getConnection();
-        	PreparedStatement ps = conn.prepareStatement(sql);
-        	
-        	Date fecha = new Date();
-        	
-        	long sec = 15 * 24 * 3600 * 1000 + new Date().getTime();
-        	Date fechaBloqueo = new Date(sec);
-        	ps.setString(1, usuario.getUsuario());
-        	ps.setDate(2, new java.sql.Date(fechaBloqueo.getTime()));
-        	
-        	ps.executeUpdate();
-        	ps.close();
-        	
-        } catch (SQLException e) {
-        	correcto = false;
-        } finally {
-        	if (conn != null) {
-        		try {
-        			conn.close();
-        		} catch (SQLException e) {}
-        	}
-        }
-		
-		return correcto;
-	}
 	
 	@Override
 	public boolean desbloquearUsuario(Usuario usuario){
@@ -365,5 +362,82 @@ public class JDBCUsuarioDAO implements UsuarioDAO{
         	}
         }
         return listaUsuarios;
+	}
+
+	public boolean actualizarPerfil(Usuario usuario){
+		
+		boolean correcto = false;
+		
+		String sql = "update perfil set genero = ?, descripcion = ?, pais = ? where usuario = ?";
+		Connection conn = null;
+		
+		try {
+			conn = dataSource.getConnection();
+			
+			PreparedStatement ps = conn.prepareStatement(sql);
+
+			if(usuario.getGenero().equals(Gender.Hombre)){
+				ps.setString(1, "H");
+			}
+			else if(usuario.getGenero().equals(Gender.Mujer)){
+				ps.setString(1, "M");
+			}
+			ps.setString(2, usuario.getDescripcion());
+			ps.setString(3, usuario.getPais());
+			
+			if(ps.executeUpdate() == 1){
+				correcto = true;
+			}
+			
+			
+			ps.close();
+ 
+		} catch (SQLException e) {
+			correcto = false;
+			 
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {}
+			}
+		}
+		
+		return correcto;
+	}
+	
+	@Override
+	public boolean bloquearUsuario(Usuario usuario){
+		
+		boolean correcto = true;
+		
+		String sql = "insert into bloqueado values (?, ?)";
+        Connection conn = null;
+        ResultSet rs = null;
+            
+        try {
+        	conn = dataSource.getConnection();
+        	PreparedStatement ps = conn.prepareStatement(sql);
+        	
+        	Date fecha = new Date();
+        	
+        	long sec = 15 * 24 * 3600 * 1000 + new Date().getTime();
+        	Date fechaBloqueo = new Date(sec);
+        	ps.setString(1, usuario.getUsuario());
+        	ps.setDate(2, new java.sql.Date(fechaBloqueo.getTime()));
+        	
+        	ps.executeUpdate();
+        	ps.close();
+        	
+        } catch (SQLException e) {
+        	correcto = false;
+        } finally {
+        	if (conn != null) {
+        		try {
+        			conn.close();
+        		} catch (SQLException e) {}
+        	}
+        }
+		return correcto;
 	}
 }

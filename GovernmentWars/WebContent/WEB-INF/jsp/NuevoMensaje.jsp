@@ -3,6 +3,14 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:include page="base.jsp" />
+
+	<c:if test="${envioMensaje == true}">
+		<p>Mensaje enviado correctamente</p>
+	</c:if>
+	<c:if test="${envioMensaje == false}">
+	    <p>Mensaje no enviado</p>
+	</c:if>
+	             		
 	<div class="row">
 		<div class="itm first-1">
 			<div class="">
@@ -10,7 +18,7 @@
 						<div class="row">
 							<h1>Mensaje para ${destinatario.getUsuario()}</h1>
 							<div class="span4 well" style="padding-bottom:0">
-	            				<form accept-charset="UTF-8" action="/GovernmentWars/Usuario/NuevoMensaje" method="get">
+	            				<form accept-charset="UTF-8" action="/GovernmentWars/Usuario/EnviarMensaje" method="post">
 	            					<input type="hidden" name="destinatario" value="${destinatario.getUsuario()}">
 	                				<div class="form-group">
 										<input id="asunto" name="asunto" type="text" class="form-control" placeholder="Escribe el asunto del mensaje..." required>

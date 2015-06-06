@@ -15,12 +15,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import Classes.Ciudad;
 import Classes.Edificio;
+import Classes.Mensaje;
 import Classes.Recursos;
 import Classes.Tecnologia;
 import Classes.Unidad;
 import Classes.Usuario;
 import Repository.CiudadDAO;
 import Repository.EdificioDAO;
+import Repository.MensajeDAO;
 import Repository.TecnologiaDAO;
 import Repository.UnidadDAO;
 import Repository.UsuarioDAO;
@@ -31,13 +33,13 @@ import Repository.UsuarioDAO;
 public class AjaxControlador {
 		
 	@RequestMapping(value="/Login", method=RequestMethod.GET)
-	public @ResponseBody String processAJAXRequest(
+	public @ResponseBody String Login(
 				@RequestParam("usuario") String name,
 				@RequestParam("password") String password, HttpSession session, HttpServletRequest request) {
 
 		session.invalidate();
 		
-		String response = "false";
+		String response = "0";
 		
 		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 		
@@ -46,19 +48,25 @@ public class AjaxControlador {
 		Usuario usuario = new Usuario(name, password);
 		
 		if(usuarioDAO.isRegistrado(usuario)){
-			
-			response = "true";
-			usuario.setPass("");
-			session = request.getSession(true);
-			
-			if(usuarioDAO.isAdmin(usuario)){
-				session.setAttribute("isAdmin", true);
+
+			if(usuarioDAO.isBloqueado(usuario)){
+				response = "2";
 			}
 			else{
-				session.setAttribute("isAdmin", false);
+				usuario.setPass("");
+				session = request.getSession(true);
+				
+				if(usuarioDAO.isAdmin(usuario)){
+					session.setAttribute("isAdmin", true);
+				}
+				else{
+					session.setAttribute("isAdmin", false);
+				}
+				session.setAttribute("usuario", usuario);
+				session.setAttribute("raza", usuarioDAO.getRaza(usuario));
+
+				response = "1";
 			}
-			session.setAttribute("usuario", usuario);
-			session.setAttribute("raza", usuarioDAO.getRaza(usuario));
 		}
 		
 		return response;
@@ -90,6 +98,29 @@ public class AjaxControlador {
 		}
 		
 		return response;
+	}
+	
+	@RequestMapping(value="/EliminarMensaje", method=RequestMethod.POST)
+	public @ResponseBody String EliminarMensaje(
+				@RequestParam("id") int idMensaje,
+				HttpSession session) {
+		
+		String respuesta = "";
+		boolean response = false;
+		
+		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
+		
+		MensajeDAO mensajeDAO = (MensajeDAO) context.getBean("MensajeDAO");
+		
+		Mensaje mensaje = new Mensaje(idMensaje);
+		response = mensajeDAO.eliminarMensaje(mensaje);
+		
+		if(response)
+			respuesta = "true";
+		else
+			respuesta = "false";
+		
+		return respuesta;
 	}
 	
 	@RequestMapping(value="/ColaUnidad", method=RequestMethod.GET)
@@ -166,13 +197,11 @@ public class AjaxControlador {
 	
 	@RequestMapping(value="/ColaTecnologia", method=RequestMethod.GET)
 	public @ResponseBody String CrearColaTecnologia(
-				@RequestParam("edificio") String nTecnologia,
+				@RequestParam("tecnologia") String nTecnologia,
 				@RequestParam("sobres") long sobres,
 				@RequestParam("antena") long antena,
 				@RequestParam("jueces") long jueces,
 				HttpSession session) {
-		
-		System.out.println("edificio" + nTecnologia);
 		
 		String respuesta = "";
 		boolean response = false;

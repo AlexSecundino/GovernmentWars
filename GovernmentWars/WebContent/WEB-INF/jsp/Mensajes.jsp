@@ -7,7 +7,7 @@
 		<div class="itm first-1">
 			<div class="nat-accordion">
 				<c:forEach items ="${listaMensajes}" var="mensaje">
-				<fmt:formatDate value="${mensaje.getFecha()}" var="dateString" pattern="dd/MM-hh:mm" />
+				<fmt:formatDate value="${mensaje.getFecha()}" var="dateString" pattern="dd/MM HH:mm"/>
 					<c:if test="${mensaje.isLeido() == false}">
 	    				<div class="nat-accordion-button clearfix noleido">${mensaje.getAsunto()}<div class="remitent">${mensaje.getRemitente()}</div><div>${dateString}</div></div>
 	    			</c:if>
@@ -73,8 +73,8 @@ $(document).ready(function() {
   		console.log(parametros);
       	$.ajax({
         	data:  parametros,
-            url:   '/GovernmentWars/Ajax/ColaEdificio',
-            type:  'get',
+            url:   '/GovernmentWars/Ajax/EliminarMensaje',
+            type:  'post',
             success:  function (response) {
             	if (response=='true') {
             		location.reload();

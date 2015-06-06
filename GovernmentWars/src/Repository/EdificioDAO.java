@@ -13,11 +13,5 @@ public interface EdificioDAO {
 
 	public boolean crearCola(Usuario usuario, Ciudad ciudad, Edificio edificio, HashMap<Recursos, Long> recursos);
 	
-	public boolean aumentarNivelEdificio();
-	
-	public boolean eliminarCola();
-	
-	public boolean comprobarRequisitos();
-	
 	public List<Edificio> getEdificios(Usuario usuario, Ciudad ciudad);
 }

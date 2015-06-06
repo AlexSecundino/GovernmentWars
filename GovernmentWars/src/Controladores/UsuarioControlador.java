@@ -12,10 +12,12 @@ import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import Classes.Ciudad;
 import Classes.ColaConstruccion;
+import Classes.Gender;
 import Classes.Mensaje;
 import Classes.Produccion;
 import Classes.Unidad;
@@ -37,7 +39,7 @@ public class UsuarioControlador {
 		return "Registro";
 	}
 	
-	@RequestMapping("/Registrar")
+	@RequestMapping(value="/Registrar", method=RequestMethod.POST)
 	public String Registrar(
 					@RequestParam("usuario") String nombre,
 					@RequestParam("password") String password,
@@ -76,6 +78,8 @@ public class UsuarioControlador {
 		
 		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 		
+		UsuarioDAO usuarioDAO = (UsuarioDAO) context.getBean("UsuarioDAO");
+		
 		CiudadDAO ciudadDAO = (CiudadDAO) context.getBean("CiudadDAO");
 		MensajeDAO mensajeDAO = (MensajeDAO) context.getBean("MensajeDAO");
 		UnidadDAO unidadDAO = (UnidadDAO) context.getBean("UnidadDAO");
@@ -94,7 +98,6 @@ public class UsuarioControlador {
 		Produccion produccion = ciudadDAO.getProduccion(usuario, ciudad);
 
 		session.setAttribute("ciudad", ciudad);
-		session.setAttribute("unidadesCiudad", unidades);
 		
 		/*System.out.println("Datos session: ");
 		System.out.println("1) Ciudad: " + session.getAttribute("ciudad"));
@@ -140,17 +143,6 @@ public class UsuarioControlador {
 		return "Perfil";
 	}
 	
-	@RequestMapping("/NuevoMensaje")
-	 public String NuevoMensaje(Model modelo, HttpSession session,
-	   @RequestParam("destinatario") String destinatario) {
-	  
-	  Usuario usuario = new Usuario(destinatario);
-	  
-	  modelo.addAttribute("destinatario", usuario);
-	  
-	  return "NuevoMensaje";
-	 }
-	
 	@RequestMapping("/Logout")
 	public String Logout(Model modelo, HttpSession session, HttpServletRequest request) {
 		
@@ -184,5 +176,92 @@ public class UsuarioControlador {
 		else{
 			return "Mensajes";
 		}
+	}
+	
+	@RequestMapping("/NuevoMensaje")
+	public String NuevoMensaje(Model modelo, HttpSession session,
+			@RequestParam("destinatario") String destinatario) {
+		
+		Usuario usuario = new Usuario(destinatario);
+		
+		modelo.addAttribute("destinatario", usuario);
+		
+		return "NuevoMensaje";
+	}
+	
+	@RequestMapping(value="/EnviarMensaje", method=RequestMethod.POST)
+	public String EnviarMensaje(Model modelo, HttpSession session,
+			@RequestParam("destinatario") String destinatario,
+			@RequestParam("asunto") String asunto,
+			@RequestParam("mensaje") String mensaje) {
+		
+		Mensaje msg = new Mensaje(asunto, mensaje);
+		
+		boolean correcto = false;
+		
+		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
+		
+		MensajeDAO mensajeDAO = (MensajeDAO) context.getBean("MensajeDAO");
+		
+		if(mensajeDAO.enviarMensaje((Usuario)session.getAttribute("usuario"), new Usuario(destinatario), msg)){
+			correcto = true;
+		}
+		
+		modelo.addAttribute("envioMensaje", correcto);
+		
+		return "NuevoMensaje";
+	}
+	
+	@RequestMapping(value="/CambiarPerfil", method=RequestMethod.POST)
+	public String CambiarPerfil(
+					@RequestParam("usuario") String us,
+					@RequestParam("genero") String genero,
+					@RequestParam("descripcion") String descripcion,
+					@RequestParam("pais") String pais,
+					HttpSession session,
+					Model modelo) {
+		
+		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
+		
+		UsuarioDAO usuarioDAO = (UsuarioDAO) context.getBean("UsuarioDAO");
+		
+		Usuario usuario = new Usuario();
+		usuario.setUsuario(us);
+		
+		if(genero != null){
+			if(genero.equals(Gender.Hombre)){
+				usuario.setGenero(Gender.Hombre);
+			}
+			else{
+				usuario.setGenero(Gender.Mujer);
+			}
+		}
+		else{
+			usuario.setGenero(Gender.Hombre);
+		}
+		
+		if(descripcion != null){
+			usuario.setDescripcion(descripcion);
+		}
+		else{
+			usuario.setDescripcion("");
+		}
+		
+		if(pais != null){
+			usuario.setPais(pais);
+		}
+		else{
+			usuario.setPais("España");
+		}
+		
+		if(usuarioDAO.actualizarPerfil(usuario)){
+			modelo.addAttribute("correcto", true);
+		}
+		else{
+			modelo.addAttribute("correcto", false);
+		}
+		
+	
+		return "Perfil";
 	}
 }

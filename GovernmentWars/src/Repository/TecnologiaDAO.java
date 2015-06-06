@@ -15,8 +15,6 @@ public interface TecnologiaDAO {
 
 	public boolean crearCola(Usuario usuario, Ciudad ciudad, Tecnologia tecnologia, HashMap<Recursos, Long> recursos);
 	
-	public boolean eliminarCola();
-	
 	public boolean cumpleRequisitos(Usuario usuario, Ciudad ciudad, String tecnologia);
 	
 	public Requisitos getRequisitos(String nombreTecnologia);

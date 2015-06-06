@@ -239,9 +239,11 @@
   function gestionarRespuesta(evento){
    if (evento.target.readyState == 4 && evento.target.status == 200) {
     login.disabled = false;
-    
-    if(evento.target.responseText == "true"){
+    if(evento.target.responseText == "1"){
      location.href = "/GovernmentWars/Usuario/Index";
+    }
+    else if(evento.target.responseText == "2"){
+    	alert("estas bloqueado pinche la wea!! report!!!");
     }
     else{
      alert("usuario o pass incorrectas"); 

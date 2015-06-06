@@ -7,13 +7,11 @@ import Classes.Usuario;
 
 public interface MensajeDAO {
 	
-	public boolean enviarMensaje(Usuario destinatario);
+	public boolean enviarMensaje(Usuario remitente, Usuario destinatario, Mensaje mensaje);
 	
 	public boolean eliminarMensaje(Mensaje mensaje);
 	
 	public boolean comprobarNuevoMensaje(Usuario destinatario);
 	
 	public List<Mensaje> cargarMensajes(Usuario destinatario);
-	
-	public List<Mensaje> cargarTodosLosMensajes();
 }

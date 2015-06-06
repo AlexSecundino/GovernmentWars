@@ -118,6 +118,7 @@
 	    		</div>
 	    </div>
 	    <div class="row">
+
 	    		<div class="col-md-6">
 	    			<div class="recurses">
 						<span class="rcr"><i class="fa fa-envelope" title="Sobres"></i><span> ${unidad.getRecurso('Sobres')}</span></span>
@@ -154,6 +155,3 @@
 
 </body>
 </html>
-<!-- 
-
- -->
