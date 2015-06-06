@@ -5,7 +5,6 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-
 	<title>GovernmentWars</title>
 	<link rel="icon" type="image/png" href="<c:url value='/resources/img/favicon.ico'/>" >
 	<script src="<c:url value='/resources/js/countdown.min.js'/>"></script>

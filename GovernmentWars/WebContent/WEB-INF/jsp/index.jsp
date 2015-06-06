@@ -239,7 +239,6 @@
   function gestionarRespuesta(evento){
    if (evento.target.readyState == 4 && evento.target.status == 200) {
     login.disabled = false;
-    
     if(evento.target.responseText == "1"){
      location.href = "/GovernmentWars/Usuario/Index";
     }

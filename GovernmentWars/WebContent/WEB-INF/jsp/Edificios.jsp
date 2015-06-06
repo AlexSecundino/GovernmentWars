@@ -203,5 +203,8 @@ CODIGO USABLE:
     
     localStorage.setItem('tmp_edificio', JSON.stringify(object));
     localStorage.setItem('tmp_edificio', JSON.stringify(object));
+<<<<<<< HEAD
+>>>>>>> refs/heads/master
+=======
 >>>>>>> refs/heads/master
  -->

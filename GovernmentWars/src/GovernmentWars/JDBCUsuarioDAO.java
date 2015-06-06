@@ -291,42 +291,6 @@ public class JDBCUsuarioDAO implements UsuarioDAO{
      }
 	
 	@Override
-	public boolean bloquearUsuario(Usuario usuario){
-		
-		boolean correcto = true;
-		
-		String sql = "insert into bloqueado values (?, ?)";
-        Connection conn = null;
-        ResultSet rs = null;
-            
-        try {
-        	conn = dataSource.getConnection();
-        	PreparedStatement ps = conn.prepareStatement(sql);
-        	
-        	Date fecha = new Date();
-        	
-        	long sec = 15 * 24 * 3600 * 1000 + new Date().getTime();
-        	Date fechaBloqueo = new Date(sec);
-        	ps.setString(1, usuario.getUsuario());
-        	ps.setDate(2, new java.sql.Date(fechaBloqueo.getTime()));
-        	
-        	ps.executeUpdate();
-        	ps.close();
-        	
-        } catch (SQLException e) {
-        	correcto = false;
-        } finally {
-        	if (conn != null) {
-        		try {
-        			conn.close();
-        		} catch (SQLException e) {}
-        	}
-        }
-		
-		return correcto;
-	}
-	
-	@Override
 	public boolean desbloquearUsuario(Usuario usuario){
 		
 		boolean correcto = false;
@@ -439,6 +403,42 @@ public class JDBCUsuarioDAO implements UsuarioDAO{
 				} catch (SQLException e) {}
 			}
 		}
+		
+		return correcto;
+	}
+	
+	@Override
+	public boolean bloquearUsuario(Usuario usuario){
+		
+		boolean correcto = true;
+		
+		String sql = "insert into bloqueado values (?, ?)";
+        Connection conn = null;
+        ResultSet rs = null;
+            
+        try {
+        	conn = dataSource.getConnection();
+        	PreparedStatement ps = conn.prepareStatement(sql);
+        	
+        	Date fecha = new Date();
+        	
+        	long sec = 15 * 24 * 3600 * 1000 + new Date().getTime();
+        	Date fechaBloqueo = new Date(sec);
+        	ps.setString(1, usuario.getUsuario());
+        	ps.setDate(2, new java.sql.Date(fechaBloqueo.getTime()));
+        	
+        	ps.executeUpdate();
+        	ps.close();
+        	
+        } catch (SQLException e) {
+        	correcto = false;
+        } finally {
+        	if (conn != null) {
+        		try {
+        			conn.close();
+        		} catch (SQLException e) {}
+        	}
+        }
 		
 		return correcto;
 	}

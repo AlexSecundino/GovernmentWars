@@ -72,57 +72,56 @@ public class JDBCUnidadDAO implements UnidadDAO{
 	}
 
 	@Override
-	public boolean cumpleRequisitos(Usuario usuario, Ciudad ciudad, String unidad) {
-		
-		boolean cumple = false;
-		String sql = "Select count(*), ru.nombreTecnologia, ct.nombreCiudad from RequisitosUnidades ru inner join ciudad_edificios ce on (ru.nombreEdificio = ce.nombre and ru.nivelEdificio <= ce.nivel) left join ciudad_tecnologias ct on ((ru.nombreTecnologia = ct.nombre or ru.nombreTecnologia is null) and (ct.nombreCiudad = ? and ct.usuario = ?)) where ((ce.nombreCiudad = ? and ce.usuario = ?) or (ct.nombreCiudad = ? and ct.usuario = ?)) and ru.unidad = ?";
-		Connection conn = null;
-		ResultSet rs = null;
-		
-		try {
-			conn = dataSource.getConnection();
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, ciudad.getNombre());
-			ps.setString(2, usuario.getUsuario());
-			ps.setString(3, ciudad.getNombre());
-			ps.setString(4, usuario.getUsuario());
-			ps.setString(5, ciudad.getNombre());
-			ps.setString(6, usuario.getUsuario());
-			ps.setString(7, unidad);
-			
-			rs = ps.executeQuery();
+	 public boolean cumpleRequisitos(Usuario usuario, Ciudad ciudad, String unidad) {
+	  
+	  boolean cumple = false;
+	  String sql = "Select count(*), ru.nombreTecnologia, ct.nombreCiudad from RequisitosUnidades ru inner join ciudad_edificios ce on (ru.nombreEdificio = ce.nombre and ru.nivelEdificio <= ce.nivel) left join ciudad_tecnologias ct on ((ru.nombreTecnologia = ct.nombre or ru.nombreTecnologia is null) and (ct.nombreCiudad = ? and ct.usuario = ?)) where ((ce.nombreCiudad = ? and ce.usuario = ?) or (ct.nombreCiudad = ? and ct.usuario = ?)) and ru.unidad = ?";
+	  Connection conn = null;
+	  ResultSet rs = null;
+	  
+	  try {
+	   conn = dataSource.getConnection();
+	   PreparedStatement ps = conn.prepareStatement(sql);
+	   ps.setString(1, ciudad.getNombre());
+	   ps.setString(2, usuario.getUsuario());
+	   ps.setString(3, ciudad.getNombre());
+	   ps.setString(4, usuario.getUsuario());
+	   ps.setString(5, ciudad.getNombre());
+	   ps.setString(6, usuario.getUsuario());
+	   ps.setString(7, unidad);
+	   
+	   rs = ps.executeQuery();
 
-			if(rs.next()){
-				if(rs.getInt(1) >= 1){
-					if(rs.getString("nombreTecnologia") != null){
-						if(rs.getString("nombreCiudad") != null){
-							cumple = true;
-						}
-						else{
-							cumple = false;
-						}
-					}
-					else{
-						cumple = true;
-					}
-				}
-			}
-			
-			ps.close();
- 
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
- 
-		} finally {
-			if (conn != null) {
-				try {
-					conn.close();
-				} catch (SQLException e) {}
-			}
-		}
-		
-		return cumple;
-	}
+	   if(rs.next()){
+		   if(rs.getInt(1) >= 1){
+			   if(rs.getString("nombreTecnologia") != null){
+				  if(rs.getString("nombreCiudad") != null){
+					  cumple = true;
+				  }
+				  else{
+					  cumple = false;
+				  }
+			   }
+			   else{
+				   cumple = true;
+			   }
+		   }
+	   }
+	   
+	   ps.close();
+	 
+	  }catch (SQLException e) {
+		  throw new RuntimeException(e);
+	  } finally {
+		  if (conn != null) {
+			  try {
+				  conn.close();
+			  } catch (SQLException e) {}
+		  }
+	  }
+	  
+	  return cumple;
+	 }
 	
 	@Override
 	public Requisitos getRequisitos(String unidad) {

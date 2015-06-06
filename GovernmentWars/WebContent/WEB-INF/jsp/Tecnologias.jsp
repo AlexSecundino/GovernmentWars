@@ -41,6 +41,19 @@
 								cultivo para partidos como el tuto, tan solo has de saber dirigir su rabia contra el objetivo 
 								deseado. Y si lo consigues al menos te habrás echado una cervecitas.</p>
     						</c:when>
+    						    <c:when test="${tecnologia.getNombre() == 'Manifa'}">
+    							<p>¡Invéntate un motivo por el que echar a la gente a la calle y se te llenará de hippies porretas 
+								dispuestos a agarrar un megáfono para gritar al personal! Una manifestación es caldo de 
+								cultivo para partidos como el tuto, tan solo has de saber dirigir su rabia contra el objetivo 
+								deseado. Y si lo consigues al menos te habrás echado una cervecitas.</p>
+    						</c:when>
+    						<c:when test="${tecnologia.getNombre() == 'Multinacional'}">
+    							<p>Tráete del extranjero alguna de esas grandes empresas que convierten en oro todo lo que
+								tocan y tendrás tu futuro asegurado. Pero ya sabes, practica bien tus inclinaciones serviciales, 
+								pluma estilográfica preferida y un buen puñado de papeles porque tendrás que otórgales 
+								cientos de concesiones. ¿O creáis que el puesto en su empresa cuando salieses de tu puesto 
+								político era gratis?</p>
+    						</c:when>
     						<c:when test="${tecnologia.getNombre() == 'Multinacional'}">
     							<p>Tráete del extranjero alguna de esas grandes empresas que convierten en oro todo lo que
 								tocan y tendrás tu futuro asegurado. Pero ya sabes, practica bien tus inclinaciones serviciales, 
@@ -213,6 +226,7 @@ for (var i=0; i<sbm.length; i++)
 
 </body>
 </html>
+>>>>>>> refs/heads/master
 <!-- 
 
 

@@ -49,4 +49,5 @@
 						<c:if test="${log.isLeido() == false}">
 					            <td>Puto afk leelo</td> 	
 					    </c:if>
+<<<<<<< HEAD
  -->

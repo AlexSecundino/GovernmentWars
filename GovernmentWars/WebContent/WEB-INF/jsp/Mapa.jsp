@@ -17,7 +17,7 @@
 					<td>${usuario.getUsuario()}</td>
 					<td>${usuario.getFaccion()}</td>
 					<td>${usuario.getCoordenadas()}</td>
-					<td><a href="/GovernmentWars/Usuario/NuevoMensaje"><i class="fa fa-envelope"></i></a></td>
+					<td><a href="/GovernmentWars/Usuario/NuevoMensaje?destinatario=${usuario.getUsuario()}"><i class="fa fa-envelope"></i></a></td>
 					<td><a class="" href="/GovernmentWars/Juego/Atacar?usuario=${usuario.getUsuario()}&ciudad=${usuario.getnCiudad()}">Atacar</a></td>
 				</tr>
 			</c:forEach>
@@ -36,6 +36,5 @@
 </div>
 </div>
 </div>
->>>>>>> refs/heads/master
 </body>
 </html>
