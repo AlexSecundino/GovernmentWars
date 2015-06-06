@@ -53,6 +53,8 @@ public class JDBCCiudadDAO implements CiudadDAO{
 
 				ciudad.setNivelCorrupcion(rs.getInt("corrupcion"));
 				ciudad.setUltimaFechaActualizacion(rs.getDate("ultimaActualizacion"));
+				
+				System.out.println(ciudad);
 			}
 			
 			ps.close();

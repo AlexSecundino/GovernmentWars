@@ -1,6 +1,7 @@
 package Classes;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Mensaje {
@@ -12,6 +13,15 @@ public class Mensaje {
 	private String mensaje;
 	private Date fecha;
 	private boolean isLeido;
+	
+	public Mensaje(int id){
+		this.id = id;
+	}
+	
+	public Mensaje(String asunto, String mensaje){
+		this.asunto = asunto;
+		this.mensaje = mensaje;
+	}
 	
 	public Mensaje(int id, String remitente, String destinatario, String asunto, String mensaje, Date fecha, boolean isLeido){
 		
@@ -73,7 +83,7 @@ public class Mensaje {
 	public void setMensaje(String mensaje) {
 		this.mensaje = mensaje;
 	}
-
+	
 	public Date getFecha() {
 		return fecha;
 	}

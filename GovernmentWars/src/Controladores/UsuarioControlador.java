@@ -195,6 +195,29 @@ public class UsuarioControlador {
 		return "NuevoMensaje";
 	}
 	
+	@RequestMapping(value="/EnviarMensaje", method=RequestMethod.POST)
+	public String EnviarMensaje(Model modelo, HttpSession session,
+			@RequestParam("destinatario") String destinatario,
+			@RequestParam("asunto") String asunto,
+			@RequestParam("mensaje") String mensaje) {
+		
+		Mensaje msg = new Mensaje(asunto, mensaje);
+		
+		boolean correcto = false;
+		
+		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
+		
+		MensajeDAO mensajeDAO = (MensajeDAO) context.getBean("MensajeDAO");
+		
+		if(mensajeDAO.enviarMensaje((Usuario)session.getAttribute("usuario"), new Usuario(destinatario), msg)){
+			correcto = true;
+		}
+		
+		modelo.addAttribute("envioMensaje", correcto);
+		
+		return "NuevoMensaje";
+	}
+	
 	@RequestMapping(value="/CambiarPerfil", method=RequestMethod.POST)
 	public String CambiarPerfil(
 					@RequestParam("usuario") String us,

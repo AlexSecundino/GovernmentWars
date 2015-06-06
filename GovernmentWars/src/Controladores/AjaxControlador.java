@@ -15,12 +15,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import Classes.Ciudad;
 import Classes.Edificio;
+import Classes.Mensaje;
 import Classes.Recursos;
 import Classes.Tecnologia;
 import Classes.Unidad;
 import Classes.Usuario;
 import Repository.CiudadDAO;
 import Repository.EdificioDAO;
+import Repository.MensajeDAO;
 import Repository.TecnologiaDAO;
 import Repository.UnidadDAO;
 import Repository.UsuarioDAO;
@@ -96,6 +98,29 @@ public class AjaxControlador {
 		}
 		
 		return response;
+	}
+	
+	@RequestMapping(value="/EliminarMensaje", method=RequestMethod.POST)
+	public @ResponseBody String EliminarMensaje(
+				@RequestParam("id") int idMensaje,
+				HttpSession session) {
+		
+		String respuesta = "";
+		boolean response = false;
+		
+		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
+		
+		MensajeDAO mensajeDAO = (MensajeDAO) context.getBean("MensajeDAO");
+		
+		Mensaje mensaje = new Mensaje(idMensaje);
+		response = mensajeDAO.eliminarMensaje(mensaje);
+		
+		if(response)
+			respuesta = "true";
+		else
+			respuesta = "false";
+		
+		return respuesta;
 	}
 	
 	@RequestMapping(value="/ColaUnidad", method=RequestMethod.GET)

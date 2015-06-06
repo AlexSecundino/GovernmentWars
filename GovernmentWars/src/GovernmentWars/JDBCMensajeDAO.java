@@ -27,17 +27,16 @@ public class JDBCMensajeDAO implements MensajeDAO{
 		
 		boolean correcto = true;
 		
-		String sql = "Insert into Mensajes (fecha, remitente, destinatario, asunto, mensaje) values (?, ?, ?, ?, ?)";
+		String sql = "Insert into Mensajes (fecha, remitente, destinatario, asunto, mensaje) values (now(), ?, ?, ?, ?)";
 		Connection conn = null;
 		
 		try {
 			conn = dataSource.getConnection();
 			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setDate(1, new java.sql.Date(new Date().getTime()));
-			ps.setString(2, remitente.getUsuario());
-			ps.setString(3, destinatario.getUsuario());
-			ps.setString(4, mensaje.getAsunto());			
-			ps.setString(5, mensaje.getMensaje());
+			ps.setString(1, remitente.getUsuario());
+			ps.setString(2, destinatario.getUsuario());
+			ps.setString(3, mensaje.getAsunto());			
+			ps.setString(4, mensaje.getMensaje());
 			
 			ps.executeUpdate();
 			ps.close();
@@ -126,7 +125,7 @@ public class JDBCMensajeDAO implements MensajeDAO{
 		
 		List<Mensaje> listaMensajes = new ArrayList<>();
 		
-		String sql = "Select idMensaje, remitente, destinatario, asunto, mensaje, fecha, leido from mensajes where destinatario = ?";
+		String sql = "Select idMensaje, remitente, destinatario, asunto, mensaje, fecha, leido from mensajes where destinatario = ? order by fecha desc";
 		Connection conn = null;
 		ResultSet rs = null;
 		
@@ -137,7 +136,7 @@ public class JDBCMensajeDAO implements MensajeDAO{
 			rs = ps.executeQuery();
 			
 			while(rs.next()){
-				Mensaje mensaje = new Mensaje(rs.getInt("idMensaje"), rs.getString("remitente"), rs.getString("destinatario"), rs.getString("asunto"), rs.getString("mensaje"), rs.getDate("fecha"), rs.getBoolean("leido"));
+				Mensaje mensaje = new Mensaje(rs.getInt("idMensaje"), rs.getString("remitente"), rs.getString("destinatario"), rs.getString("asunto"), rs.getString("mensaje"), new Date(rs.getTimestamp("fecha").getTime()), rs.getBoolean("leido"));
 				System.out.println(mensaje);
 				listaMensajes.add(mensaje);
 			}
