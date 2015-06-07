@@ -50,8 +50,8 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav">
             <li class=""><a href="/GovernmentWars/"><span class=""></span>Inicio</a></li>
-            <li class=""><a href="/GovernmentWars/SobreNosotros"><span class=""></span>Sobre nosotros</a></li>
-            <li class=""><a href="/GovernmentWars/"><span class=""></span>Ayuda</a></li>
+            <li class=""><a href="/GovernmentWars/Conocenos"><span class=""></span>Conocenos</a></li>
+            <li class=""><a href="/GovernmentWars/Ayuda"><span class=""></span>Ayuda</a></li>
             <li class=""><a href="/GovernmentWars/"><span class=""></span>Foro</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">

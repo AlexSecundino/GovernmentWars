@@ -23,8 +23,10 @@
 		<div class="vg-normal">
 			<h1>Cola de construccion</h1>
 			<span id = 'edificio_cola'></span><span id = 'fecha_edificio'></span>
+			<br>
 			<span id = 'tecnologia_cola'></span><span id = 'fecha_tecnologia'></span>
-			
+			<br>
+			<span id = 'unidad_cola'></span><span id = 'fecha_unidad'></span>
 		</div>
 		<div style="clear:both"></div>
 	</div>
@@ -40,19 +42,22 @@
 </div>
 
 <script>
-if (localStorage.getItem("tmp_edificio") !== null) {
-	var dest = new Date(JSON.parse(localStorage.getItem('tmp_edificio')).tm);
-	$('#edificio_cola').html(JSON.parse(localStorage.getItem('tmp_edificio')).nombre+' '+JSON.parse(localStorage.getItem('tmp_edificio')).nivel+' - ');
+if (localStorage.getItem("${usuario.getUsuario()}_tmp_edificio") !== null) {
+	var dest = new Date(JSON.parse(localStorage.getItem('${usuario.getUsuario()}_tmp_edificio')).tm);
+	$('#edificio_cola').html(JSON.parse(localStorage.getItem('${usuario.getUsuario()}_tmp_edificio')).nombre+' '+JSON.parse(localStorage.getItem('${usuario.getUsuario()}_tmp_edificio')).nivel+' - ');
 	var timerId = countdown(new Date(dest),function(ts) {document.getElementById('fecha_edificio').innerHTML = ts.toHTML("strong");},null,countdown.HOURS|countdown.MINUTES|countdown.SECONDS);
 }
-if (localStorage.getItem("tmp_tecnologia") !== null) {
-	var dest = new Date(JSON.parse(localStorage.getItem('tmp_edificio')).tm);
-	$('#tecnologia_cola').html(JSON.parse(localStorage.getItem('tmp_edificio')).nombre+' '+JSON.parse(localStorage.getItem('tmp_tecnologia')).nivel+' - ');
-	var timerId = countdown(new Date(dest),function(ts) {document.getElementById('fecha_tecnologia').innerHTML = ts.toHTML("strong");},null,countdown.HOURS|countdown.MINUTES|countdown.SECONDS);
+if (localStorage.getItem("${usuario.getUsuario()}_tmp_tecnologia") !== null) {
+	var dest2 = new Date(JSON.parse(localStorage.getItem('${usuario.getUsuario()}_tmp_tecnologia')).tm);
+	$('#tecnologia_cola').html(JSON.parse(localStorage.getItem('${usuario.getUsuario()}_tmp_tecnologia')).nombre+' - ');
+	var timerId2 = countdown(new Date(dest2),function(ts) {document.getElementById('fecha_tecnologia').innerHTML = ts.toHTML("strong");},null,countdown.HOURS|countdown.MINUTES|countdown.SECONDS);
+}
+if (localStorage.getItem("${usuario.getUsuario()}_tmp_unidad") !== null) {
+	var dest3 = new Date(JSON.parse(localStorage.getItem('${usuario.getUsuario()}_tmp_unidad')).tm);
+	$('#unidad_cola').html(JSON.parse(localStorage.getItem('${usuario.getUsuario()}_tmp_unidad')).cantidad+' '+JSON.parse(localStorage.getItem('${usuario.getUsuario()}_tmp_unidad')).nombre+' - ');
+	var timerId3 = countdown(new Date(dest3),function(ts) {document.getElementById('fecha_unidad').innerHTML = ts.toHTML("strong");},null,countdown.HOURS|countdown.MINUTES|countdown.SECONDS);
 }
 
-//var dest = JSON.parse(localStorage.getItem('tmp_edificio'));
-//$('#fecha').html(countdown(null, dest.tm, units, max, digits));
 
 <c:if test="${nuevoMensaje == true}">
 	$('.msg').css("color","green");

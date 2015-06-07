@@ -9,4 +9,14 @@ public class RootControlador {
     public String root() {
         return "index";
 }
+    
+    @RequestMapping(value = "/Conocenos")
+    public String conocenos() {
+        return "Conocenos";
+}
+    
+    @RequestMapping(value = "/Ayuda")
+    public String ayuda() {
+        return "Ayuda";
+}
 }

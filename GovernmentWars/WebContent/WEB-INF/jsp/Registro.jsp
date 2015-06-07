@@ -66,8 +66,8 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav">
             <li class=""><a href="/GovernmentWars/"><span class=""></span>Inicio</a></li>
-            <li class=""><a href="/GovernmentWars/"><span class=""></span>About us</a></li>
-            <li class=""><a href="/GovernmentWars/"><span class=""></span>Ayuda</a></li>
+            <li class=""><a href="/GovernmentWars/Conocenos"><span class=""></span>Conocenos</a></li>
+            <li class=""><a href="/GovernmentWars/Ayuda"><span class=""></span>Ayuda</a></li>
             <li class=""><a href="/GovernmentWars/"><span class=""></span>Foro</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
@@ -115,7 +115,6 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
               <h4 class="modal-title" id="myModalLabel">Formulario de registro</h4>
             </div>
             <div class="modal-body">

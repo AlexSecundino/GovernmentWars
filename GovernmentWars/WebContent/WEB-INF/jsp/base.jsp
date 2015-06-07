@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,14 +22,19 @@
 				sessionStorage.removeItem('recursos');
 			});	
   			
-  			if (localStorage.getItem("tmp_edificio") !== null) {
-				var tm = JSON.parse(localStorage.getItem("tmp_edificio"));
-				checkTime(tm.tm,'tmp_edificio');
+  			if (localStorage.getItem("${usuario.getUsuario()}_tmp_edificio") !== null) {
+				var tm = JSON.parse(localStorage.getItem("${usuario.getUsuario()}_tmp_edificio"));
+				checkTime(tm.tm,'${usuario.getUsuario()}_tmp_edificio');
 			}
 			
-  			if (localStorage.getItem("tmp_tecnologia") !== null) {
-				var tm = JSON.parse(localStorage.getItem("tmp_tecnologia"));
-				checkTime(tm.tm,'tmp_tecnologia');
+  			if (localStorage.getItem("${usuario.getUsuario()}_tmp_tecnologia") !== null) {
+				var tm2 = JSON.parse(localStorage.getItem("${usuario.getUsuario()}_tmp_tecnologia"));
+				checkTime(tm2.tm,'${usuario.getUsuario()}_tmp_tecnologia');
+			}
+  			
+  			if (localStorage.getItem("${usuario.getUsuario()}_tmp_unidad") !== null) {
+				var tm3 = JSON.parse(localStorage.getItem("${usuario.getUsuario()}_tmp_unidad"));
+				checkTime(tm3.tm,'${usuario.getUsuario()}_tmp_unidad');
 			}
   			
   			if (sessionStorage.msg == 1)
@@ -36,51 +42,120 @@
   			else
   				$('.msg').css("color","#777");
   			
-  			if (typeof sm == 'undefined') {
-  				var sm = 0;
+  			
+  			if (sessionStorage.getItem('${usuario.getUsuario()}_recursos')!==null) {
+  				alert('esta la variable');
+				var sm_sobres = JSON.parse(sessionStorage.getItem('${usuario.getUsuario()}_recursos')).dsobres;
+				var sm_antena = JSON.parse(sessionStorage.getItem('${usuario.getUsuario()}_recursos')).dantena;
+				var sm_jueces = JSON.parse(sessionStorage.getItem('${usuario.getUsuario()}_recursos')).djueces;
+  			}
+  			else if (sessionStorage.getItem('${usuario.getUsuario()}_recursos')==null){
+  				alert('no esta');
+  				var sm_sobres = 0;
+				var sm_antena = 0;
+				var sm_jueces = 0;
   			}
   			
-			var timer = window.setInterval(function(){
-			number = 1200/3600;
-			number += sm;
-			intPart= getPartNumber(number,'int',16);
-			fracPart= getPartNumber(number,'frac',16);
-			fracPart= '0.'+fracPart;
-			number = 0;
-			if (intPart>=1) {
-				number=intPart;
-				sm=fracPart;
-				sm=sm*1;
-			}
-			else {
-				sm=fracPart*1;
-				sm=sm*1;
-			}
-    		document.getElementById('number1').innerHTML = document.getElementById('number1').innerHTML*1+number;
-    		document.getElementById('number2').innerHTML = document.getElementById('number2').innerHTML*1+number;
-    		document.getElementById('number3').innerHTML = document.getElementById('number3').innerHTML*1+number;	
-		}, 1000);
+  						
+			window.setInterval(function(){
+				var produccion_sobres = $('.data-get1').attr("id");
+				number_sobres = produccion_sobres*1/3600;
+				number_sobres += sm_sobres;
+				intPart_sobres= getPartNumber(number_sobres,'int',16);
+				fracPart_sobres= getPartNumber(number_sobres,'frac',16);
+				fracPart_sobres= '0.'+fracPart_sobres;
+				number_sobres = 0;
+			
+				if (intPart_sobres>=1) {
+					number_sobres=intPart_sobres;
+					sm_sobres=fracPart_sobres;
+					sm_sobres=sm_sobres*1;
+				}
+				
+				else {
+					sm_sobres=fracPart_sobres*1;
+					sm_sobres=sm_sobres*1;
+				}
+    			document.getElementById('number1').innerHTML = document.getElementById('number1').innerHTML*1+number_sobres;
+			}, 1000);
+			
+			window.setInterval(function(){
+				var produccion_antena = $('.data-get2').attr("id");
+				number_antena = produccion_antena*1/3600;
+				number_antena += sm_antena;
+				intPart_antena= getPartNumber(number_antena,'int',16);
+				fracPart_antena= getPartNumber(number_antena,'frac',16);
+				fracPart_antena= '0.'+fracPart_antena;
+				number_antena = 0;
+			
+				if (intPart_antena>=1) {
+					number_antena=intPart_antena;
+					sm_antena=fracPart_antena;
+					sm_antena=sm_antena*1;
+				}
+				
+				else {
+					sm_antena=fracPart_antena*1;
+					sm_antena=sm_antena*1;
+				}
+    			document.getElementById('number2').innerHTML = document.getElementById('number2').innerHTML*1+number_antena;
+			}, 1000);
+			
+			window.setInterval(function(){
+				var produccion_jueces = $('.data-get3').attr("id");
+				number_jueces = produccion_jueces*1/3600;
+				number_jueces += sm_jueces;
+				intPart_jueces= getPartNumber(number_jueces,'int',16);
+				fracPart_jueces= getPartNumber(number_jueces,'frac',16);
+				fracPart_jueces= '0.'+fracPart_jueces;
+				number_jueces = 0;
+			
+				if (intPart_jueces>=1) {
+					number_jueces=intPart_jueces;
+					sm_jueces=fracPart_jueces;
+					sm_jueces=sm_jueces*1;
+				}
+				
+				else {
+					sm_jueces=fracPart_jueces*1;
+					sm_jueces=sm_jueces*1;
+				}
+    			document.getElementById('number3').innerHTML = document.getElementById('number3').innerHTML*1+number_jueces;
+			}, 1000);
 		
 					
-		window.addEventListener("beforeunload", saveResources);
 		
+		window.addEventListener("beforeunload", saveResources);
+
 		window.addEventListener("load", function (event) {
-			if (sessionStorage.getItem('recursos')!== null) {
-				document.getElementById('number1').innerHTML = JSON.parse(sessionStorage.getItem('recursos')).Sobres;
-	    		document.getElementById('number2').innerHTML = JSON.parse(sessionStorage.getItem('recursos')).Antena;
-	    		document.getElementById('number3').innerHTML = JSON.parse(sessionStorage.getItem('recursos')).Jueces;
-	    		document.getElementById('number4').innerHTML = JSON.parse(sessionStorage.getItem('recursos')).Militantes;
-	    		document.getElementById('number5').innerHTML = JSON.parse(sessionStorage.getItem('recursos')).Corrupcion;
+			if (sessionStorage.getItem('${usuario.getUsuario()}recursos')!== null) {
+				document.getElementById('number1').innerHTML = JSON.parse(sessionStorage.getItem('${usuario.getUsuario()}_recursos')).Sobres;
+	    		document.getElementById('number2').innerHTML = JSON.parse(sessionStorage.getItem('${usuario.getUsuario()}_recursos')).Antena;
+	    		document.getElementById('number3').innerHTML = JSON.parse(sessionStorage.getItem('${usuario.getUsuario()}_recursos')).Jueces;
+	    		document.getElementById('number4').innerHTML = JSON.parse(sessionStorage.getItem('${usuario.getUsuario()}_recursos')).Militantes;
+	    		document.getElementById('number5').innerHTML = JSON.parse(sessionStorage.getItem('${usuario.getUsuario()}_recursos')).Corrupcion;
 			}
+			else {
+	  			var sm_sobres = 0;
+	  			var sm_antena = 0;
+	  			var sm_jueces = 0;
+			}
+				
 			event.preventDefault();
 		});
-			
+
 		function saveResources() {
-			sessionStorage.setItem('recursos', JSON.stringify( {'Sobres': document.getElementById('number1').innerHTML*1+1, 
-				'Antena': document.getElementById('number2').innerHTML*1+1, 'Jueces': document.getElementById('number3').innerHTML*1+1, 'Militantes': document.getElementById('number4').innerHTML, 
-				'Corrupcion': document.getElementById('number5').innerHTML} ));
+			sessionStorage.setItem('${usuario.getUsuario()}_recursos', JSON.stringify({
+				'Sobres': document.getElementById('number1').innerHTML*1,
+				'dsobres': sm_sobres,
+				'Antena': document.getElementById('number2').innerHTML*1,
+				'dantena': sm_antena,
+				'Jueces': document.getElementById('number3').innerHTML*1,
+				'djueces': sm_jueces,
+				'Militantes': document.getElementById('number4').innerHTML, 
+				'Corrupcion': document.getElementById('number5').innerHTML
+			}));
 		}
-		
 		
 		function checkTime(tm,tmp_c) {
     		window.setInterval(function(){
@@ -88,6 +163,14 @@
         			window.location.replace("/GovernmentWars/Usuario/Index");
         			if (typeof timerId !== 'undefined') {
         				window.clearInterval(timerId);
+        				localStorage.removeItem(tmp_c);
+        			}
+        			if (typeof timerId2 !== 'undefined') {
+        				window.clearInterval(timerId2);
+        				localStorage.removeItem(tmp_c);
+        			}
+        			if (typeof timerId3 !== 'undefined') {
+        				window.clearInterval(timerId3);
         				localStorage.removeItem(tmp_c);
         			}
         		}
@@ -107,13 +190,15 @@
     			return fracPart;
 		}
 
-			//2000recursos/hora. * 1hora/3600 segundos.  2000/3600
-
   		});
   	</script>
 </head>
 
 <body>
+<input type="hidden" class="data-get1" id="${produccion.getRecurso('Sobres')}"></input>
+<input type="hidden" class="data-get2" id="${produccion.getRecurso('Antena')}"></input>
+<input type="hidden" class="data-get3" id="${produccion.getRecurso('Jueces')}"></input>
+
 <div class="wrap-vg">
 	<div class="resources">
 	    <nav class="navbar navbar-default" role="navigation">
@@ -136,11 +221,11 @@
 	            <ul class="nav navbar-nav navbar-right">
 					<li><a href="/GovernmentWars/Usuario/Mensajes" class="msg"><i class="fa fa-diamond"></i>Mensajes</a></li>
 	                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span
-	                    class="fa fa-diamond"></span>${usuario.getUsuario()} <b class="caret"></b></a>
+	                    class="fa fa-user"></span> ${usuario.getUsuario()} <b class="caret"></b></a>
 	                    <ul class="dropdown-menu">
-	                        <li><a href="/GovernmentWars/Usuario/Perfil"><span class="glyphicon glyphicon-user"></span>Profile</a></li>
+	                        <li><a href="/GovernmentWars/Usuario/Perfil"><span class="glyphicon glyphicon-user"></span> Perfil</a></li>
 	                        <li class="divider"></li>
-	                        <li><a href="/GovernmentWars/Usuario/Logout" id="lgout"><span class="glyphicon glyphicon-off"></span>Logout</a></li>
+	                        <li><a href="/GovernmentWars/Usuario/Logout" id="lgout"><span class="glyphicon glyphicon-off"></span> Desconectarse</a></li>
 	                    </ul>
 	                </li>
 	            </ul>

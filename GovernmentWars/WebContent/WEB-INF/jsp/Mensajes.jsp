@@ -42,6 +42,7 @@ $(document).ready(function() {
 		if ($('.noleido').length==0) {
 			sessionStorage.removeItem('msg');
 		}
+		mensajeVisto($(this).attr("id"));
 });
 	
 	
@@ -67,6 +68,18 @@ $(document).ready(function() {
 		})
 	});
 	
+	function mensajeVisto(id) {
+		var parametros = {"id" : id};
+  		console.log(parametros);
+      	$.ajax({
+        	data:  parametros,
+            url:   '/GovernmentWars/Ajax/MensajeLeido',
+            type:  'post',
+            success:  function (response) {
+            	console.log("leido grabado en el server");
+            }
+      	});
+	}
 	
 	function ajax(id) {
   		var parametros = {"id" : id};
