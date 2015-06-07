@@ -90,9 +90,9 @@
 	    <div class="row">
 	    		<div class="col-md-6">
 	    			<div class="recurses">
-						<span class="rcr"><i class="fa fa-envelope" title="Sobres"></i><span>${tecnologia.getRecurso('Sobres')}</span></span>
-						<span class="rcr"><i class="fa fa-bullseye" title="Antena"></i><span>${tecnologia.getRecurso('Antena')}</span></span>
-						<span class="rcr"><i class="fa fa-gavel" title="Jueces"></i><span>${tecnologia.getRecurso('Jueces')}</span></span>
+						<span class="rcr"><i class="fa fa-envelope" title="Sobres"></i><span> ${tecnologia.getRecurso('Sobres')}</span></span>
+						<span class="rcr"><i class="fa fa-bullseye" title="Antena"></i><span> ${tecnologia.getRecurso('Antena')}</span></span>
+						<span class="rcr"><i class="fa fa-gavel" title="Jueces"></i><span> ${tecnologia.getRecurso('Jueces')}</span></span>
 					</div>
 				</div>
 				<div class="col-md-6">
@@ -104,7 +104,7 @@
 	             			<a href="javascript:void(0)" class="btn btn-primary btn-lg dsb" id="${tecnologia.getNombre()}}">Ya se ha investigado</a>
 	             		</c:if>
 	             		<c:if test="${tecnologia.isInvestigada() == false}">
-	             				<a href="javascript:void(0)" class="btn btn-primary btn-lg sbm" id="${tecnologia.getNombre()}&${edificio.formatearTiempo(edificio.getTiempoConstruccion())}">Investigar</a>
+	             				<a href="javascript:void(0)" class="btn btn-primary btn-lg sbm" id="${tecnologia.getNombre()}&${tecnologia.formatearTiempo(tecnologia.getTiempoConstruccion())}&${edificio.getRecurso('Sobres')}&${edificio.getRecurso('Antena')}&${edificio.getRecurso('Jueces')}">Investigar</a>
 	             		</c:if>
              		</c:if>
              		<a href="javascript:void(0)" class="btn btn-primary btn-lg tiempoq" disabled="disabled">${tecnologia.formatearTiempo(tecnologia.getTiempoConstruccion())}</a>
@@ -123,11 +123,14 @@
 </div>
 
 <script>
-var edificio;
+var tecnologia;
 var tiempo;
 var sobres;
+var pr_sobres;
 var antena;
+var pr_antena;
 var jueces;
+var pr_jueces;
 var militantes;
 var corrupcion;
 var sbm = $('.sbm');
@@ -136,6 +139,15 @@ var e;
 for (var i=0; i<sbm.length; i++)
 	sbm[i].addEventListener('click',inicializar,false);
 
+
+if (localStorage.getItem('${usuario.getUsuario()}_tmp_tecnologia')!==null) {
+	for (var i=0; i<sbm.length; i++) {
+		sbm[i].removeEventListener('click',inicializar);			
+	$('.sbm').html("Ya hay una tecnologia en la cola.");
+	$('.sbm').addClass("dsb");
+	$('.sbm').removeClass("sbm");
+	}
+}
   
   function inicializar(evento) {
    if (document.readyState == 'complete') {
@@ -147,6 +159,9 @@ for (var i=0; i<sbm.length; i++)
 	e = evento.target.id.split('&');
 	tecnologia = e[0];
 	tiempo = e[1];
+	pr_sobres = e[2]
+	pr_antena = e[3]
+	pr_jueces = e[4]
 	ajax();
    }
   }
@@ -157,7 +172,7 @@ for (var i=0; i<sbm.length; i++)
     	$.ajax({
       	data:  parametros,
           url:   '/GovernmentWars/Ajax/ColaTecnologia',
-          type:  'get',
+          type:  'post',
           success:  function (response) {
           	console.log(response);
           	if (response == 'true') {
@@ -206,14 +221,19 @@ for (var i=0; i<sbm.length; i++)
          			console.log('suma segundos '+e);
 
           		console.log('DESPUES DE LA MOVIDA: '+e);
-          		var cola_tecnologia = {'nombre': edificio,'tm': e};
+          		
+          		var cola_tecnologia = {'nombre': tecnologia,'tm': e};
           		
           		
-          		localStorage.setItem('tmp_tecnologia', JSON.stringify(cola_tecnologia));
+          		localStorage.setItem('${usuario.getUsuario()}_tmp_tecnologia', JSON.stringify(cola_tecnologia));
 
-          		var object = JSON.parse(localStorage.getItem('tmp_tecnologia'));
+          		var object = JSON.parse(localStorage.getItem('${usuario.getUsuario()}_tmp_tecnologia'));
           		
-          		//location.reload();
+				document.getElementById('number1').innerHTML = document.getElementById('number1').innerHTML*1 - pr_sobres*1;
+	    		document.getElementById('number2').innerHTML = document.getElementById('number2').innerHTML*1 - pr_antena*1;
+	    		document.getElementById('number3').innerHTML = document.getElementById('number3').innerHTML*1 - pr_jueces*1;
+	    		
+	    		location.reload();
           	}
           		
           	else if (response == 'false')
@@ -226,7 +246,6 @@ for (var i=0; i<sbm.length; i++)
 
 </body>
 </html>
->>>>>>> refs/heads/master
 <!-- 
 
 

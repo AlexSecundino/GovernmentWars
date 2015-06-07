@@ -1,30 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 
-	<script>
-		var unidad;
-		var cantidad;
-		var crearUnidad;
-		var xhr;
-		
-		function ajax(evento) {
-			xhr = new XMLHttpRequest();
-			xhr.addEventListener('readystatechange', gestionarRespuesta, false);
-			xhr.open('get', "/GovernmentWars/Ajax/CrearUnidad?unidad=" + unidad + "&cantidad=" + cantidad, true);
-			xhr.send(null);
-		}
-		
-		function gestionarRespuesta(evento){
-			if (evento.target.readyState == 4 && evento.target.status == 200) {	
-				if(evento.target.responseText == "true"){
-					alert("creando unidades...");
-				}
-				else{
-					alert(evento.target.responseText);	
-				}
-			}
-		}
-	
+	<script>	
 	
 		function crearUnidad(u){
 			unidad = u;
@@ -131,7 +108,9 @@
              			<a href="javascript:void(0)" class="btn btn-primary btn-lg dsb" id="${unidad.getNombre()}" title="${unidad.getRequisitos()}">No cumples los requisitos</a>
              		</c:if>
              		<c:if test="${unidad.getCumpleRequisitos() == true}">
-             			<a href="javascript:void(0)" class="btn btn-primary btn-lg sbm" id="${unidad.getNombre()}">Crear unidad</a>
+             			<a href="javascript:void(0)" class="btn btn-primary btn-lg sbm" id="${unidad.getNombre()}&${unidad.formatearTiempo(unidad.getTiempoConstruccion())}&${edificio.getRecurso('Sobres')}&${edificio.getRecurso('Antena')}&${edificio.getRecurso('Jueces')}">Crear unidad</a><input style="width: 300px; margin-top: 1px; border: none; 
+             			border-bottom: 1px solid #bbb; text-align: center; font-size: 20px; font-family: 'troika';;" type="number" name="howm" min="1" max="9999" size="4" 
+             			placeholder="...Cantidad..."/>
              		</c:if>
              		<a href="javascript:void(0)" class="btn btn-primary btn-lg tiempoq" disabled="disabled">${unidad.formatearTiempo(unidad.getTiempoConstruccion())}</a>
 				</div>
@@ -149,11 +128,129 @@
 </div>
 
 <script>
+var unidad;
+var tiempo;
+var cantidad;
+var sobres;
+var pr_sobres;
+var antena;
+var pr_antena;
+var jueces;
+var pr_jueces;
+var militantes;
+var corrupcion;
+var sbm = $('.sbm');
+var e;
 
+for (var i=0; i<sbm.length; i++)
+	sbm[i].addEventListener('click',inicializar,false);
+
+
+if (localStorage.getItem('${usuario.getUsuario()}_tmp_unidad')!==null) {
+	for (var i=0; i<sbm.length; i++) {
+		sbm[i].removeEventListener('click',inicializar);			
+	$('.sbm').html("Ya hay unidades en la cola.");
+	$('.sbm').siblings('input').attr("disabled", "disabled");
+	$('.sbm').addClass("dsb");
+	$('.sbm').removeClass("sbm");
+	}
+}
+  
+  function inicializar(evento) {
+   if (document.readyState == 'complete') {
+	sobres = $('#number1').html();
+    antena = $('#number2').html();
+	jueces = $('#number3').html();
+	militantes = $('#number4').html().substring(0, $('#number4').html().length-4);
+	corrupcion = $('#number5').html().substring(0, $('#number4').html().length-6);
+	e = evento.target.id.split('&');
+	unidad = e[0];
+	cantidad = $(this).siblings('input').val();
+	tiempo = e[1];
+	pr_sobres = e[2]
+	pr_antena = e[3]
+	pr_jueces = e[4]
+	ajax();
+   }
+  }
+ 
+  function ajax() {
+		var parametros = {"unidad" : unidad,"cantidad" : cantidad, "sobres" : sobres, "antena" : antena, "jueces" : jueces, "militantes" : militantes};
+		console.log(parametros);
+    	$.ajax({
+      	data:  parametros,
+          url:   '/GovernmentWars/Ajax/ColaUnidad',
+          type:  'post',
+          success:  function (response) {
+          	console.log(response);
+          	if (response == 'true') {
+          		
+          		tiempo = tiempo.split(':');
+          		
+          		console.log('TIEMPO QUE TARDA:');
+          		console.log(tiempo);
+          		if (tiempo.length == 3) {
+          			console.log('Sin la d');
+          			var h = tiempo[0].substring(tiempo[0],tiempo[0].length-1);
+          			var m = tiempo[1].substring(tiempo[1],tiempo[1].length-1);
+          			var s = tiempo[2].substring(tiempo[2],tiempo[2].length-1);
+          		} else if (tiempo.length == 4) {
+          			console.log('Con la d');
+          			var d = tiempo[0].substring(tiempo[0],tiempo[0].length-1);
+          			var h = tiempo[1].substring(tiempo[1],tiempo[1].length-1);
+          			var m = tiempo[2].substring(tiempo[2],tiempo[2].length-1);
+          			var s = tiempo[3].substring(tiempo[3],tiempo[3].length-1);
+          		}
+          		
+          		var e = new Date();
+          		console.log('ANTES DE LA MOVIDA: '+e);
+          		var emas;
+          		
+          		console.log('PARSEADO: '+h+' '+m+' '+s);
+          		
+          		for(var i=0; i<cantidad*1; i++) {
+          			if (typeof d !== 'undefined')
+              			emas = e.setDate(e.getDate() + d*1);
+              			
+              		if (h!=='0') {
+              				emas = e.setHours(e.getHours() + h*1);
+              				console.log('suma horas '+emas);
+              				e = new Date(emas);
+              				console.log('suma horas '+e);
+             			}
+             			if (m!=='0') {
+             				emas = e.setMinutes(e.getMinutes() + m*1);
+             				console.log('suma minutos '+emas);
+             				e = new Date(emas);
+             				console.log('suma minutos '+e);
+             			}
+             			emas = e.setSeconds(e.getSeconds() + s*1);
+             			console.log('suma segundos '+emas);
+             			e = new Date(emas);
+             			console.log('suma segundos '+e);
+
+              		console.log('DESPUES DE LA MOVIDA: '+e);          			
+          		}
+          		
+          		var cola_unidad = {'nombre': unidad,'cantidad': cantidad, 'tm': e};
+          		
+          		localStorage.setItem('${usuario.getUsuario()}_tmp_unidad', JSON.stringify(cola_unidad));
+
+          		var object = JSON.parse(localStorage.getItem('${usuario.getUsuario()}_tmp_unidad'));
+          		
+				document.getElementById('number1').innerHTML = document.getElementById('number1').innerHTML*1 - pr_sobres*1;
+	    		document.getElementById('number2').innerHTML = document.getElementById('number2').innerHTML*1 - pr_antena*1;
+	    		document.getElementById('number3').innerHTML = document.getElementById('number3').innerHTML*1 - pr_jueces*1;
+	    		
+	    		location.reload();
+          	}
+          		
+          	else if (response == 'false')
+          		alert('no tienes recursos suficientes');
+        	}
+    	});
+	}
+  
 </script>
-
 </body>
 </html>
-<!-- 
-
- -->

@@ -31,7 +31,7 @@ import Repository.UsuarioDAO;
 //@SessionAttributes({"usuario", "ciudad", "edificios", "tecnologias", "raza"})
 @RequestMapping("/Ajax")
 public class AjaxControlador {
-		
+
 	@RequestMapping(value="/Login", method=RequestMethod.POST)
 	public @ResponseBody String Login(
 				@RequestParam("usuario") String name,
@@ -47,8 +47,7 @@ public class AjaxControlador {
 			
 		Usuario usuario = new Usuario(name, password);
 		
-		if(usuarioDAO.isRegistrado(usuario)){
-			
+		if(usuarioDAO.isRegistrado(usuario)){	
 			if(usuarioDAO.isBloqueado(usuario)){
 				response = "2";
 			}
@@ -114,6 +113,8 @@ public class AjaxControlador {
 				@RequestParam("id") int id,
 				HttpSession session) {
 		
+		System.out.println(id);
+		
 		String response = "false";
 		
 		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
@@ -128,7 +129,7 @@ public class AjaxControlador {
 		
 		return response;
 	}
-	
+
 	@RequestMapping(value="/EliminarMensaje", method=RequestMethod.POST)
 	public @ResponseBody String EliminarMensaje(
 				@RequestParam("id") int idMensaje,
@@ -152,7 +153,7 @@ public class AjaxControlador {
 		return respuesta;
 	}
 	
-	@RequestMapping(value="/ColaUnidad", method=RequestMethod.GET)
+	@RequestMapping(value="/ColaUnidad", method=RequestMethod.POST)
 	public @ResponseBody String CrearUnidad(
 				@RequestParam("unidad") String unidad,
 				@RequestParam("cantidad") int cantidad,
@@ -189,7 +190,7 @@ public class AjaxControlador {
 		return respuesta;
 	}
 	
-	@RequestMapping(value="/ColaEdificio", method=RequestMethod.GET)
+	@RequestMapping(value="/ColaEdificio", method=RequestMethod.POST)
 	public @ResponseBody String CrearColaEdifio(
 				@RequestParam("edificio") String nEdificio,
 				@RequestParam("nivel") int nivel,
@@ -224,7 +225,7 @@ public class AjaxControlador {
 		return respuesta;
 	}
 	
-	@RequestMapping(value="/ColaTecnologia", method=RequestMethod.GET)
+	@RequestMapping(value="/ColaTecnologia", method=RequestMethod.POST)
 	public @ResponseBody String CrearColaTecnologia(
 				@RequestParam("tecnologia") String nTecnologia,
 				@RequestParam("sobres") long sobres,

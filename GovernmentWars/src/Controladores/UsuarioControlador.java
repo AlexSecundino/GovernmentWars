@@ -90,8 +90,7 @@ public class UsuarioControlador {
 		
 		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 		
-		UsuarioDAO usuarioDAO = (UsuarioDAO) context.getBean("UsuarioDAO");
-		
+		UsuarioDAO usuarioDAO = (UsuarioDAO) context.getBean("UsuarioDAO");		
 		
 		MensajeDAO mensajeDAO = (MensajeDAO) context.getBean("MensajeDAO");
 		UnidadDAO unidadDAO = (UnidadDAO) context.getBean("UnidadDAO");
@@ -99,7 +98,9 @@ public class UsuarioControlador {
 		CiudadDAO ciudadDAO = (CiudadDAO) context.getBean("CiudadDAO");
 		
 		Usuario usuario = (Usuario)session.getAttribute("usuario");
+
 		Ciudad ciudad = (Ciudad)session.getAttribute("ciudad");
+
 		
 		/*Actualizar ciudad*/
 		if(colasDAO.implementarColas(usuario, ciudad)){
@@ -225,22 +226,21 @@ public class UsuarioControlador {
 	
 	@RequestMapping(value="/CambiarPerfil", method=RequestMethod.POST)
 	public String CambiarPerfil(
-					@RequestParam("usuario") String us,
 					@RequestParam("genero") String genero,
-					@RequestParam("descripcion") String descripcion,
+					@RequestParam("desc") String descripcion,
 					@RequestParam("pais") String pais,
 					HttpSession session,
 					Model modelo) {
+		System.out.println("genero: " + genero);
 		
 		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 		
 		UsuarioDAO usuarioDAO = (UsuarioDAO) context.getBean("UsuarioDAO");
 		
-		Usuario usuario = new Usuario();
-		usuario.setUsuario(us);
+		Usuario usuario = (Usuario)session.getAttribute("usuario");
 		
 		if(genero != null){
-			if(genero.equals(Gender.Hombre)){
+			if(genero.equals(Gender.Hombre.toString())){
 				usuario.setGenero(Gender.Hombre);
 			}
 			else{
@@ -266,9 +266,11 @@ public class UsuarioControlador {
 		}
 		
 		if(usuarioDAO.actualizarPerfil(usuario)){
+			System.out.println("si");
 			modelo.addAttribute("correcto", true);
 		}
 		else{
+			System.out.println("no");
 			modelo.addAttribute("correcto", false);
 		}
 		

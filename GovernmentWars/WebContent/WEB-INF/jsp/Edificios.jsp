@@ -59,7 +59,7 @@
 					</div>
 				</div>
 				<div class="col-md-6">
-					<a href="javascript:void(0)" class="btn btn-primary btn-lg sbm" id="${edificio.getNombre()}&${edificio.getNivel()}&${edificio.formatearTiempo(edificio.getTiempoConstruccion())}">Subir nivel</a>
+					<a href="javascript:void(0)" class="btn btn-primary btn-lg sbm" id="${edificio.getNombre()}&${edificio.getNivel()}&${edificio.formatearTiempo(edificio.getTiempoConstruccion())}&${edificio.getRecurso('Sobres')}&${edificio.getRecurso('Antena')}&${edificio.getRecurso('Jueces')}">Subir nivel</a>
 					<a href="javascript:void(0)" class="btn btn-primary btn-lg tiempoq" disabled="disabled">${edificio.formatearTiempo(edificio.getTiempoConstruccion())}</a>
 				</div>
 	   	</div>
@@ -81,8 +81,11 @@ var edificio;
 var tiempo;
 var nivel;
 var sobres;
+var pr_sobres;
 var antena;
+var pr_antena;
 var jueces;
+var pr_jueces;
 var militantes;
 var corrupcion;
 var sbm = $('.sbm');
@@ -91,7 +94,16 @@ var e;
 for (var i=0; i<sbm.length; i++)
 	sbm[i].addEventListener('click',inicializar,false);
 
-  
+
+if (localStorage.getItem('${usuario.getUsuario()}_tmp_edificio')!==null) {
+	for (var i=0; i<sbm.length; i++) {
+		sbm[i].removeEventListener('click',inicializar);			
+	$('.sbm').html("Ya hay un edificio en la cola.");
+	$('.sbm').addClass("dsb");
+	$('.sbm').removeClass("sbm");
+	}
+}
+
   function inicializar(evento) {
    if (document.readyState == 'complete') {
 	sobres = $('#number1').html();
@@ -103,6 +115,9 @@ for (var i=0; i<sbm.length; i++)
 	edificio = e[0];
 	nivel = e[1];
 	tiempo = e[2];
+	pr_sobres = e[3]
+	pr_antena = e[4]
+	pr_jueces = e[5]
 	ajax();
    }
   }
@@ -113,7 +128,7 @@ for (var i=0; i<sbm.length; i++)
       	$.ajax({
         	data:  parametros,
             url:   '/GovernmentWars/Ajax/ColaEdificio',
-            type:  'get',
+            type:  'post',
             success:  function (response) {
             	console.log(response);
             	if (response == 'true') {
@@ -165,11 +180,15 @@ for (var i=0; i<sbm.length; i++)
             		var cola_edificio = {'nombre': edificio, 'nivel' : nivel*1+1, 'tm': e};
             		
             		
-            		localStorage.setItem('tmp_edificio', JSON.stringify(cola_edificio));
+            		localStorage.setItem('${usuario.getUsuario()}_tmp_edificio', JSON.stringify(cola_edificio));
 
-            		var object = JSON.parse(localStorage.getItem('tmp_edificio'));
+            		var object = JSON.parse(localStorage.getItem('${usuario.getUsuario()}_tmp_edificio'));
             		
-            		//location.reload();
+    				document.getElementById('number1').innerHTML = document.getElementById('number1').innerHTML*1 - pr_sobres*1;
+    	    		document.getElementById('number2').innerHTML = document.getElementById('number2').innerHTML*1 - pr_antena*1;
+    	    		document.getElementById('number3').innerHTML = document.getElementById('number3').innerHTML*1 - pr_jueces*1;
+            		
+            		location.reload();
             	}
             		
             	else if (response == 'false')
@@ -202,9 +221,13 @@ CODIGO USABLE:
     var cola_unidades = {'nombre': tecnologia, 'num': 'cantidad', 'tm': e.getTime()};
     
     localStorage.setItem('tmp_edificio', JSON.stringify(object));
+<<<<<<< HEAD
     localStorage.setItem('tmp_edificio', JSON.stringify(object));
 <<<<<<< HEAD
 >>>>>>> refs/heads/master
 =======
+>>>>>>> refs/heads/master
+=======
+    localStorage.setItem('tmp_edificio', JSON.stringify(object));
 >>>>>>> refs/heads/master
  -->

@@ -14,6 +14,6 @@ public interface MensajeDAO {
 	public boolean mensajeLeido(Mensaje mensaje);
 	
 	public boolean comprobarNuevoMensaje(Usuario destinatario);
-	
-	public List<Mensaje> cargarMensajes(Usuario destinatario); 
+
+	public List<Mensaje> cargarMensajes(Usuario destinatario);
 }

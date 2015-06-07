@@ -173,8 +173,8 @@ public class JDBCTecnologiaDAO implements TecnologiaDAO{
 		List<Tecnologia> listaTecnologias = new ArrayList<Tecnologia>();
 		
 		/*Saca los datos de las tecnologias nombre, tiempo y recursos que costaria investigarlas y te indica las que tienes creadas*/
-		String sql = "Select ctec.nombre, ctec.nombreCiudad, tec.nombre as nombreTec, bonus, antena, sobres, jueces, tiempo from Ciudad_Tecnologias ctec right join (select * from tecnologias where raza is null or raza = ?) as tec"
-				+ " on tec.nombre = ctec.nombre where ((nombreCiudad = ? or nombreCiudad is null) and (usuario = ? or usuario is null))";
+		String sql = "Select ctec.nombre, ctec.nombreCiudad, tec.nombre as nombreTec, bonus, antena, sobres, jueces, tiempo from Ciudad_Tecnologias ctec right join (select * from tecnologias where raza is null or raza = ?) as tec "
+				+ "on tec.nombre = ctec.nombre where ((nombreCiudad = ? or nombreCiudad is null or nombreCiudad != ?) and (usuario = ? or usuario is null or usuario != ?))";
 		Connection conn = null;
 		ResultSet rs = null;
 		
@@ -183,7 +183,9 @@ public class JDBCTecnologiaDAO implements TecnologiaDAO{
 			PreparedStatement ps = conn.prepareStatement(sql);
 			ps.setString(1, raza);
 			ps.setString(2, ciudad.getNombre());
-			ps.setString(3, usuario.getUsuario());
+			ps.setString(3, ciudad.getNombre());
+			ps.setString(4, usuario.getUsuario());
+			ps.setString(5, usuario.getUsuario());
 			
 			rs = ps.executeQuery();
 

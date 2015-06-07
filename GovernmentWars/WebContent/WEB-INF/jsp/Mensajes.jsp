@@ -9,7 +9,7 @@
 				<c:forEach items ="${listaMensajes}" var="mensaje">
 				<fmt:formatDate value="${mensaje.getFecha()}" var="dateString" pattern="dd/MM HH:mm"/>
 					<c:if test="${mensaje.isLeido() == false}">
-	    				<div class="nat-accordion-button clearfix noleido">${mensaje.getAsunto()}<div class="remitent">${mensaje.getRemitente()}</div><div>${dateString}</div></div>
+	    				<div class="nat-accordion-button clearfix noleido" id="${mensaje.getId()}">${mensaje.getAsunto()}<div class="remitent">${mensaje.getRemitente()}</div><div>${dateString}</div></div>
 	    			</c:if>
 	    			<c:if test="${mensaje.isLeido() == true}">
 	    				<div class="nat-accordion-button clearfix">${mensaje.getAsunto()}<div class="remitent">${mensaje.getRemitente()}</div><div>${dateString}</div></div>
@@ -42,6 +42,7 @@ $(document).ready(function() {
 		if ($('.noleido').length==0) {
 			sessionStorage.removeItem('msg');
 		}
+		mensajeVisto($(this).attr("id"));
 });
 	
 	
@@ -67,6 +68,18 @@ $(document).ready(function() {
 		})
 	});
 	
+	function mensajeVisto(id) {
+		var parametros = {"id" : id};
+  		console.log(parametros);
+      	$.ajax({
+        	data:  parametros,
+            url:   '/GovernmentWars/Ajax/MensajeLeido',
+            type:  'post',
+            success:  function (response) {
+            	console.log("leido grabado en el server");
+            }
+      	});
+	}
 	
 	function ajax(id) {
   		var parametros = {"id" : id};
