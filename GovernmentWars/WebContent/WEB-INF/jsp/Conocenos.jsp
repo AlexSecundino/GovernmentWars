@@ -33,7 +33,7 @@
  
 <body>
   <div class="wrap">
-    <header class="page-header"><h1>LOGO COOL >:)</h1></header>
+     <header class="page-header"><img src="<c:url value='/resources/img/logo_gw.jpg'/>"></header>
     
     <div class="menu">
       <ul class="navbar navbar-default cpp" role="navigation">
@@ -56,7 +56,7 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="reg"><a href="javascript:void(0)">Identificarse</a></li>
-            <div class="hid">
+            <div class="hid" style="display:none">
               <em></em>
               <form id='ff'>
                 <fieldset>
@@ -123,22 +123,40 @@
 
       
     </div>
-    <footer><div class="foot"></div></footer>
+    <footer>
+    	<div class="foot">
+    		<div class="ccommons">
+    			<img src="<c:url value='/resources/img/cc.png'/>">
+    		</div>
+    		<div class="social-media">
+    			<a href="http://facebook.com"><img src="<c:url value='/resources/img/facebook.png'/>"></a>
+    			<a href="http://twitter.com"><img src="<c:url value='/resources/img/twitter.png'/>"></a>
+    			<a href="http://youtube.com"><img src="<c:url value='/resources/img/youtube.png'/>"></a>
+    			<a href="http://linkedin.com"><img src="<c:url value='/resources/img/linkedin.png'/>"></a>
+    			<a href="https://github.com/AlexSecundino/GovernmentWars"><img src="<c:url value='/resources/img/github.png'/>"></a>
+    		</div>
+    	</div>
+    </footer>
   </div>
 
-<script>
-  $(document).ready(function() {
-    var pathArray = window.location.pathname.split( '/' );
-    var actual = pathArray[pathArray.length-1];
-    console.log($('a[href="' + actual + '"]'));
-    $('a[href="' + actual + '"]').parent().addClass('active');
-  });
-  
-  $('#ff input').keydown(function(e) {
-	    if (e.keyCode == 13) {
-	        $('#ffc').click();
-	  	}
-  });
+<script>  
+$(document).ready(function() {
+	//BIND DEL BORDER-BOTTOM A PAGINA ACTUAL
+	var pathArray = window.location.pathname.split( '/' );
+	if (pathArray[2]=='') {
+		$('a[href="' + /GovernmentWars/ + '"]').parent().addClass('active');
+	} else {
+		var actual = pathArray[2];
+		$('a[href="/GovernmentWars/' + actual + '"]').parent().addClass('active');
+	}
+	
+	//BIND DE LOGIN CON ENTER
+	$('#ff input').keydown(function(e) {
+		if (e.keyCode == 13) {
+			$('#ffc').click();
+	 	}
+	});
+});
 </script>
 
 <script>
@@ -146,7 +164,6 @@
   var usuario;
   var pass;
   var xhr;
-  
   var registro;
   
   document.addEventListener('readystatechange', inicializar, false);
@@ -155,7 +172,7 @@
    if (document.readyState == 'complete') {
     usuario = document.getElementById("usuario");
     pass = document.getElementById("password");
-    login = document.getElementById("ff");
+    login = document.getElementById("ffc");
     login.addEventListener('click', ajax, false);
    }
   }
@@ -167,7 +184,7 @@
     login.disabled = true;
     xhr = new XMLHttpRequest();
     xhr.addEventListener('readystatechange', gestionarRespuesta, false);
-    xhr.open('get', "/GovernmentWars/Ajax/Login?usuario=" + usuario.value + "&password=" + password.value, true);
+    xhr.open('post', "/GovernmentWars/Ajax/Login?usuario=" + usuario.value + "&password=" + password.value, true);
     xhr.send(null);
    }
   }
@@ -179,10 +196,10 @@
      location.href = "/GovernmentWars/Usuario/Index";
     }
     else if(evento.target.responseText == "2"){
-    	alert("estas bloqueado pinche la wea!! report!!!");
+    	alert("Lo sentimos, tu usuario se encuentra bloqueado por alguna razón.");
     }
     else{
-     alert("usuario o pass incorrectas"); 
+     alert("Usuario o password incorrectos."); 
     }
    }
   }

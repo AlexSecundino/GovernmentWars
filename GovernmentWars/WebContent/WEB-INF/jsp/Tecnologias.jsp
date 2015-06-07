@@ -9,7 +9,32 @@
 	    		<div class="col-md-6">
 					<div class="ccdd">
 						<h1>${tecnologia.getNombre()}</h1>
-						<img src="<c:url value='/resources/img/edif.jpg'/>" alt="">     
+						<c:choose>
+    						<c:when test="${tecnologia.getNombre() == 'Maletines con doble fondo'}">
+    							<img src="<c:url value='/resources/img/maletin.png'/>" alt="">
+    						</c:when>
+    						<c:when test="${tecnologia.getNombre() == 'Diputacion'}">
+    							<img src="<c:url value='/resources/img/congreso.png'/>" alt="">
+    						</c:when>
+    						<c:when test="${tecnologia.getNombre() == 'Ministerio'}">
+    							<img src="<c:url value='/resources/img/ministerio.png'/>" alt="">
+    						</c:when>
+    						<c:when test="${tecnologia.getNombre() == 'Manifa'}">
+    							<img src="<c:url value='/resources/img/manifa.png'/>" alt="">
+    						</c:when>
+    						<c:when test="${tecnologia.getNombre() == 'Multinacional'}">
+    							<img src="<c:url value='/resources/img/multinacional.png'/>" alt="">
+    						</c:when>
+    						<c:when test="${tecnologia.getNombre() == 'Estado Policial'}">
+    							<img src="<c:url value='/resources/img/estadopolicial.png'/>" alt="">
+    						</c:when>
+    						<c:when test="${tecnologia.getNombre() == 'Pancartas'}">
+    							<img src="<c:url value='/resources/img/pancartas.png'/>" alt="">
+    						</c:when>
+    						<c:when test="${tecnologia.getNombre() == 'Lanzapelotas'}">
+    							<img src="<c:url value='/resources/img/lanzapelotas.jpg'/>" alt="">
+    						</c:when>
+						</c:choose>
 				    </div>
 				</div> 
 	    		<div class="col-md-6">
@@ -41,19 +66,6 @@
 								cultivo para partidos como el tuto, tan solo has de saber dirigir su rabia contra el objetivo 
 								deseado. Y si lo consigues al menos te habrás echado una cervecitas.</p>
     						</c:when>
-    						    <c:when test="${tecnologia.getNombre() == 'Manifa'}">
-    							<p>¡Invéntate un motivo por el que echar a la gente a la calle y se te llenará de hippies porretas 
-								dispuestos a agarrar un megáfono para gritar al personal! Una manifestación es caldo de 
-								cultivo para partidos como el tuto, tan solo has de saber dirigir su rabia contra el objetivo 
-								deseado. Y si lo consigues al menos te habrás echado una cervecitas.</p>
-    						</c:when>
-    						<c:when test="${tecnologia.getNombre() == 'Multinacional'}">
-    							<p>Tráete del extranjero alguna de esas grandes empresas que convierten en oro todo lo que
-								tocan y tendrás tu futuro asegurado. Pero ya sabes, practica bien tus inclinaciones serviciales, 
-								pluma estilográfica preferida y un buen puñado de papeles porque tendrás que otórgales 
-								cientos de concesiones. ¿O creáis que el puesto en su empresa cuando salieses de tu puesto 
-								político era gratis?</p>
-    						</c:when>
     						<c:when test="${tecnologia.getNombre() == 'Multinacional'}">
     							<p>Tráete del extranjero alguna de esas grandes empresas que convierten en oro todo lo que
 								tocan y tendrás tu futuro asegurado. Pero ya sabes, practica bien tus inclinaciones serviciales, 
@@ -82,7 +94,6 @@
 								porra? ¡Ahora tienes la solución! ¡Dispárales con pelotas de goma y verás cómo se retuercen 
 								de dolor! Garantizado.</p>
     						</c:when>
-    						
 						</c:choose>
 	    			</div>
 	    		</div>

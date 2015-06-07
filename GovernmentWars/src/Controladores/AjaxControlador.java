@@ -211,8 +211,8 @@ public class AjaxControlador {
 		Edificio edificio = new Edificio(nEdificio, nivel);
 		
 		HashMap<Recursos, Long> recursos = new HashMap<Recursos, Long>();
-		recursos.put(Recursos.Antena, sobres);
-		recursos.put(Recursos.Sobres, antena);
+		recursos.put(Recursos.Sobres, sobres);
+		recursos.put(Recursos.Antena, antena);
 		recursos.put(Recursos.Jueces, jueces);
 		
 		response = edificioDAO.crearCola((Usuario)session.getAttribute("usuario"), (Ciudad)session.getAttribute("ciudad"), edificio, recursos);
@@ -243,8 +243,8 @@ public class AjaxControlador {
 		Tecnologia tecnologia = new Tecnologia(nTecnologia);
 		
 		HashMap<Recursos, Long> recursos = new HashMap<Recursos, Long>();
-		recursos.put(Recursos.Antena, sobres);
-		recursos.put(Recursos.Sobres, antena);
+		recursos.put(Recursos.Sobres, sobres);
+		recursos.put(Recursos.Antena, antena);
 		recursos.put(Recursos.Jueces, jueces);
 		
 		response = tecnologiaDao.crearCola((Usuario)session.getAttribute("usuario"), (Ciudad)session.getAttribute("ciudad"), tecnologia, recursos);

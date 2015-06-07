@@ -37,18 +37,13 @@
 
       $(".obj img").click(function(event) { 
       });
-
-
-    // CLICK FUERA Y DESAPARECE DIV
-
-    // ################
     });
   </script>
 </head>
  
 <body>
   <div class="wrap">
-    <header class="page-header"><h1>LOGO COOL >:)</h1></header>
+     <header class="page-header"><img src="<c:url value='/resources/img/logo_gw.jpg'/>"></header>
     
     <!-- <img class=".img-responsive" src="gov.png" alt="GovWars"> -->
     <div class="menu">
@@ -68,11 +63,11 @@
             <li class=""><a href="/GovernmentWars/"><span class=""></span>Inicio</a></li>
             <li class=""><a href="/GovernmentWars/Conocenos"><span class=""></span>Conocenos</a></li>
             <li class=""><a href="/GovernmentWars/Ayuda"><span class=""></span>Ayuda</a></li>
-            <li class=""><a href="/GovernmentWars/"><span class=""></span>Foro</a></li>
+            <li class=""><a href="/GovernmentWars/Foro"><span class=""></span>Foro</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li class="reg"><a href="#">Login</a></li>
-            <div class="hid">
+            <li class="reg"><a href="#">Identificarse</a></li>
+            <div class="hid" style="display:none">
               <em></em>
               <form action="" id='ff'>
                 <fieldset>
@@ -101,11 +96,11 @@
             </div>
             <div class="col-md-4 obj">
               <img src="<c:url value='/resources/img/edificio2.png'/>" data-toggle="modal" data-target="#basicModal">
-              <h1>Centro</h1>
+              <h1>Social-democracia</h1>
             </div>
             <div class="col-md-4 obj">
               <img src="<c:url value='/resources/img/corona2.png'/>" data-toggle="modal" data-target="#basicModal">
-              <h1>Derecha</h1>
+              <h1>Liberalismo</h1>
             </div>
           </div>
         </div>
@@ -138,27 +133,34 @@
 	   </div>
 
     </div>
-
-    <footer><div class="foot"></div></footer>
+    <footer>
+    	<div class="foot">
+    		<div class="ccommons">
+    			<img src="<c:url value='/resources/img/cc.png'/>">
+    		</div>
+    		<div class="social-media">
+    			<a href="http://facebook.com"><img src="<c:url value='/resources/img/facebook.png'/>"></a>
+    			<a href="http://twitter.com"><img src="<c:url value='/resources/img/twitter.png'/>"></a>
+    			<a href="http://youtube.com"><img src="<c:url value='/resources/img/youtube.png'/>"></a>
+    			<a href="http://linkedin.com"><img src="<c:url value='/resources/img/linkedin.png'/>"></a>
+    			<a href="https://github.com/AlexSecundino/GovernmentWars"><img src="<c:url value='/resources/img/github.png'/>"></a>
+    		</div>
+    	</div>
+    </footer>
   </div>
     
     
-<script>
-  $(document).ready(function() {
-    var pathArray = window.location.pathname.split( '/' );
-    var actual = pathArray[pathArray.length-1];
-    console.log($('a[href="' + actual + '"]'));
-    $('a[href="' + actual + '"]').parent().addClass('active');
-  });
-  
-  $('#ff input').keydown(function(e) {
-	    if (e.keyCode == 13) {
-	        $('#ffc').click();
-	  	}
+<script>  
+$(document).ready(function() {
+	//BIND DE LOGIN CON ENTER
+	$('#ff input').keydown(function(e) {
+		if (e.keyCode == 13) {
+			$('#ffc').click();
+	 	}
 	});
+});
 </script>
 
-  
 <script>
   var raza;
   
@@ -175,7 +177,52 @@
   });
 </script>
 
+<script>
+  var login;
+  var usuario;
+  var pass;
+  var xhr;
+  
+  var registro;
+  
+  document.addEventListener('readystatechange', inicializar, false);
 
+  function inicializar() {
+   if (document.readyState == 'complete') {
+    usuario = document.getElementById("usuario");
+    pass = document.getElementById("password");
+    login = document.getElementById("ffc");
+    login.addEventListener('click', ajax, false);
+   }
+  }
+  
+  function ajax(evento) {
+
+
+   if (usuario.value != "" && pass.value != "") {
+    login.disabled = true;
+    xhr = new XMLHttpRequest();
+    xhr.addEventListener('readystatechange', gestionarRespuesta, false);
+    xhr.open('post', "/GovernmentWars/Ajax/Login?usuario=" + usuario.value + "&password=" + password.value, true);
+    xhr.send(null);
+   }
+  }
+  
+  function gestionarRespuesta(evento){
+   if (evento.target.readyState == 4 && evento.target.status == 200) {
+    login.disabled = false;
+    if(evento.target.responseText == "1"){
+     location.href = "/GovernmentWars/Usuario/Index";
+    }
+    else if(evento.target.responseText == "2"){
+    	alert("Lo sentimos, tu usuario se encuentra bloqueado por alguna razón.");
+    }
+    else{
+     alert("Usuario o password incorrectos."); 
+    }
+   }
+  }
+</script>
 </body>
 
 </html>

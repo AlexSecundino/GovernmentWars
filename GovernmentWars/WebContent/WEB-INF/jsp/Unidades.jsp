@@ -25,12 +25,31 @@
 	    		<div class="col-md-6">
 					<div class="ccdd">
 						<h1>${unidad.getNombre()}</h1>
-						<img src="<c:url value='/resources/img/edif.jpg'/>" alt="">     
+						<c:choose>
+    						<c:when test="${unidad.getNombre() == 'Repartepanfletos'}">
+    							<img src="<c:url value='/resources/img/repartepanfletos.png'/>" alt="">
+    						</c:when>
+    						<c:when test="${unidad.getNombre() == 'Diputado'}">
+    							<img src="<c:url value='/resources/img/diputado.png'/>" alt="">
+    						</c:when>
+    						<c:when test="${unidad.getNombre() == 'Ministro'}">
+    							<img src="<c:url value='/resources/img/ministro.png'/>" alt="">
+    						</c:when>
+    						<c:when test="${unidad.getNombre() == 'Antidisturbios'}">
+    							<img src="<c:url value='/resources/img/antidisturbios.png'/>" alt="">
+    						</c:when>
+    						<c:when test="${unidad.getNombre() == 'Empresario'}">
+    							<img src="<c:url value='/resources/img/empresario.png'/>" alt="">
+    						</c:when>
+    						<c:when test="${unidad.getNombre() == 'Perroflauta'}">
+    							<img src="<c:url value='/resources/img/perroflauta.png'/>" alt="">
+    						</c:when>
+						</c:choose>    
 				    </div>
 				</div> 
 	    		<div class="col-md-6">
 	    			<div class="ccdd2np">
-	    				<h2>${unidad.getAtaque()}/${unidad.getSpeed()}/${unidad.getDefensa()}/${unidad.getCapacidad()}</h2>
+	    				<h2>A${unidad.getAtaque()}/V${unidad.getSpeed()}/D${unidad.getDefensa()}/C${unidad.getCapacidad()}</h2>
 	    				<c:choose>
     						<c:when test="${unidad.getNombre() == 'Repartepanfletos'}">
     							<p>Por algún lado se empieza, y en la política este lado se trata de patearte las

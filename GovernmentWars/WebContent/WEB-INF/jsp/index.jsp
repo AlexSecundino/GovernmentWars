@@ -23,17 +23,13 @@
           else
             $(".hid").hide(1);
       })
-
-      // CLICK FUERA Y DESAPARECE DIV
-
-      // ################
     });
   </script>
 </head>
  
 <body>
   <div class="wrap">
-    <header class="page-header"><h1>LOGO COOL >:)</h1></header>
+    <header class="page-header"><img src="<c:url value='/resources/img/logo_gw.jpg'/>"></header>
     
     <div class="menu">
       <ul class="navbar navbar-default cpp" role="navigation">
@@ -52,11 +48,11 @@
             <li class=""><a href="/GovernmentWars/"><span class=""></span>Inicio</a></li>
             <li class=""><a href="/GovernmentWars/Conocenos"><span class=""></span>Conocenos</a></li>
             <li class=""><a href="/GovernmentWars/Ayuda"><span class=""></span>Ayuda</a></li>
-            <li class=""><a href="/GovernmentWars/"><span class=""></span>Foro</a></li>
+            <li class=""><a href="/GovernmentWars/Foro"><span class=""></span>Foro</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="reg"><a href="javascript:void(0)">Identificarse</a></li>
-            <div class="hid">
+            <div class="hid" style="display:none">
               <em></em>
               <form id='ff'>
                 <fieldset>
@@ -116,7 +112,7 @@
             <div class="col-md-4">
               <div class="nall">
                 <div class="nt pb-20">
-                  <img src="<c:url value='/resources/img/edif.jpg'/>">
+                  <img src="<c:url value='/resources/img/construye.png'/>">
                 </div>
                 <div class="nc ">
                   <h1>Construye</h1>
@@ -130,7 +126,7 @@
             <div class="col-md-4">
               <div class="nall">
                 <div class="nt pb-20">
-                  <img src="<c:url value='/resources/img/edif.jpg'/>">
+                  <img src="<c:url value='/resources/img/lucha.png'/>">
                 </div>
               <div class="nc">
                   <h1>Combate</h1>
@@ -144,7 +140,7 @@
             <div class="col-md-4">
               <div class="nall">
                 <div class="nt pb-20">
-                  <img src="<c:url value='/resources/img/edif.jpg'/>">
+                  <img src="<c:url value='/resources/img/investiga.png'/>">
                 </div>
                 <div class="nc">
                   <h1>Investiga</h1>
@@ -172,37 +168,102 @@
             <div class="col-md-12 pl-20">
               <div class="col-md-4 obj">
               <img src="<c:url value='/resources/img/anarchy2.png'/>">
-              <h1>Izquierda</h1>
+              <div class="texto-facc" style="display:none">
+              	<p>Ya sabes de qué va todo esto. Denuncia social, derechos de los animales, perroflautismo, 
+				vegetarianismo…. ¡Sé todo lo rebelde que siempre has querido ser! ¡Coge tus rotuladores y 
+				hazte una pancarta para la primera manifestación que encuentres! ¡O únete a una banda de 
+				rock y abofetea a los corruptos con tu música infernal!
+				Claro, que también puedes montar un partido y tratar de sacar de juego a los malos. Incluso 
+				puedes enriquecerte un poco mientras llevas a cabo esta lucha. ¿Qué son unos cuantos miles 
+				de euros en tu bolsillo cuando estás luchando por el pueblo? Pero mejor que nadie se dé 
+				cuenta, no querrás perder el amor de tus electores. ¿O sí?</p>
+              </div>
+              <h1>Anarquia</h1>
             </div>
             <div class="col-md-4 obj">
               <img src="<c:url value='/resources/img/edificio2.png'/>">
-              <h1>Centro</h1>
+              <div class="texto-facc" style="display:none">
+              	<p>Ni frío ni calor, lo moderado es cómodo, amigable, calmado. ¿Que la mayoría del pueblo dice
+				que desea el derecho a matrimonio de sus mascotas? Pues se le concede. ¿Que la mayoría 
+				ahora decide establecer como fiesta nacional el día de “Corremos Todos en Pelota Picada”? 
+				Pues nada, a quitarse todos la ropa y a correr. ¿Que la mayoría dictamina que se ha de bajar el 
+				sueldo a los políticos? Bueno… Tampoco nos pasemos. ¿Eh?
+				Asóciate con los presidentes de las mayores empresas, procura cosechar este tipo de 
+				relaciones y cuando te jubiles podrás trabajar en 4 puestos diferentes, en 3 empresas distintas, 
+				simultáneamente. ¿Quién dijo que la omnipresencia era solo para divinidades? Y si las cosas 
+				empiezan a ir mal desborda a los periodistas con una lluvia de billetes, o con una de falacias 
+				mientras te escabulles por la puerta trasera.</p>
+              </div>
+              <h1>Social-democracia</h1>
             </div>
             <div class="col-md-4 obj">
               <img src="<c:url value='/resources/img/corona2.png'/>">
-              <h1>Derecha</h1>
+              <div class="texto-facc" style="display:none">
+              	<p>Todos son unos mariquitas, rojos, ateos, populistas, cobardes, desertores… ¡Todos menos tú y
+				los que piensan como tú! Sabes lo que es lo mejor para tu país, sabes que lo que siempre ha 
+				funcionado jamás dejará de hacerlo. ¿Por qué todos se empeñan en cambiar las cosas cuando 
+				todo está perfecto tal y como están? Al servicio militar os enviaba yo a todos a que 
+				aprendieseis un poco de disciplina.
+				Defiende los valores fundamentales de una sociedad pura, decente y tradicional. Ponte la 
+				bandera patria por capa y lucha contra todos los engendros abominables que desean manchar 
+				el honor de tu país. Construye un muro lo más alto posible para que nadie ni nada pueda 
+				traspasar tus fronteras y mancillar tu cultura. Y si la gente se queja ya sabes, somanta de palos 
+				y  que se paguen las facturas del médico. ¿Qué el servicio médico es gratuito? Bueno, bueno, 
+				eso ya lo veremos.</p>
+              </div>
+              <h1>Liberalismo</h1>
             </div>
             </div>
           </div>
         </div>  
       </section>
     </div>
-    <footer><div class="foot"></div></footer>
+    <footer>
+    	<div class="foot">
+    		<div class="ccommons">
+    			<img src="<c:url value='/resources/img/cc.png'/>">
+    		</div>
+    		<div class="social-media">
+    			<a href="http://facebook.com"><img src="<c:url value='/resources/img/facebook.png'/>"></a>
+    			<a href="http://twitter.com"><img src="<c:url value='/resources/img/twitter.png'/>"></a>
+    			<a href="http://youtube.com"><img src="<c:url value='/resources/img/youtube.png'/>"></a>
+    			<a href="http://linkedin.com"><img src="<c:url value='/resources/img/linkedin.png'/>"></a>
+    			<a href="https://github.com/AlexSecundino/GovernmentWars"><img src="<c:url value='/resources/img/github.png'/>"></a>
+    		</div>
+    	</div>
+    </footer>
   </div>
 
+
 <script>
-  $(document).ready(function() {
-    var pathArray = window.location.pathname.split( '/' );
-    var actual = pathArray[pathArray.length-1];
-    console.log($('a[href="' + actual + '"]'));
-    $('a[href="' + actual + '"]').parent().addClass('active');
-  });
-  
-  $('#ff input').keydown(function(e) {
-	    if (e.keyCode == 13) {
-	        $('#ffc').click();
-	  	}
-  });
+	$(".obj img[src*=2]").click(function(event) {
+		if ($(this).next().is(":visible"))
+			$(this).next().hide("slow");
+		else
+			$(this).next().show("slow");
+			
+	});
+</script>
+
+
+<script>  
+$(document).ready(function() {
+	//BIND DEL BORDER-BOTTOM A PAGINA ACTUAL
+	var pathArray = window.location.pathname.split( '/' );
+	if (pathArray[2]=='') {
+		$('a[href="' + /GovernmentWars/ + '"]').parent().addClass('active');
+	} else {
+		var actual = pathArray[1];
+		$('a[href="' + actual + '"]').parent().addClass('active');
+	}
+	
+	//BIND DE LOGIN CON ENTER
+	$('#ff input').keydown(function(e) {
+		if (e.keyCode == 13) {
+			$('#ffc').click();
+	 	}
+	});
+});
 </script>
 
 <script>
@@ -219,7 +280,7 @@
    if (document.readyState == 'complete') {
     usuario = document.getElementById("usuario");
     pass = document.getElementById("password");
-    login = document.getElementById("ff");
+    login = document.getElementById("ffc");
     login.addEventListener('click', ajax, false);
    }
   }
@@ -243,10 +304,10 @@
      location.href = "/GovernmentWars/Usuario/Index";
     }
     else if(evento.target.responseText == "2"){
-    	alert("estas bloqueado pinche la wea!! report!!!");
+    	alert("Lo sentimos, tu usuario se encuentra bloqueado por alguna razón.");
     }
     else{
-     alert("usuario o pass incorrectas"); 
+     alert("Usuario o password incorrectos."); 
     }
    }
   }

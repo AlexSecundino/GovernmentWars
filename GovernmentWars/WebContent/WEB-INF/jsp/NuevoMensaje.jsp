@@ -3,14 +3,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <jsp:include page="base.jsp" />
-
-	<c:if test="${envioMensaje == true}">
-		<p>Mensaje enviado correctamente</p>
-	</c:if>
-	<c:if test="${envioMensaje == false}">
-	    <p>Mensaje no enviado</p>
-	</c:if>
-	             		
 	<div class="row">
 		<div class="itm first-1">
 			<div class="">
@@ -41,5 +33,16 @@
 </div>
 </div>
 </div>
+
+<script>
+<c:if test="${envioMensaje == true}">
+	alert('Tu mensaje se ha enviado correctamente');
+	window.location.replace("/GovernmentWars/Juego/Mapa");
+</c:if>
+<c:if test="${envioMensaje == false}">
+	alert('Mensaje no enviado, lo sentimos');
+	window.location.replace("/GovernmentWars/Juego/Mapa");
+</c:if>
+</script>
 </body>
 </html>

@@ -16,11 +16,15 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   	<script>
   		$(document).ready(function() {
+  			
+  			//AL SALIR BORRA EL EVENTO DE GUARDAR RECURSOS, PARA DESACTIVAR EL ONBEFOREUNLOAD Y BORRA LA SESION DE RECURSOS GUARDADOS
 			$('#lgout').click(function() {
 				window.removeEventListener("beforeunload", saveResources);
-				sessionStorage.removeItem('recursos');
+				sessionStorage.removeItem('${usuario.getUsuario()}_recursos')
 			});	
 
+  			
+  			//COMPRUEBA SI EXISTEN COLAS PARA COMPROBAR SI HA PASADO EL TIEMPO DE ESTA Y BORRARLA DE LA SESION Y DE LA CUENTA ATRAS
   			if (localStorage.getItem("${usuario.getUsuario()}_tmp_edificio") !== null) {
 				var tm = JSON.parse(localStorage.getItem("${usuario.getUsuario()}_tmp_edificio"));
 				checkTime(tm.tm,'${usuario.getUsuario()}_tmp_edificio');
@@ -36,26 +40,27 @@
 				checkTime(tm3.tm,'${usuario.getUsuario()}_tmp_unidad');
 			}
   			
+  			//COMPRUEBA SI HAY MENSAJES PARA PINTAR DE VERDE EL LI Y AVISAR DE ELLO  			
   			if (sessionStorage.msg == 1)
   				$('.msg').css("color","green");
   			else
   				$('.msg').css("color","#777");
   			
   			
+  			//GUARDA LOS DECIMALES DE LOS RECURSOS QUE LLEVAS O SI NO HAY LOS PONE A 0
   			if (sessionStorage.getItem('${usuario.getUsuario()}_recursos')!==null) {
-
 				var sm_sobres = JSON.parse(sessionStorage.getItem('${usuario.getUsuario()}_recursos')).dsobres;
 				var sm_antena = JSON.parse(sessionStorage.getItem('${usuario.getUsuario()}_recursos')).dantena;
 				var sm_jueces = JSON.parse(sessionStorage.getItem('${usuario.getUsuario()}_recursos')).djueces;
   			}
   			else if (sessionStorage.getItem('${usuario.getUsuario()}_recursos')==null){
-
   				var sm_sobres = 0;
 				var sm_antena = 0;
 				var sm_jueces = 0;
   			}
   			
-  						
+  			
+  			//SETINTERVALS DE SUBIDA DE RECURSOS SEGUN LOS DATOS DEL SERVIDOR QUE PROVIENEN DE LA MEJORA DE LOS EDIFICIOS OPORTUNOS
 			window.setInterval(function(){
 				var produccion_sobres = $('.data-get1').attr("id");
 				number_sobres = produccion_sobres*1/3600;
@@ -123,23 +128,19 @@
 			}, 1000);
 		
 					
-		
+		//GUARDA LOS RECURSOS QUE LLEVES CUANDO SALGAS DE LA PAGINA ACTUAL
 		window.addEventListener("beforeunload", saveResources);
 
+		//CARGA LOS RECURSOS QUE LLEVASES EN LA ANTERIOR PAGINA
 		window.addEventListener("load", function (event) {
-			if (sessionStorage.getItem('${usuario.getUsuario()}recursos')!== null) {
+			if (sessionStorage.getItem('${usuario.getUsuario()}_recursos')!== null) {
 				document.getElementById('number1').innerHTML = JSON.parse(sessionStorage.getItem('${usuario.getUsuario()}_recursos')).Sobres;
 	    		document.getElementById('number2').innerHTML = JSON.parse(sessionStorage.getItem('${usuario.getUsuario()}_recursos')).Antena;
 	    		document.getElementById('number3').innerHTML = JSON.parse(sessionStorage.getItem('${usuario.getUsuario()}_recursos')).Jueces;
 	    		document.getElementById('number4').innerHTML = JSON.parse(sessionStorage.getItem('${usuario.getUsuario()}_recursos')).Militantes;
 	    		document.getElementById('number5').innerHTML = JSON.parse(sessionStorage.getItem('${usuario.getUsuario()}_recursos')).Corrupcion;
 			}
-			else {
-	  			var sm_sobres = 0;
-	  			var sm_antena = 0;
-	  			var sm_jueces = 0;
-			}
-				
+
 			event.preventDefault();
 		});
 
@@ -177,6 +178,7 @@
         	}, 1000);
 		}
 
+		//FUNCION QUE EXTRAE LOS DECIMALES DE UN NUMERO Y DEVUELVE LA PARTE INTEGRA Y LA PARTE FRACCIONARIA
 		function getPartNumber(number,part,decimals) {
   			if ((decimals <= 0) || (decimals == null)) decimals =1;
   				decimals = Math.pow(10,decimals);
@@ -199,6 +201,7 @@
 <input type="hidden" class="data-get3" id="${produccion.getRecurso('Jueces')}"></input>
 
 <div class="wrap-vg">
+  <header class="page-header"><img src="<c:url value='/resources/img/logo_gw.jpg'/>"></header>
 	<div class="resources">
 	    <nav class="navbar navbar-default" role="navigation">
 	        <!-- Brand and toggle get grouped for better mobile display -->
@@ -208,7 +211,6 @@
 	                    class="icon-bar"></span><span class="icon-bar"></span>
 	            </button>
 	        </div>
-	        <!-- Collect the nav links, forms, and other content for toggling -->
 	        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	            <ul class="nav navbar-nav">
 	                <li><a><i class="fa fa-envelope"></i> Sobres <span id="number1">${ciudad.getRecurso("Sobres")}</span></a></li>
@@ -218,7 +220,7 @@
 	                <li><a><i class="fa fa-diamond"></i> Corrupcion <span id="number5">${ciudad.getNivelCorrupcion()} %</span></a></li>
 	            </ul>
 	            <ul class="nav navbar-nav navbar-right">
-					<li><a href="/GovernmentWars/Usuario/Mensajes" class="msg"><i class="fa fa-diamond"></i>Mensajes</a></li>
+					<li><a href="/GovernmentWars/Usuario/Mensajes" class="msg"><i class="fa fa-envelope-o"></i> Mensajes</a></li>
 	                <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span
 	                    class="fa fa-user"></span> ${usuario.getUsuario()} <b class="caret"></b></a>
 	                    <ul class="dropdown-menu">

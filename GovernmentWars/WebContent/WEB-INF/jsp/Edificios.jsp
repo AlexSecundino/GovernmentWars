@@ -9,7 +9,20 @@
 	    		<div class="col-md-6">
 					<div class="ccdd">
 						<h1>${edificio.getNombre()} nivel ${edificio.getNivel()}</h1>
-						<img src="<c:url value='/resources/img/edif.jpg'/>" alt="">     
+	    				<c:choose>
+    						<c:when test="${edificio.getNombre() == 'Sede'}">
+    							<img src="<c:url value='/resources/img/sede.png'/>" alt="">
+    						</c:when>
+    						<c:when test="${edificio.getNombre() == 'Juzgado'}">
+    							<img src="<c:url value='/resources/img/juzgado.png'/>" alt="">
+    						</c:when>
+    						<c:when test="${edificio.getNombre() == 'TV'}">
+    							<img src="<c:url value='/resources/img/antena.png'/>" alt="">
+    						</c:when>
+    						<c:when test="${edificio.getNombre() == 'Banco'}">
+    							<img src="<c:url value='/resources/img/banco.png'/>" alt="">
+    						</c:when>
+						</c:choose>     
 				    </div>
 				</div> 
 	    		<div class="col-md-6">

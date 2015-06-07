@@ -23,10 +23,6 @@
           else
             $(".hid").hide(1);
       })
-
-      // CLICK FUERA Y DESAPARECE DIV
-
-      // ################
     });
   </script>
   
@@ -54,7 +50,7 @@
  
 <body>
   <div class="wrap">
-    <header class="page-header"><h1>LOGO COOL >:)</h1></header>
+     <header class="page-header"><img src="<c:url value='/resources/img/logo_gw.jpg'/>"></header>
     
     <div class="menu">
       <ul class="navbar navbar-default cpp" role="navigation">
@@ -73,11 +69,11 @@
             <li class=""><a href="/GovernmentWars/"><span class=""></span>Inicio</a></li>
             <li class=""><a href="/GovernmentWars/Conocenos"><span class=""></span>Conocenos</a></li>
             <li class=""><a href="/GovernmentWars/Ayuda"><span class=""></span>Ayuda</a></li>
-            <li class=""><a href="/GovernmentWars/"><span class=""></span>Foro</a></li>
+            <li class=""><a href="/GovernmentWars/Foro"><span class=""></span>Foro</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li class="reg"><a href="javascript:void(0)">Identificarse</a></li>
-            <div class="hid">
+            <div class="hid" style="display:none">
               <em></em>
               <form id='ff'>
                 <fieldset>
@@ -152,9 +148,17 @@
 					necesario para la creación de ministros.</p>
           			<a name="unidades"></a>
           			<h1>Unidades</h1>
-          			<p>Aquí podremos ver las diferentes tropas que podremos crear, siempre y cuando cumplamos
-					con los requisitos necesarios para hacerlo. Cada unidad tiene su propio coste. Cuanto más caro 
+          			<p>Aquí podremos ver las diferentes tropas que podremos crear. Cada unidad tiene su propio coste. Cuanto más caro 
 					es el precio mejores son sus estadísticas.</p>
+					<p>Cada facción a su vez tendrá una tropa única. En el caso de los <b>anarquistas</b> es el temido perroflauta. 
+					Para los <b>social-democratas</b> tenemos al empresario, o empresaurio como suele decir. 
+					Por último para los <b>liberales</b> está el perrito faldero, el temido guerrero y guardían de la cripta. El antidisturbios.</p>
+					<p>Todas estas unidades se desbloquean mediante tecnologías que a su vez necesitan de algunos edificios de alto nivel. Podrás mirar siempre que quieras los requisitos
+					de algo que no puedas construir posándote sobre el botón rojo, pero por el amor de dios ¡No lo pulses!)</p>
+					<p>Leyenda de estadísticas:</p> 
+					<p><b>A=Ataque</b>(Fuerza con la que golpea la unidad), 
+					<b>V=Velocidad</b>(Velocidad a la que se mueve la unidad, cuanto mayor sea este número a mayor velocidad se movera la tropa de ataque en conjunto)
+					, <b>D=Defensa</b>(Defensa contra el ataque de las unidades), <b>C=Capacidad</b>(Cantidad que puede almacenar la unidad en sus bolsillos al robar)</p>
           			<a name="tecnologias"></a>
           			<h1>Tecnologías</h1>
           			<p>En esta página podremos ver el árbol de tecnologías al que tendremos acceso según la 
@@ -198,7 +202,20 @@
         </div>
       </div>
     </div>
-    <footer><div class="foot"></div></footer>
+    <footer>
+    	<div class="foot">
+    		<div class="ccommons">
+    			<img src="<c:url value='/resources/img/cc.png'/>">
+    		</div>
+    		<div class="social-media">
+    			<a href="http://facebook.com"><img src="<c:url value='/resources/img/facebook.png'/>"></a>
+    			<a href="http://twitter.com"><img src="<c:url value='/resources/img/twitter.png'/>"></a>
+    			<a href="http://youtube.com"><img src="<c:url value='/resources/img/youtube.png'/>"></a>
+    			<a href="http://linkedin.com"><img src="<c:url value='/resources/img/linkedin.png'/>"></a>
+    			<a href="https://github.com/AlexSecundino/GovernmentWars"><img src="<c:url value='/resources/img/github.png'/>"></a>
+    		</div>
+    	</div>
+    </footer>
   </div>
 
 <script>
@@ -216,19 +233,24 @@
 	});
 </script>
 
-<script>
-  $(document).ready(function() {
-    var pathArray = window.location.pathname.split( '/' );
-    var actual = pathArray[pathArray.length-1];
-    console.log($('a[href="' + actual + '"]'));
-    $('a[href="' + actual + '"]').parent().addClass('active');
-  });
-  
-  $('#ff input').keydown(function(e) {
-	    if (e.keyCode == 13) {
-	        $('#ffc').click();
-	  	}
-  });
+<script>  
+$(document).ready(function() {
+	//BIND DEL BORDER-BOTTOM A PAGINA ACTUAL
+	var pathArray = window.location.pathname.split( '/' );
+	if (pathArray[2]=='') {
+		$('a[href="' + /GovernmentWars/ + '"]').parent().addClass('active');
+	} else {
+		var actual = pathArray[2];
+		$('a[href="/GovernmentWars/' + actual + '"]').parent().addClass('active');
+	}
+	
+	//BIND DE LOGIN CON ENTER
+	$('#ff input').keydown(function(e) {
+		if (e.keyCode == 13) {
+			$('#ffc').click();
+	 	}
+	});
+});
 </script>
 
 <script>
@@ -245,7 +267,7 @@
    if (document.readyState == 'complete') {
     usuario = document.getElementById("usuario");
     pass = document.getElementById("password");
-    login = document.getElementById("ff");
+    login = document.getElementById("ffc");
     login.addEventListener('click', ajax, false);
    }
   }
@@ -257,7 +279,7 @@
     login.disabled = true;
     xhr = new XMLHttpRequest();
     xhr.addEventListener('readystatechange', gestionarRespuesta, false);
-    xhr.open('get', "/GovernmentWars/Ajax/Login?usuario=" + usuario.value + "&password=" + password.value, true);
+    xhr.open('post', "/GovernmentWars/Ajax/Login?usuario=" + usuario.value + "&password=" + password.value, true);
     xhr.send(null);
    }
   }
@@ -269,10 +291,10 @@
      location.href = "/GovernmentWars/Usuario/Index";
     }
     else if(evento.target.responseText == "2"){
-    	alert("estas bloqueado pinche la wea!! report!!!");
+    	alert("Lo sentimos, tu usuario se encuentra bloqueado por alguna razón.");
     }
     else{
-     alert("usuario o pass incorrectas"); 
+     alert("Usuario o password incorrectos."); 
     }
    }
   }
