@@ -50,8 +50,8 @@
         <div class="collapse navbar-collapse navbar-ex1-collapse">
           <ul class="nav navbar-nav">
             <li class=""><a href="/GovernmentWars/"><span class=""></span>Inicio</a></li>
-            <li class=""><a href="/GovernmentWars/SobreNosotros"><span class=""></span>Sobre nosotros</a></li>
-            <li class=""><a href="/GovernmentWars/"><span class=""></span>Ayuda</a></li>
+            <li class=""><a href="/GovernmentWars/Usuario/SobreNosotros"><span class=""></span>Sobre nosotros</a></li>
+            <li class=""><a href="/GovernmentWars/Usuario/Ayuda"><span class=""></span>Ayuda</a></li>
             <li class=""><a href="/GovernmentWars/"><span class=""></span>Foro</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
@@ -231,7 +231,7 @@
     login.disabled = true;
     xhr = new XMLHttpRequest();
     xhr.addEventListener('readystatechange', gestionarRespuesta, false);
-    xhr.open('get', "/GovernmentWars/Ajax/Login?usuario=" + usuario.value + "&password=" + password.value, true);
+    xhr.open('post', "/GovernmentWars/Ajax/Login?usuario=" + usuario.value + "&password=" + password.value, true);
     xhr.send(null);
    }
   }

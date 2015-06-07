@@ -67,7 +67,38 @@ public class JDBCMensajeDAO implements MensajeDAO{
 			ps.setInt(1, mensaje.getId());
 			
 			if(ps.executeUpdate() >= 1){
-					correcto  = true;
+				correcto  = true;
+			}
+			ps.close();
+ 
+		} catch (SQLException e) {
+			correcto = false;
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {}
+			}
+		}
+		return correcto;
+	}
+	
+	@Override
+	public boolean mensajeLeido(Mensaje mensaje) {
+		
+		boolean correcto = false;
+		
+		String sql = "update mensajes set leido = ? where idMensaje = ?";
+		Connection conn = null;
+		
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setBoolean(1, true);
+			ps.setInt(2, mensaje.getId());
+			
+			if(ps.executeUpdate() == 1){
+				correcto = true;
 			}
 			ps.close();
  

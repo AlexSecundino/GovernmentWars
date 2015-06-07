@@ -17,9 +17,5 @@ public interface CiudadDAO {
 	
 	public boolean cambiarNombre(String antiguoNombre, String nombre, Usuario usuario);
 	
-	public List<Recursos> cargarRecursos();
-	
-	public boolean actualizarCiudad();
-	
-	public boolean implementarBonus(List<Bonus> listaBonus); //Algoritmia para implementar los bonus en los recursos, capacidad de nuevas tropas etc 
+	public boolean actualizarRecursos(Usuario usuario, Ciudad ciudad); 
 }

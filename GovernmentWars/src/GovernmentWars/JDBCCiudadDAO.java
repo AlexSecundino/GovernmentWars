@@ -151,22 +151,46 @@ public class JDBCCiudadDAO implements CiudadDAO{
 	}
 
 	@Override
-	public List<Recursos> cargarRecursos() {
-		List<Recursos> listaRecursos = new ArrayList<>();
+	public boolean actualizarRecursos(Usuario usuario, Ciudad ciudad){
 		
-		return listaRecursos;
-	}
-
-	@Override
-	public boolean actualizarCiudad() {
 		boolean correcto = true;
 		
-		return correcto;
-	}
-
-	@Override
-	public boolean implementarBonus(List<Bonus> listaBonus) {
-		boolean correcto = true;
+		String sql = "call actualizarRecursos(?, ?);";
+		Connection conn = null;
+		ResultSet rs = null;
+			
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setString(1, ciudad.getNombre());
+			ps.setString(2, usuario.getUsuario());
+				
+			rs = ps.executeQuery();
+			
+			if(rs.next()){
+				if(rs.getInt("correcto") >= 1){
+					correcto = true;
+				}
+				else{
+					correcto = false;
+				}
+			}
+			else{
+				correcto = false;
+			}
+			
+			ps.close();
+	 
+		} catch (SQLException e) {
+			correcto = false;
+	 
+		} finally {
+			if (conn != null) {
+				try {
+					conn.close();
+				} catch (SQLException e) {}
+			}
+		}
 		
 		return correcto;
 	}

@@ -33,6 +33,18 @@ import Repository.UsuarioDAO;
 @RequestMapping("/Usuario")
 public class UsuarioControlador {
 	
+	@RequestMapping("/Conocenos")
+	public String Conocenos(){
+		
+		return "Conocenos";
+	}
+	
+	@RequestMapping("/Ayuda")
+	public String Ayuda(){
+		
+		return "Ayuda";
+	}
+	
 	@RequestMapping("/Registro")
 	public String Registro(){
 		
@@ -75,24 +87,19 @@ public class UsuarioControlador {
 		else if((boolean)session.getAttribute("isAdmin")){
 			return "redirect:/Admin/Usuarios";
 		}
-		else if((boolean)session.getAttribute("isAdmin")){
-			return "redirect:/Admin/Usuarios";
-		}
-		else if((boolean)session.getAttribute("isAdmin")){
-			return "redirect:/Admin/Usuarios";
-		}
 		
 		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 		
 		UsuarioDAO usuarioDAO = (UsuarioDAO) context.getBean("UsuarioDAO");
 		
-		CiudadDAO ciudadDAO = (CiudadDAO) context.getBean("CiudadDAO");
+		
 		MensajeDAO mensajeDAO = (MensajeDAO) context.getBean("MensajeDAO");
 		UnidadDAO unidadDAO = (UnidadDAO) context.getBean("UnidadDAO");
 		ColasDAO colasDAO = (ColasDAO) context.getBean("ColasDAO");
+		CiudadDAO ciudadDAO = (CiudadDAO) context.getBean("CiudadDAO");
 		
 		Usuario usuario = (Usuario)session.getAttribute("usuario");
-		Ciudad ciudad = ciudadDAO.getCiudad(usuario);
+		Ciudad ciudad = (Ciudad)session.getAttribute("ciudad");
 		
 		/*Actualizar ciudad*/
 		if(colasDAO.implementarColas(usuario, ciudad)){
@@ -102,8 +109,6 @@ public class UsuarioControlador {
 		List<Unidad> unidades = unidadDAO.getUnidades(usuario, ciudad);
 		List<ColaConstruccion> colas = colasDAO.getColas(usuario, ciudad);
 		Produccion produccion = ciudadDAO.getProduccion(usuario, ciudad);
-
-		session.setAttribute("ciudad", ciudad);
 		
 		/*System.out.println("Datos session: ");
 		System.out.println("1) Ciudad: " + session.getAttribute("ciudad"));
@@ -177,7 +182,7 @@ public class UsuarioControlador {
 		
 
 		if((boolean)session.getAttribute("isAdmin")){
-			return "MensajesAdmin";
+			return "Admin";
 		}
 		else{
 			return "Mensajes";
@@ -267,7 +272,10 @@ public class UsuarioControlador {
 			modelo.addAttribute("correcto", false);
 		}
 		
-	
+		Usuario datosUsuario = usuarioDAO.getUsuario(usuario);
+		
+		modelo.addAttribute("datosUsuario", datosUsuario);
+		
 		return "Perfil";
 	}
 }

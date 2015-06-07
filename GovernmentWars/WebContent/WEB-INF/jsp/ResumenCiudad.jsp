@@ -85,7 +85,7 @@ console.log(parametros);
     $.ajax({
             data:  parametros,
             url:   '/GovernmentWars/Ajax/CambiarNombreCiudad',
-            type:  'get',
+            type:  'post',
             success:  function (response) {
             	alert(response);
         }

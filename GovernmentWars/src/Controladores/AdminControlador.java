@@ -44,7 +44,6 @@ public class AdminControlador {
 		int nTotal = 0;
 		
 		for(Usuario user : listaUsuarios) {
-			System.out.println("un user");
 			switch(user.getFaccion()){
 				case "Anarquista":
 					estadisticasRazas.replace(Raza.Anarquista, estadisticasRazas.get(Raza.Anarquista) + 1);

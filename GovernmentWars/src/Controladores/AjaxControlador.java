@@ -32,7 +32,7 @@ import Repository.UsuarioDAO;
 @RequestMapping("/Ajax")
 public class AjaxControlador {
 		
-	@RequestMapping(value="/Login", method=RequestMethod.GET)
+	@RequestMapping(value="/Login", method=RequestMethod.POST)
 	public @ResponseBody String Login(
 				@RequestParam("usuario") String name,
 				@RequestParam("password") String password, HttpSession session, HttpServletRequest request) {
@@ -62,6 +62,15 @@ public class AjaxControlador {
 				else{
 					session.setAttribute("isAdmin", false);
 				}
+				
+				CiudadDAO ciudadDAO = (CiudadDAO) context.getBean("CiudadDAO");
+				Ciudad ciudad = ciudadDAO.getCiudad(usuario);
+				
+				if(ciudadDAO.actualizarRecursos(usuario, ciudad)){
+					System.out.println("recursos actualizados");
+				}
+				
+				session.setAttribute("ciudad", ciudad);
 				session.setAttribute("usuario", usuario);
 				session.setAttribute("raza", usuarioDAO.getRaza(usuario));
 
@@ -73,7 +82,7 @@ public class AjaxControlador {
 		
 	}
 	
-	@RequestMapping(value="/CambiarNombreCiudad", method=RequestMethod.GET)
+	@RequestMapping(value="/CambiarNombreCiudad", method=RequestMethod.POST)
 	public @ResponseBody String cambiarNombreCiudad(
 				@RequestParam("antiguoNombre") String antiguoNombre,
 				@RequestParam("nombre") String nombre,
@@ -95,6 +104,26 @@ public class AjaxControlador {
 			
 			System.out.println(session.getAttribute("usuario"));
 			System.out.println(session.getAttribute("ciudad"));
+		}
+		
+		return response;
+	}
+	
+	@RequestMapping(value="/MensajeLeido", method=RequestMethod.POST)
+	public @ResponseBody String mensajeLeido(
+				@RequestParam("id") int id,
+				HttpSession session) {
+		
+		String response = "false";
+		
+		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
+		
+		MensajeDAO mensajeDAO = (MensajeDAO) context.getBean("MensajeDAO");
+		
+		Mensaje msg = new Mensaje(id);
+		
+		if(mensajeDAO.mensajeLeido(msg)){
+			response = "true";
 		}
 		
 		return response;
