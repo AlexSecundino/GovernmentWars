@@ -31,8 +31,8 @@ import Repository.UsuarioDAO;
 //@SessionAttributes({"usuario", "ciudad", "edificios", "tecnologias", "raza"})
 @RequestMapping("/Ajax")
 public class AjaxControlador {
-		
-	@RequestMapping(value="/Login", method=RequestMethod.GET)
+
+	@RequestMapping(value="/Login", method=RequestMethod.POST)
 	public @ResponseBody String Login(
 				@RequestParam("usuario") String name,
 				@RequestParam("password") String password, HttpSession session, HttpServletRequest request) {
@@ -46,9 +46,8 @@ public class AjaxControlador {
 		UsuarioDAO usuarioDAO = (UsuarioDAO) context.getBean("UsuarioDAO");
 			
 		Usuario usuario = new Usuario(name, password);
-		
-		if(usuarioDAO.isRegistrado(usuario)){
 
+		if(usuarioDAO.isRegistrado(usuario)){	
 			if(usuarioDAO.isBloqueado(usuario)){
 				response = "2";
 			}
@@ -62,6 +61,15 @@ public class AjaxControlador {
 				else{
 					session.setAttribute("isAdmin", false);
 				}
+				
+				CiudadDAO ciudadDAO = (CiudadDAO) context.getBean("CiudadDAO");
+				Ciudad ciudad = ciudadDAO.getCiudad(usuario);
+				
+				if(ciudadDAO.actualizarRecursos(usuario, ciudad)){
+					System.out.println("recursos actualizados");
+				}
+				
+				session.setAttribute("ciudad", ciudad);
 				session.setAttribute("usuario", usuario);
 				session.setAttribute("raza", usuarioDAO.getRaza(usuario));
 
@@ -73,7 +81,7 @@ public class AjaxControlador {
 		
 	}
 	
-	@RequestMapping(value="/CambiarNombreCiudad", method=RequestMethod.GET)
+	@RequestMapping(value="/CambiarNombreCiudad", method=RequestMethod.POST)
 	public @ResponseBody String cambiarNombreCiudad(
 				@RequestParam("antiguoNombre") String antiguoNombre,
 				@RequestParam("nombre") String nombre,
@@ -123,7 +131,29 @@ public class AjaxControlador {
 		return respuesta;
 	}
 	
-	@RequestMapping(value="/ColaUnidad", method=RequestMethod.GET)
+	@RequestMapping(value="/MensajeLeido", method=RequestMethod.POST)
+	public @ResponseBody String mensajeLeido(
+				@RequestParam("id") int id,
+				HttpSession session) {
+		
+		System.out.println(id);
+		
+		String response = "false";
+		
+		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
+		
+		MensajeDAO mensajeDAO = (MensajeDAO) context.getBean("MensajeDAO");
+		
+		Mensaje msg = new Mensaje(id);
+		
+		if(mensajeDAO.mensajeLeido(msg)){
+			response = "true";
+		}
+		
+		return response;
+	}
+	
+	@RequestMapping(value="/ColaUnidad", method=RequestMethod.POST)
 	public @ResponseBody String CrearUnidad(
 				@RequestParam("unidad") String unidad,
 				@RequestParam("cantidad") int cantidad,
@@ -160,7 +190,7 @@ public class AjaxControlador {
 		return respuesta;
 	}
 	
-	@RequestMapping(value="/ColaEdificio", method=RequestMethod.GET)
+	@RequestMapping(value="/ColaEdificio", method=RequestMethod.POST)
 	public @ResponseBody String CrearColaEdifio(
 				@RequestParam("edificio") String nEdificio,
 				@RequestParam("nivel") int nivel,
@@ -195,7 +225,7 @@ public class AjaxControlador {
 		return respuesta;
 	}
 	
-	@RequestMapping(value="/ColaTecnologia", method=RequestMethod.GET)
+	@RequestMapping(value="/ColaTecnologia", method=RequestMethod.POST)
 	public @ResponseBody String CrearColaTecnologia(
 				@RequestParam("tecnologia") String nTecnologia,
 				@RequestParam("sobres") long sobres,

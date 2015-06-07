@@ -9,7 +9,7 @@
 				<c:forEach items ="${listaMensajes}" var="mensaje">
 				<fmt:formatDate value="${mensaje.getFecha()}" var="dateString" pattern="dd/MM HH:mm"/>
 					<c:if test="${mensaje.isLeido() == false}">
-	    				<div class="nat-accordion-button clearfix noleido">${mensaje.getAsunto()}<div class="remitent">${mensaje.getRemitente()}</div><div>${dateString}</div></div>
+	    				<div class="nat-accordion-button clearfix noleido" id="${mensaje.getId()}">${mensaje.getAsunto()}<div class="remitent">${mensaje.getRemitente()}</div><div>${dateString}</div></div>
 	    			</c:if>
 	    			<c:if test="${mensaje.isLeido() == true}">
 	    				<div class="nat-accordion-button clearfix">${mensaje.getAsunto()}<div class="remitent">${mensaje.getRemitente()}</div><div>${dateString}</div></div>

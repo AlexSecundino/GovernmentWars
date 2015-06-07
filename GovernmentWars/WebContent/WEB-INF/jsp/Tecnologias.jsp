@@ -172,7 +172,7 @@ if (localStorage.getItem('${usuario.getUsuario()}_tmp_tecnologia')!==null) {
     	$.ajax({
       	data:  parametros,
           url:   '/GovernmentWars/Ajax/ColaTecnologia',
-          type:  'get',
+          type:  'post',
           success:  function (response) {
           	console.log(response);
           	if (response == 'true') {
@@ -228,11 +228,12 @@ if (localStorage.getItem('${usuario.getUsuario()}_tmp_tecnologia')!==null) {
           		localStorage.setItem('${usuario.getUsuario()}_tmp_tecnologia', JSON.stringify(cola_tecnologia));
 
           		var object = JSON.parse(localStorage.getItem('${usuario.getUsuario()}_tmp_tecnologia'));
-          		//location.reload();
           		
 				document.getElementById('number1').innerHTML = document.getElementById('number1').innerHTML*1 - pr_sobres*1;
 	    		document.getElementById('number2').innerHTML = document.getElementById('number2').innerHTML*1 - pr_antena*1;
 	    		document.getElementById('number3').innerHTML = document.getElementById('number3').innerHTML*1 - pr_jueces*1;
+	    		
+	    		location.reload();
           	}
           		
           	else if (response == 'false')

@@ -27,5 +27,4 @@ public interface UsuarioDAO {
 		public List<Usuario> getCiudadesAtacar();
 		
 		public boolean actualizarPerfil(Usuario usuario);
-
 }

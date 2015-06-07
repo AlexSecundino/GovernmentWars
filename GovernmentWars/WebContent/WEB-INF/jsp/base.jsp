@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 	<meta charset="UTF-8">
 	<title>GovernmentWars</title>
@@ -21,7 +20,7 @@
 				window.removeEventListener("beforeunload", saveResources);
 				sessionStorage.removeItem('recursos');
 			});	
-  			
+
   			if (localStorage.getItem("${usuario.getUsuario()}_tmp_edificio") !== null) {
 				var tm = JSON.parse(localStorage.getItem("${usuario.getUsuario()}_tmp_edificio"));
 				checkTime(tm.tm,'${usuario.getUsuario()}_tmp_edificio');
@@ -44,13 +43,13 @@
   			
   			
   			if (sessionStorage.getItem('${usuario.getUsuario()}_recursos')!==null) {
-  				alert('esta la variable');
+
 				var sm_sobres = JSON.parse(sessionStorage.getItem('${usuario.getUsuario()}_recursos')).dsobres;
 				var sm_antena = JSON.parse(sessionStorage.getItem('${usuario.getUsuario()}_recursos')).dantena;
 				var sm_jueces = JSON.parse(sessionStorage.getItem('${usuario.getUsuario()}_recursos')).djueces;
   			}
   			else if (sessionStorage.getItem('${usuario.getUsuario()}_recursos')==null){
-  				alert('no esta');
+
   				var sm_sobres = 0;
 				var sm_antena = 0;
 				var sm_jueces = 0;

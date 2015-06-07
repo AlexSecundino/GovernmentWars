@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+
 <jsp:include page="base.jsp" />
 	<div class="row">
 		<div class="itm first-1">
@@ -36,6 +37,6 @@
 <script>
 $('#gnr').val("${datosUsuario.getGenero()}").attr("selected","selected");
 </script>
-
+>>>>>>> refs/heads/AlexSecundino
 </body>
 </html>

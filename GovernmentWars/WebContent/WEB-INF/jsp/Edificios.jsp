@@ -128,7 +128,7 @@ if (localStorage.getItem('${usuario.getUsuario()}_tmp_edificio')!==null) {
       	$.ajax({
         	data:  parametros,
             url:   '/GovernmentWars/Ajax/ColaEdificio',
-            type:  'get',
+            type:  'post',
             success:  function (response) {
             	console.log(response);
             	if (response == 'true') {
@@ -188,7 +188,7 @@ if (localStorage.getItem('${usuario.getUsuario()}_tmp_edificio')!==null) {
     	    		document.getElementById('number2').innerHTML = document.getElementById('number2').innerHTML*1 - pr_antena*1;
     	    		document.getElementById('number3').innerHTML = document.getElementById('number3').innerHTML*1 - pr_jueces*1;
             		
-            		//location.reload();
+            		location.reload();
             	}
             		
             	else if (response == 'false')
@@ -221,5 +221,21 @@ CODIGO USABLE:
     var cola_unidades = {'nombre': tecnologia, 'num': 'cantidad', 'tm': e.getTime()};
     
     localStorage.setItem('tmp_edificio', JSON.stringify(object));
+<<<<<<< HEAD
     localStorage.setItem('tmp_edificio', JSON.stringify(object));
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+    localStorage.setItem('tmp_edificio', JSON.stringify(object));
+<<<<<<< HEAD
+>>>>>>> refs/heads/master
+=======
+>>>>>>> refs/heads/master
+=======
+    localStorage.setItem('tmp_edificio', JSON.stringify(object));
+>>>>>>> refs/heads/master
+=======
+    localStorage.setItem('tmp_edificio', JSON.stringify(object));
+>>>>>>> refs/heads/master
+>>>>>>> refs/heads/AlexSecundino
  -->

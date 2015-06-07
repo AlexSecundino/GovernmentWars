@@ -367,6 +367,8 @@ public class JDBCUsuarioDAO implements UsuarioDAO{
 	public boolean actualizarPerfil(Usuario usuario){
 		
 		boolean correcto = false;
+
+		System.out.println(usuario);
 		
 		String sql = "update perfil set genero = ?, descripcion = ?, pais = ? where usuario = ?";
 		Connection conn = null;
@@ -378,12 +380,15 @@ public class JDBCUsuarioDAO implements UsuarioDAO{
 
 			if(usuario.getGenero().equals(Gender.Hombre)){
 				ps.setString(1, "H");
+				System.out.println("hombre");
 			}
 			else if(usuario.getGenero().equals(Gender.Mujer)){
 				ps.setString(1, "M");
+				System.out.println("mujer");
 			}
 			ps.setString(2, usuario.getDescripcion());
 			ps.setString(3, usuario.getPais());
+			ps.setString(4, usuario.getUsuario());
 			
 			if(ps.executeUpdate() == 1){
 				correcto = true;
@@ -392,9 +397,9 @@ public class JDBCUsuarioDAO implements UsuarioDAO{
 			
 			ps.close();
  
+			 
 		} catch (SQLException e) {
 			correcto = false;
-			 
 		} finally {
 			if (conn != null) {
 				try {

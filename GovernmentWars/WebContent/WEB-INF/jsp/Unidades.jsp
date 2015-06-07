@@ -1,30 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c" %>
-
-	<script>
-		var unidad;
-		var cantidad;
-		var crearUnidad;
-		var xhr;
-		
-		function ajax(evento) {
-			xhr = new XMLHttpRequest();
-			xhr.addEventListener('readystatechange', gestionarRespuesta, false);
-			xhr.open('get', "/GovernmentWars/Ajax/CrearUnidad?unidad=" + unidad + "&cantidad=" + cantidad, true);
-			xhr.send(null);
-		}
-		
-		function gestionarRespuesta(evento){
-			if (evento.target.readyState == 4 && evento.target.status == 200) {	
-				if(evento.target.responseText == "true"){
-					alert("creando unidades...");
-				}
-				else{
-					alert(evento.target.responseText);	
-				}
-			}
-		}
-	
+	<script>	
 	
 		function crearUnidad(u){
 			unidad = u;
@@ -118,7 +94,6 @@
 	    		</div>
 	    </div>
 	    <div class="row">
-
 	    		<div class="col-md-6">
 	    			<div class="recurses">
 						<span class="rcr"><i class="fa fa-envelope" title="Sobres"></i><span> ${unidad.getRecurso('Sobres')}</span></span>
@@ -204,7 +179,7 @@ if (localStorage.getItem('${usuario.getUsuario()}_tmp_unidad')!==null) {
     	$.ajax({
       	data:  parametros,
           url:   '/GovernmentWars/Ajax/ColaUnidad',
-          type:  'get',
+          type:  'post',
           success:  function (response) {
           	console.log(response);
           	if (response == 'true') {
@@ -262,11 +237,11 @@ if (localStorage.getItem('${usuario.getUsuario()}_tmp_unidad')!==null) {
 
           		var object = JSON.parse(localStorage.getItem('${usuario.getUsuario()}_tmp_unidad'));
           		
-          		//location.reload();
-          		
 				document.getElementById('number1').innerHTML = document.getElementById('number1').innerHTML*1 - pr_sobres*1;
 	    		document.getElementById('number2').innerHTML = document.getElementById('number2').innerHTML*1 - pr_antena*1;
 	    		document.getElementById('number3').innerHTML = document.getElementById('number3').innerHTML*1 - pr_jueces*1;
+	    		
+	    		location.reload();
           	}
           		
           	else if (response == 'false')

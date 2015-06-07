@@ -6,8 +6,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
-public class Edificio {
+public class Edificio implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String nombre;
 	private int nivel;
 	private HashMap<Recursos, Integer> recursos;
