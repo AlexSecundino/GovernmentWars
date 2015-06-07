@@ -367,7 +367,7 @@ public class JDBCUsuarioDAO implements UsuarioDAO{
 	public boolean actualizarPerfil(Usuario usuario){
 		
 		boolean correcto = false;
-		
+
 		System.out.println(usuario);
 		
 		String sql = "update perfil set genero = ?, descripcion = ?, pais = ? where usuario = ?";

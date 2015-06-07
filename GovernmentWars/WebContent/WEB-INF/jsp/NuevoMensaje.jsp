@@ -17,7 +17,6 @@
 					<div class="container">
 						<div class="row">
 							<h1>Mensaje para ${destinatario.getUsuario()}</h1>
-							<div class="span4 well" style="padding-bottom:0">
 	            				<form accept-charset="UTF-8" action="/GovernmentWars/Usuario/EnviarMensaje" method="post">
 	            					<input type="hidden" name="destinatario" value="${destinatario.getUsuario()}">
 	                				<div class="form-group">

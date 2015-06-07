@@ -72,29 +72,40 @@
     </div>
     
     <div class="bod">
-      <div id="carousel" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-            <div class="item active">
-                <img alt="Bootstrap template" src="<c:url value='/resources/img/img1.jpg'/>">
-                <div class="carousel-caption"></div>
-            </div>
-            <div class="item">
-                <img alt="Bootstrap template" src="<c:url value='/resources/img/img2.jpg'/>">
-                <div class="carousel-caption"></div>
-            </div>
-            <div class="item">
-                <img alt="Bootstrap template" src="<c:url value='/resources/img/img3.jpg'/>">
-                <div class="carousel-caption"></div>
-            </div>
+    
+    <section class="sec">
+        <div class="container">
+          <div class="row">
+          	<div class="col-md-12 texto-normal">
+          		<h1>Conoce al equipo de GovernmentWars</h1>
+          		<p>Government Wars se trata de un proyecto desarrollado por un grupo de tres estudiantes de 
+				“Desarrollo de Aplicaciones Web” del I.E.S. Clara del Rey como proyecto de fin de grado. 
+				Siendo jugadores de este tipo de juegos, un día, decidiendo sobre el futuro de nuestro 
+				proyecto y bien acompañados de unos buenos tercios de Mahou decidimos que se había 
+				hecho juegos de casi todo, pero que nunca, jamás de los jamases se había llevado a cabo uno 
+				con temática de política. Y como el desarrollo nos parecía un reto y de la temática se podía 
+				extraer bastante jugo pues nos dijimos: “Oye, vamos a hacerlo” y tras varias rondas después la 
+				idea quedó bastante consolidada.
+				La idea del juego era transmitir una sensación de crítica pero siempre de la mano con una 
+				sátira desenfadada, al fin y al cabo no se busca ofender, solamente diversión y alguna que otra 
+				sonrisa.
+				Y como a todos nos gusta reírnos y pasárnoslo bien, y como teníamos la necesidad por ley de 
+				sacar un proyecto adelante si queríamos el diploma…
+				¡Aquí os presentamos a nuestra criatura!</p>
+          	</div>
+          </div>
         </div>
+      </section>
 
-      <ol class="carousel-indicators">
-        <li data-target="#carousel" data-slide-to="0" class="active"></li>
-        <li data-target="#carousel" data-slide-to="1"></li>
-        <li data-target="#carousel" data-slide-to="2"></li>
-      </ol>
-      
-      </div>
+      <section class="sec sec-white">
+        <div class="container">
+          <div class="row">
+          
+          </div>
+        </div>  
+      </section>
+    
+    
 
       <div class="callout">
         <div class="container">
@@ -110,82 +121,7 @@
         </div>
       </div>
 
-      <section class="sec">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-4">
-              <div class="nall">
-                <div class="nt pb-20">
-                  <img src="<c:url value='/resources/img/edif.jpg'/>">
-                </div>
-                <div class="nc ">
-                  <h1>Construye</h1>
-                  <p>Crea edificios para dotar a tu partido de los recursos necesarios para conseguir el poder. 
-                     ¡Recuerda! ¡Sin financiación ni cobertura mediática no eres nadie! ¡Consigue que tu partido 
-                     sea el más grande!</p>
-                </div>
-              </div>
-            </div>
-            
-            <div class="col-md-4">
-              <div class="nall">
-                <div class="nt pb-20">
-                  <img src="<c:url value='/resources/img/edif.jpg'/>">
-                </div>
-              <div class="nc">
-                  <h1>Combate</h1>
-                  <p>¿Quién dijo que ver a varios partidos políticos reunidos en las cámaras no fuese tan sangriento
-                     como ver a los gladiadores en el coliseo? ¡Envía a tus chicos a tirar por tierra todos los planes 
-                     de tus rivales, y de paso déjales los maletines vacíos!</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-4">
-              <div class="nall">
-                <div class="nt pb-20">
-                  <img src="<c:url value='/resources/img/edif.jpg'/>">
-                </div>
-                <div class="nc">
-                  <h1>Investiga</h1>
-                  <p>Hazte con los conocimientos necesarios para sobresalir en el mundillo. Evadir impuestos, 
-                     guardar ahorrillos en Suiza, coches oficiales, sobresueldos en dietas… Nada es suficiente en 
-                     comparación con lo que podrías ganas aposentando tu trasero en la silla de presidente.</p>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </section>
-
-      <section class="sec sec-white">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12 pl-20 font-high">
-              <h1>¿De qué bando estás?</h1>
-              <hr>
-              <p>Elige una de las tres facciones (izquierda, centro, derecha) y aventúrate en una vertiginosa
-                 carrera por alcanzar el gobierno. Cada una de ellas con sus peculiaridades, unidades especiales 
-                 y tecnologías únicas.</p>
-            </div>
-            <div class="col-md-12 pl-20">
-              <div class="col-md-4 obj">
-              <img src="<c:url value='/resources/img/anarchy2.png'/>">
-              <h1>Izquierda</h1>
-            </div>
-            <div class="col-md-4 obj">
-              <img src="<c:url value='/resources/img/edificio2.png'/>">
-              <h1>Centro</h1>
-            </div>
-            <div class="col-md-4 obj">
-              <img src="<c:url value='/resources/img/corona2.png'/>">
-              <h1>Derecha</h1>
-            </div>
-            </div>
-          </div>
-        </div>  
-      </section>
+      
     </div>
     <footer><div class="foot"></div></footer>
   </div>
@@ -231,7 +167,7 @@
     login.disabled = true;
     xhr = new XMLHttpRequest();
     xhr.addEventListener('readystatechange', gestionarRespuesta, false);
-    xhr.open('post', "/GovernmentWars/Ajax/Login?usuario=" + usuario.value + "&password=" + password.value, true);
+    xhr.open('get', "/GovernmentWars/Ajax/Login?usuario=" + usuario.value + "&password=" + password.value, true);
     xhr.send(null);
    }
   }

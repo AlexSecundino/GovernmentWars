@@ -90,7 +90,7 @@ public class UsuarioControlador {
 		
 		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 		
-		UsuarioDAO usuarioDAO = (UsuarioDAO) context.getBean("UsuarioDAO");		
+		UsuarioDAO usuarioDAO = (UsuarioDAO) context.getBean("UsuarioDAO");	
 		
 		MensajeDAO mensajeDAO = (MensajeDAO) context.getBean("MensajeDAO");
 		UnidadDAO unidadDAO = (UnidadDAO) context.getBean("UnidadDAO");
@@ -100,7 +100,6 @@ public class UsuarioControlador {
 		Usuario usuario = (Usuario)session.getAttribute("usuario");
 
 		Ciudad ciudad = (Ciudad)session.getAttribute("ciudad");
-
 		
 		/*Actualizar ciudad*/
 		if(colasDAO.implementarColas(usuario, ciudad)){
@@ -277,7 +276,7 @@ public class UsuarioControlador {
 		Usuario datosUsuario = usuarioDAO.getUsuario(usuario);
 		
 		modelo.addAttribute("datosUsuario", datosUsuario);
-		
+
 		return "Perfil";
 	}
 }

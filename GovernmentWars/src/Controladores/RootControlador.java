@@ -14,7 +14,8 @@ public class RootControlador {
     @RequestMapping(value = "/Conocenos")
     public String conocenos() {
         return "Conocenos";
-}
+    }
+
     
     @RequestMapping(value = "/Ayuda")
     public String ayuda() {

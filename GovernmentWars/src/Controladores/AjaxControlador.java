@@ -46,7 +46,7 @@ public class AjaxControlador {
 		UsuarioDAO usuarioDAO = (UsuarioDAO) context.getBean("UsuarioDAO");
 			
 		Usuario usuario = new Usuario(name, password);
-		
+
 		if(usuarioDAO.isRegistrado(usuario)){	
 			if(usuarioDAO.isBloqueado(usuario)){
 				response = "2";
@@ -108,28 +108,6 @@ public class AjaxControlador {
 		return response;
 	}
 	
-	@RequestMapping(value="/MensajeLeido", method=RequestMethod.POST)
-	public @ResponseBody String mensajeLeido(
-				@RequestParam("id") int id,
-				HttpSession session) {
-		
-		System.out.println(id);
-		
-		String response = "false";
-		
-		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
-		
-		MensajeDAO mensajeDAO = (MensajeDAO) context.getBean("MensajeDAO");
-		
-		Mensaje msg = new Mensaje(id);
-		
-		if(mensajeDAO.mensajeLeido(msg)){
-			response = "true";
-		}
-		
-		return response;
-	}
-
 	@RequestMapping(value="/EliminarMensaje", method=RequestMethod.POST)
 	public @ResponseBody String EliminarMensaje(
 				@RequestParam("id") int idMensaje,
@@ -151,6 +129,28 @@ public class AjaxControlador {
 			respuesta = "false";
 		
 		return respuesta;
+	}
+	
+	@RequestMapping(value="/MensajeLeido", method=RequestMethod.POST)
+	public @ResponseBody String mensajeLeido(
+				@RequestParam("id") int id,
+				HttpSession session) {
+		
+		System.out.println(id);
+		
+		String response = "false";
+		
+		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
+		
+		MensajeDAO mensajeDAO = (MensajeDAO) context.getBean("MensajeDAO");
+		
+		Mensaje msg = new Mensaje(id);
+		
+		if(mensajeDAO.mensajeLeido(msg)){
+			response = "true";
+		}
+		
+		return response;
 	}
 	
 	@RequestMapping(value="/ColaUnidad", method=RequestMethod.POST)
