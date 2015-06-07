@@ -32,7 +32,7 @@
     							<img src="<c:url value='/resources/img/pancartas.png'/>" alt="">
     						</c:when>
     						<c:when test="${tecnologia.getNombre() == 'Lanzapelotas'}">
-    							<img src="<c:url value='/resources/img/lanzapelotas.jpg'/>" alt="">
+    							<img src="<c:url value='/resources/img/lanzapelotas.png'/>" alt="">
     						</c:when>
 						</c:choose>
 				    </div>

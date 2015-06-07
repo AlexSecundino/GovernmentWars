@@ -73,7 +73,7 @@
                 <fieldset>
                   <label for="usr">User</label><input type="text" name="usr"/><br/>
                   <label for="pwd">Password</label><input type="text" name="pwd"/><br/>
-                  <input type="button" value="Send"><span><a href="/GovernmentWars/Usuario/Registro">Aun no te has registrado?</a></span>
+                  <input type="button" value="Send" id="ffc"><span><a href="/GovernmentWars/Usuario/Registro">Aun no te has registrado?</a></span>
                 </fieldset>
               </form>
             </div>
@@ -113,7 +113,7 @@
               <h4 class="modal-title" id="myModalLabel">Formulario de registro</h4>
             </div>
             <div class="modal-body">
-            <form action="/GovernmentWars/Usuario/Registrar" method="post" id="ff">
+            <form action="/GovernmentWars/Usuario/Registrar" method="post" id="ffr">
               <div class="input-group marginsm">
                 <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
                 <input class="form-control" type="text" placeholder="Usuario" name="usuario" id="usuario">
@@ -123,7 +123,7 @@
                 <input class="form-control" type="password" placeholder="Contraseña" name="password" id="password">
               </div>
               <div class="input-group marginsm">
-                <button type="submit" class="btn btn-default" id="ffc">Crear cuenta</button>
+                <button type="submit" class="btn btn-default" id="ffrc">Crear cuenta</button>
                 <input type="hidden" id="rz" name="raza" value=""/>
               </div>
               </form>
@@ -156,6 +156,11 @@ $(document).ready(function() {
 	$('#ff input').keydown(function(e) {
 		if (e.keyCode == 13) {
 			$('#ffc').click();
+	 	}
+	});
+	$('#ffr input').keydown(function(e) {
+		if (e.keyCode == 13) {
+			$('#ffrc').click();
 	 	}
 	});
 });
