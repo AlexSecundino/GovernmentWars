@@ -126,7 +126,7 @@
              			<a href="javascript:void(0)" class="btn btn-primary btn-lg dsb" id="${unidad.getNombre()}" title="${unidad.getRequisitos()}">No cumples los requisitos</a>
              		</c:if>
              		<c:if test="${unidad.getCumpleRequisitos() == true}">
-             			<a href="javascript:void(0)" class="btn btn-primary btn-lg sbm" id="${unidad.getNombre()}&${unidad.formatearTiempo(unidad.getTiempoConstruccion())}&${edificio.getRecurso('Sobres')}&${edificio.getRecurso('Antena')}&${edificio.getRecurso('Jueces')}">Crear unidad</a><input style="width: 300px; margin-top: 1px; border: none; 
+             			<a href="javascript:void(0)" class="btn btn-primary btn-lg sbm" id="${unidad.getNombre()}&${unidad.formatearTiempo(unidad.getTiempoConstruccion())}&${unidad.getRecurso('Sobres')}&${unidad.getRecurso('Antena')}&${unidad.getRecurso('Jueces')}">Crear unidad</a><input style="width: 300px; margin-top: 1px; border: none; 
              			border-bottom: 1px solid #bbb; text-align: center; font-size: 20px; font-family: 'troika';;" type="number" name="howm" min="1" max="9999" size="4" 
              			placeholder="...Cantidad..."/>
              		</c:if>
@@ -185,9 +185,9 @@ if (localStorage.getItem('${usuario.getUsuario()}_tmp_unidad')!==null) {
 	unidad = e[0];
 	cantidad = $(this).siblings('input').val();
 	tiempo = e[1];
-	pr_sobres = e[2]
-	pr_antena = e[3]
-	pr_jueces = e[4]
+	pr_sobres = (e[2]*1)*(cantidad*1);
+	pr_antena = (e[3]*1)*(cantidad*1);
+	pr_jueces = (e[4]*1)*(cantidad*1);
 	ajax();
    }
   }
@@ -253,8 +253,6 @@ if (localStorage.getItem('${usuario.getUsuario()}_tmp_unidad')!==null) {
           		var cola_unidad = {'nombre': unidad,'cantidad': cantidad, 'tm': e};
           		
           		localStorage.setItem('${usuario.getUsuario()}_tmp_unidad', JSON.stringify(cola_unidad));
-
-          		var object = JSON.parse(localStorage.getItem('${usuario.getUsuario()}_tmp_unidad'));
           		
 				document.getElementById('number1').innerHTML = document.getElementById('number1').innerHTML*1 - pr_sobres*1;
 	    		document.getElementById('number2').innerHTML = document.getElementById('number2').innerHTML*1 - pr_antena*1;

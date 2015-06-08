@@ -194,8 +194,6 @@ if (localStorage.getItem('${usuario.getUsuario()}_tmp_edificio')!==null) {
             		
             		
             		localStorage.setItem('${usuario.getUsuario()}_tmp_edificio', JSON.stringify(cola_edificio));
-
-            		var object = JSON.parse(localStorage.getItem('${usuario.getUsuario()}_tmp_edificio'));
             		
     				document.getElementById('number1').innerHTML = document.getElementById('number1').innerHTML*1 - pr_sobres*1;
     	    		document.getElementById('number2').innerHTML = document.getElementById('number2').innerHTML*1 - pr_antena*1;

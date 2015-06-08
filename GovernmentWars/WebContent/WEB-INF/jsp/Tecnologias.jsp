@@ -115,7 +115,7 @@
 	             			<a href="javascript:void(0)" class="btn btn-primary btn-lg dsb" id="${tecnologia.getNombre()}}">Ya se ha investigado</a>
 	             		</c:if>
 	             		<c:if test="${tecnologia.isInvestigada() == false}">
-	             				<a href="javascript:void(0)" class="btn btn-primary btn-lg sbm" id="${tecnologia.getNombre()}&${tecnologia.formatearTiempo(tecnologia.getTiempoConstruccion())}&${edificio.getRecurso('Sobres')}&${edificio.getRecurso('Antena')}&${edificio.getRecurso('Jueces')}">Investigar</a>
+	             				<a href="javascript:void(0)" class="btn btn-primary btn-lg sbm" id="${tecnologia.getNombre()}&${tecnologia.formatearTiempo(tecnologia.getTiempoConstruccion())}&${tecnologia.getRecurso('Sobres')}&${tecnologia.getRecurso('Antena')}&${tecnologia.getRecurso('Jueces')}">Investigar</a>
 	             		</c:if>
              		</c:if>
              		<a href="javascript:void(0)" class="btn btn-primary btn-lg tiempoq" disabled="disabled">${tecnologia.formatearTiempo(tecnologia.getTiempoConstruccion())}</a>
@@ -170,9 +170,9 @@ if (localStorage.getItem('${usuario.getUsuario()}_tmp_tecnologia')!==null) {
 	e = evento.target.id.split('&');
 	tecnologia = e[0];
 	tiempo = e[1];
-	pr_sobres = e[2]
-	pr_antena = e[3]
-	pr_jueces = e[4]
+	pr_sobres = e[2];
+	pr_antena = e[3];
+	pr_jueces = e[4];
 	ajax();
    }
   }
@@ -237,8 +237,6 @@ if (localStorage.getItem('${usuario.getUsuario()}_tmp_tecnologia')!==null) {
           		
           		
           		localStorage.setItem('${usuario.getUsuario()}_tmp_tecnologia', JSON.stringify(cola_tecnologia));
-
-          		var object = JSON.parse(localStorage.getItem('${usuario.getUsuario()}_tmp_tecnologia'));
           		
 				document.getElementById('number1').innerHTML = document.getElementById('number1').innerHTML*1 - pr_sobres*1;
 	    		document.getElementById('number2').innerHTML = document.getElementById('number2').innerHTML*1 - pr_antena*1;

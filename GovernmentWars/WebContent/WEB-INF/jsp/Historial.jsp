@@ -7,13 +7,13 @@
 		<div class="itm first-1 datagrid">
 			<table class="tbl">
 				<tr>
-					<th>Atacante</th>
-					<th>Defensor</th>
+					<th>A</th>
+					<th>D</th>
 					<th>T.Enviadas</th>
-					<th>T.PerdidasAtacante</th>
+					<th>T.PerdidasA</th>
 					<th>T.Defendiendo</th>
-					<th>T.PerdidasDefensor</th>
-					<th>Botin</th>
+					<th>T.PerdidasD</th>
+					<th>B</th>
 					<th>Fecha Ataque</th>
 				</tr>
 				
