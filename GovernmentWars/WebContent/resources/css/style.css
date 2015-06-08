@@ -173,8 +173,7 @@ box-shadow:inset 0px 1px 3px #bbb; -webkit-box-shadow:inset 0px 1px 3px #bbb; -m
 .rcr span {font-size: 17px}
 .rcr i {font-size: 24px}
 
-#number1,#number2,#number3,#number4, #number5 {padding: 0 15px; }
-#number1,#number2,#number3,#number4, #number5 span {display: inline-block; width: 55px}
+#number1,#number2,#number3,#number4, #number5 {padding: 0 15px;}
 
 .aside-menu, .bod .container {padding: 0 0; }
 .aside-menu li {background-color: #FFF; text-decoration: none; list-style: none; padding: 0 0; text-align: center; line-height: 100px; border-bottom: 2px solid #777; border-right: 2px solid #777}

@@ -83,7 +83,7 @@ public class JDBCTecnologiaDAO implements TecnologiaDAO{
 		boolean cumple = false;
 		
 		String sql = "Select count(*) from RequisitosTecnologias rt inner join ciudad_edificios ce on (rt.nombreEdificio = ce.nombre and rt.nivelEdificio <= ce.nivel) inner join ciudad_tecnologias ct on (rt.nombreTecnologia = ct.nombre or rt.nombreTecnologia is null)"
-				+ " where ((ce.nombreCiudad = ? and ce.usuario = ?) or (ct.nombreCiudad = ? and ct.usuario = ?)) and rt.tecnologia = ?";
+				+ " where ((ce.nombreCiudad = ? and ce.usuario = ?) and (ct.nombreCiudad = ? and ct.usuario = ?)) and rt.tecnologia = ?";
 		Connection conn = null;
 		ResultSet rs = null;
 		
@@ -173,21 +173,19 @@ public class JDBCTecnologiaDAO implements TecnologiaDAO{
 		List<Tecnologia> listaTecnologias = new ArrayList<Tecnologia>();
 		
 		/*Saca los datos de las tecnologias nombre, tiempo y recursos que costaria investigarlas y te indica las que tienes creadas*/
-		String sql = "Select ctec.nombre, ctec.nombreCiudad, tec.nombre as nombreTec, bonus, antena, sobres, jueces, tiempo from Ciudad_Tecnologias ctec right join (select * from tecnologias where raza is null or raza = ?) as tec "
-				+ "on tec.nombre = ctec.nombre where ((nombreCiudad = ? or nombreCiudad is null or nombreCiudad != ?) and (usuario = ? or usuario is null or usuario != ?)) group by tec.nombre";
-		Connection conn = null;
-		ResultSet rs = null;
-		
-		try {
-			conn = dataSource.getConnection();
-			PreparedStatement ps = conn.prepareStatement(sql);
-			ps.setString(1, raza);
-			ps.setString(2, ciudad.getNombre());
-			ps.setString(3, ciudad.getNombre());
-			ps.setString(4, usuario.getUsuario());
-			ps.setString(5, usuario.getUsuario());
-			
-			rs = ps.executeQuery();
+		  String sql = "Select ctec.nombre, ctec.nombreCiudad, tec.nombre as nombreTec, bonus, antena, sobres, jueces, tiempo from tecnologias tec left join (select * from ciudad_Tecnologias ct where nombreCiudad = ? and usuario = ?) as ctec on (tec.nombre = ctec.nombre) where raza is null or raza = ?";
+		  Connection conn = null;
+		  ResultSet rs = null;
+		  
+		  try {
+		   conn = dataSource.getConnection();
+		   PreparedStatement ps = conn.prepareStatement(sql);
+		   
+		   ps.setString(1, ciudad.getNombre());
+		   ps.setString(2, usuario.getUsuario());
+		   ps.setString(3, raza);
+		   
+		   rs = ps.executeQuery();
 
 			while(rs.next()){
 				
